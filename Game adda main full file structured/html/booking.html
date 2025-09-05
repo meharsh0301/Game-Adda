@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Gaming Station - Game Adda</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!--<link rel="stylesheet" href="booking.css">-->
+    <style>
+        /* ====== Base Styles ====== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0f0f1a;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            background-color: #3aa8d8;
+            transform: translateY(-2px);
+        }
+        
+        h1, h2, h3 {
+            color: #4cc9f0;
+        }
+        
+        h1 i, h2 i {
+            margin-right: 10px;
+        }
+        
+        /* ====== Header Styles ====== */
+        header {
+            background-color: #1a1a2e;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover, nav a.active {
+            color: #4cc9f0;
+        }
+        
+        nav a i {
+            margin-right: 5px;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* ====== Booking Container ====== */
+        .booking-container {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            background-color: #1a1a2e;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .booking-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .booking-header h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .booking-header p {
+            color: #ccc;
+        }
+        
+        /* ====== Booking Steps ====== */
+        .booking-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+            counter-reset: step;
+        }
+        
+        .booking-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #333;
+            z-index: 1;
+        }
+        
+        .step {
+            position: relative;
+            text-align: center;
+            flex: 1;
+            color: #aaa;
+            font-size: 0.9rem;
+            z-index: 2;
+        }
+        
+        .step::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            line-height: 40px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .step.active {
+            color: #4cc9f0;
+        }
+        
+        .step.active::before {
+            background-color: #4cc9f0;
+            content: counter(step);
+            counter-increment: step;
+        }
+        
+        .step.completed::before {
+            background-color: #4cc9f0;
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+        }
+        
+        /* ====== Booking Content ====== */
+        .booking-content {
+            display: none;
+        }
+        
+        .booking-content.active {
+            display: block;
+        }
+        
+        /* ====== Station Selection ====== */
+        .station-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .station-card {
+            background-color: #0f0f1a;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 2px solid #333;
+        }
+        
+        .station-card:hover {
+            border-color: #4cc9f0;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.2);
+        }
+        
+        .station-card.selected {
+            border-color: #4cc9f0;
+            background-color: rgba(76, 201, 240, 0.1);
+        }
+        
+        .station-icon {
+            font-size: 2.5rem;
+            color: #4cc9f0;
+            margin-bottom: 15px;
+        }
+        
+        .station-name {
+            font-size: 1.2rem;
+            color: #4cc9f0;
+            margin-bottom: 10px;
+        }
+        
+        .station-specs {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .station-price {
+            font-weight: bold;
+            color: #f72585;
+            font-size: 1.1rem;
+        }
+        
+        /* ====== Date & Time Selection ====== */
+        .calendar-container {
+            margin-bottom: 30px;
+        }
+        
+        .calendar {
+            background-color: #0f0f1a;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-title {
+            font-size: 1.2rem;
+            color: #4cc9f0;
+        }
+        
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .calendar-nav button {
+            background-color: #333;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .calendar-nav button:hover {
+            background-color: #444;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+        
+        .calendar-day-header {
+            text-align: center;
+            color: #aaa;
+            font-size: 0.9rem;
+            padding: 10px 0;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .calendar-day:hover {
+            background-color: #333;
+        }
+        
+        .calendar-day.selected {
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            font-weight: bold;
+        }
+        
+        .calendar-day.disabled {
+            color: #555;
+            cursor: not-allowed;
+        }
+        
+        .calendar-day.booked {
+            position: relative;
+            color: #f72585;
+        }
+        
+        .calendar-day.booked::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: #f72585;
+            border-radius: 50%;
+        }
+        
+        /* Time Slots */
+        .time-slots-container h3 {
+            margin-bottom: 15px;
+            color: #4cc9f0;
+        }
+        
+        .time-slots {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .time-slot {
+            background-color: #0f0f1a;
+            border: 2px solid #333;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1 0 120px;
+            text-align: center;
+        }
+        
+        .time-slot:hover {
+            border-color: #4cc9f0;
+        }
+        
+        .time-slot.selected {
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            border-color: #4cc9f0;
+            font-weight: bold;
+        }
+        
+        .time-slot.booked {
+            background-color: #f72585;
+            color: white;
+            cursor: not-allowed;
+            opacity: 0.7;
+            border-color: #f72585;
+        }
+        
+        /* ====== Booking Summary ====== */
+        .booking-summary {
+            background-color: #0f0f1a;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 1px solid #333;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #333;
+        }
+        
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+        
+        .summary-total {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #4cc9f0;
+        }
+        
+        /* ====== Booking Form ====== */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccc;
+        }
+        
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background-color: #0f0f1a;
+            color: white;
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .checkbox-group {
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .checkbox-group input {
+            margin-right: 10px;
+        }
+        
+        .checkbox-group label {
+            color: #ccc;
+            margin-bottom: 0;
+        }
+        
+        .checkbox-group a {
+            color: #4cc9f0;
+            text-decoration: none;
+        }
+        
+        .checkbox-group a:hover {
+            text-decoration: underline;
+        }
+        
+        /* ====== Navigation Buttons ====== */
+        .booking-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .prev-btn {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .prev-btn:hover {
+            background-color: #444;
+        }
+        
+        .prev-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .next-btn {
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .next-btn:hover {
+            background-color: #3aa8d8;
+        }
+        
+        .confirm-btn {
+            background-color: #7209b7;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .confirm-btn:hover {
+            background-color: #5e07a0;
+        }
+        
+        /* ====== Success Screen ====== */
+        .booking-success {
+            text-align: center;
+            padding: 40px 20px;
+            display: none;
+        }
+        
+        .success-icon {
+            font-size: 5rem;
+            color: #4cc9f0;
+            margin-bottom: 20px;
+        }
+        
+        .booking-success h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #4cc9f0;
+        }
+        
+        .booking-success p {
+            margin-bottom: 10px;
+            color: #ccc;
+            font-size: 1.1rem;
+        }
+        
+        .success-details {
+            background-color: #0f0f1a;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+            text-align: left;
+            border: 1px solid #333;
+        }
+        
+        .success-details p {
+            margin-bottom: 10px;
+            color: #ccc;
+        }
+        
+        .success-details p strong {
+            color: #4cc9f0;
+        }
+        
+        .dashboard-btn {
+            background-color: #7209b7;
+            padding: 12px 25px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        
+        .dashboard-btn:hover {
+            background-color: #5e07a0;
+            transform: translateY(-2px);
+        }
+        
+        /* ====== Footer Styles ====== */
+        footer {
+            background-color: #1a1a2e;
+            padding: 50px 0 0;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            color: #4cc9f0;
+        }
+        
+        .footer-section p {
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: #ccc;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: #4cc9f0;
+        }
+        
+        .footer-section.links ul {
+            list-style: none;
+        }
+        
+        .footer-section.links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section.links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section.links a:hover {
+            color: #4cc9f0;
+        }
+        
+        .footer-section.contact p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-section.contact i {
+            color: #4cc9f0;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid #333;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        
+        /* ====== Responsive Styles ====== */
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #1a1a2e;
+                flex-direction: column;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            }
+            
+            nav.active {
+                display: flex;
+            }
+            
+            nav a {
+                padding: 10px 20px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 15px;
+                right: 15px;
+            }
+            
+            .booking-container {
+                margin: 80px auto 30px;
+                padding: 20px;
+            }
+            
+            .booking-steps {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 30px;
+            }
+            
+            .booking-steps::before {
+                display: none;
+            }
+            
+            .step {
+                text-align: left;
+                display: flex;
+                align-items: center;
+            }
+            
+            .step::before {
+                margin: 0 15px 0 0;
+            }
+            
+            .station-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .time-slots {
+                justify-content: center;
+            }
+            
+            .time-slot {
+                flex: 1 0 100px;
+            }
+            
+            .booking-navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .booking-navigation button {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .calendar-day-header {
+                font-size: 0.8rem;
+                padding: 5px 0;
+            }
+            
+            .calendar-day {
+                font-size: 0.9rem;
+            }
+            
+            .time-slot {
+                flex: 1 0 80px;
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-gamepad"></i> Game Adda</h1>
+            <nav>
+                
+                <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="booking.html" class="active"><i class="fas fa-calendar-alt"></i> Book Now</a>
+            </nav>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="booking-container">
+        <div class="booking-header">
+            <h2><i class="fas fa-calendar-alt"></i> Book Your Gaming Station</h2>
+            <p>Reserve your preferred gaming setup and time slot</p>
+        </div>
+        
+        <div class="booking-steps">
+            <div class="step active" data-step="1">Choose Station</div>
+            <div class="step" data-step="2">Select Date & Time</div>
+            <div class="step" data-step="3">Confirm Booking</div>
+        </div>
+        
+        <!-- Step 1: Choose Station -->
+        <div class="booking-content active" data-step="1">
+            <h3>Available Gaming Stations</h3>
+            <p>Select your preferred gaming setup</p>
+            
+            <div class="station-grid">
+                <div class="station-card" data-type="standard">
+                    <div class="station-icon"><i class="fas fa-desktop"></i></div>
+                    <h4 class="station-name">Standard PC</h4>
+                    <div class="station-specs">
+                        <p>Intel i5 | GTX 1660</p>
+                        <p>24" Monitor | 8GB RAM</p>
+                    </div>
+                    <div class="station-price">₹199/hour</div>
+                </div>
+                
+                <div class="station-card" data-type="premium">
+                    <div class="station-icon"><i class="fas fa-tv"></i></div>
+                    <h4 class="station-name">Premium PC</h4>
+                    <div class="station-specs">
+                        <p>Intel i7 | RTX 3060</p>
+                        <p>27" Monitor | 16GB RAM</p>
+                    </div>
+                    <div class="station-price">₹299/hour</div>
+                </div>
+                
+                <div class="station-card" data-type="elite">
+                    <div class="station-icon"><i class="fas fa-gamepad"></i></div>
+                    <h4 class="station-name">Elite Gaming PC</h4>
+                    <div class="station-specs">
+                        <p>Intel i9 | RTX 4080</p>
+                        <p>32" Monitor | 32GB RAM</p>
+                    </div>
+                    <div class="station-price">₹399/hour</div>
+                </div>
+                
+                <div class="station-card" data-type="console-ps5">
+                    <div class="station-icon"><i class="fab fa-playstation"></i></div>
+                    <h4 class="station-name">PlayStation 5</h4>
+                    <div class="station-specs">
+                        <p>4K HDR | 120Hz</p>
+                        <p>DualSense Controller</p>
+                    </div>
+                    <div class="station-price">₹249/hour</div>
+                </div>
+                
+                <div class="station-card" data-type="console-xbox">
+                    <div class="station-icon"><i class="fab fa-xbox"></i></div>
+                    <h4 class="station-name">Xbox Series X</h4>
+                    <div class="station-specs">
+                        <p>4K HDR | 120Hz</p>
+                        <p>Wireless Controller</p>
+                    </div>
+                    <div class="station-price">₹249/hour</div>
+                </div>
+                
+                <div class="station-card" data-type="vr">
+                    <div class="station-icon"><i class="fas fa-vr-cardboard"></i></div>
+                    <h4 class="station-name">VR Station</h4>
+                    <div class="station-specs">
+                        <p>Meta Quest 3</p>
+                        <p>Full Body Tracking</p>
+                    </div>
+                    <div class="station-price">₹349/hour</div>
+                </div>
+            </div>
+            
+            <div class="booking-navigation">
+                <button class="prev-btn" disabled><i class="fas fa-arrow-left"></i> Previous</button>
+                <button class="next-btn">Next <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+        
+        <!-- Step 2: Select Date & Time -->
+        <div class="booking-content" data-step="2">
+            <h3>Select Date & Time</h3>
+            <p>Choose your preferred date and available time slot</p>
+            
+            <div class="calendar-container">
+                <div class="calendar">
+                    <div class="calendar-header">
+                        <div class="calendar-title" id="calendar-title">June 2025</div>
+                        <div class="calendar-nav">
+                            <button id="prev-month"><i class="fas fa-chevron-left"></i></button>
+                            <button id="next-month"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="calendar-grid" id="calendar-grid">
+                        <!-- Calendar will be generated dynamically -->
+                    </div>
+                </div>
+                
+                <div class="time-slots-container">
+                    <h4>Available Time Slots</h4>
+                    <div class="time-slots" id="time-slots">
+                        <!-- Time slots will be generated dynamically -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="booking-navigation">
+                <button class="prev-btn"><i class="fas fa-arrow-left"></i> Previous</button>
+                <button class="next-btn">Next <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+        
+        <!-- Step 3: Confirm Booking -->
+        <div class="booking-content" data-step="3">
+            <h3>Confirm Your Booking</h3>
+            <p>Review your booking details before confirmation</p>
+            
+            <div class="booking-summary">
+                <div class="summary-item">
+                    <span>Station Type:</span>
+                    <span id="summary-station">Premium PC</span>
+                </div>
+                <div class="summary-item">
+                    <span>Date:</span>
+                    <span id="summary-date">June 10, 2025</span>
+                </div>
+                <div class="summary-item">
+                    <span>Time Slot:</span>
+                    <span id="summary-time">2:00 PM - 3:00 PM</span>
+                </div>
+                <div class="summary-item">
+                    <span>Duration:</span>
+                    <span id="summary-duration">1 hour</span>
+                </div>
+                <div class="summary-item">
+                    <span>Hourly Rate:</span>
+                    <span id="summary-rate">₹299/hour</span>
+                </div>
+                <div class="summary-item summary-total">
+                    <span>Total:</span>
+                    <span id="summary-total">₹299</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="special-requests"><i class="fas fa-edit"></i> Special Requests (Optional)</label>
+                <textarea id="special-requests" rows="3" placeholder="Any special requests or notes..."></textarea>
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="terms" required>
+                <label for="terms">I agree to the <a href="terms.html">Terms & Conditions</a> and <a href="privacy.html">Privacy Policy</a></label>
+            </div>
+            
+            <div class="booking-navigation">
+                <button class="prev-btn"><i class="fas fa-arrow-left"></i> Previous</button>
+                <button class="confirm-btn"><i class="fas fa-check"></i> Confirm Booking</button>
+            </div>
+        </div>
+        
+        <!-- Booking Success -->
+        <div class="booking-success">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Booking Confirmed!</h3>
+            <p>Your gaming station has been successfully booked.</p>
+            <p>We've sent a confirmation to your email.</p>
+            
+            <div class="success-details">
+                <p><strong>Booking ID:</strong> <span id="booking-id">GA2025-XXXX</span></p>
+                <p><strong>Station:</strong> <span id="success-station">Premium PC</span></p>
+                <p><strong>Date & Time:</strong> <span id="success-datetime">June 10, 2025 at 2:00 PM</span></p>
+                <p><strong>Duration:</strong> <span id="success-duration">1 hour</span></p>
+                <p><strong>Special Requests:</strong> <span id="success-requests">None</span></p>
+            </div>
+            
+            <a href="dashboard.html" class="dashboard-btn"><i class="fas fa-tachometer-alt"></i> Go to Dashboard</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section about">
+                    <h3><i class="fas fa-gamepad"></i> Game Adda</h3>
+                    <p>Your ultimate destination for competitive gaming and esports events.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li><a href="booking.html"><i class="fas fa-calendar-alt"></i> Book Now</a></li>
+                        <li><a href="events.html"><i class="fas fa-calendar-star"></i> Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> info@gameadda.com</p>
+                    <p><i class="fas fa-phone"></i> +91 6200250705</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Gaming Street, Mumbai, India</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Game Adda. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Booking system functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const steps = document.querySelectorAll('.step');
+            const contents = document.querySelectorAll('.booking-content');
+            const prevBtns = document.querySelectorAll('.prev-btn');
+            const nextBtns = document.querySelectorAll('.next-btn');
+            const confirmBtn = document.querySelector('.confirm-btn');
+            const successScreen = document.querySelector('.booking-success');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const nav = document.querySelector('nav');
+            
+            // Calendar elements
+            const calendarTitle = document.getElementById('calendar-title');
+            const calendarGrid = document.getElementById('calendar-grid');
+            const prevMonthBtn = document.getElementById('prev-month');
+            const nextMonthBtn = document.getElementById('next-month');
+            const timeSlotsContainer = document.getElementById('time-slots');
+            
+            // Booking data
+            let currentStep = 0;
+            let selectedStation = null;
+            let selectedDate = null;
+            let selectedTime = null;
+            let currentMonth = new Date().getMonth();
+            let currentYear = new Date().getFullYear();
+            
+            // Initialize
+            showStep(currentStep);
+            generateCalendar(currentMonth, currentYear);
+            
+            // Event Listeners
+            nextBtns.forEach(btn => btn.addEventListener('click', goToNextStep));
+            prevBtns.forEach(btn => btn.addEventListener('click', goToPrevStep));
+            confirmBtn.addEventListener('click', confirmBooking);
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            prevMonthBtn.addEventListener('click', showPrevMonth);
+            nextMonthBtn.addEventListener('click', showNextMonth);
+            
+            // Station selection
+            document.querySelectorAll('.station-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    document.querySelectorAll('.station-card').forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    selectedStation = {
+                        type: card.dataset.type,
+                        name: card.querySelector('.station-name').textContent,
+                        price: card.querySelector('.station-price').textContent,
+                        specs: card.querySelector('.station-specs').textContent.trim()
+                    };
+                });
+            });
+            
+            // Functions
+            function showStep(step) {
+                contents.forEach((content, index) => {
+                    content.classList.toggle('active', index === step);
+                });
+                updateSteps();
+            }
+            
+            function updateSteps() {
+                steps.forEach((step, index) => {
+                    if (index < currentStep) {
+                        step.classList.remove('active');
+                        step.classList.add('completed');
+                    } else if (index === currentStep) {
+                        step.classList.add('active');
+                        step.classList.remove('completed');
+                    } else {
+                        step.classList.remove('active', 'completed');
+                    }
+                });
+            }
+            
+            function goToNextStep() {
+                if (validateStep(currentStep)) {
+                    currentStep++;
+                    showStep(currentStep);
+                    
+                    // If moving to step 2, generate time slots
+                    if (currentStep === 1) {
+                        generateTimeSlots();
+                    }
+                }
+            }
+            
+            function goToPrevStep() {
+                currentStep--;
+                showStep(currentStep);
+            }
+            
+            function validateStep(step) {
+                if (step === 0) {
+                    if (!selectedStation) {
+                        alert('Please select a gaming station');
+                        return false;
+                    }
+                    
+                    // Update summary with selected station
+                    document.getElementById('summary-station').textContent = selectedStation.name;
+                    document.getElementById('summary-rate').textContent = selectedStation.price;
+                    document.getElementById('success-station').textContent = selectedStation.name;
+                    return true;
+                } else if (step === 1) {
+                    if (!selectedDate) {
+                        alert('Please select a date');
+                        return false;
+                    }
+                    
+                    if (!selectedTime) {
+                        alert('Please select an available time slot');
+                        return false;
+                    }
+                    
+                    // Update summary with selected time
+                    const formattedDate = selectedDate.toLocaleDateString('en-US', { 
+                        month: 'long', 
+                        day: 'numeric', 
+                        year: 'numeric' 
+                    });
+                    
+                    document.getElementById('summary-date').textContent = formattedDate;
+                    document.getElementById('summary-time').textContent = `${selectedTime} - ${nextHour(selectedTime)}`;
+                    document.getElementById('summary-duration').textContent = '1 hour';
+                    document.getElementById('summary-total').textContent = selectedStation.price;
+                    
+                    document.getElementById('success-datetime').textContent = `${formattedDate} at ${selectedTime}`;
+                    document.getElementById('success-duration').textContent = '1 hour';
+                    return true;
+                }
+                return true;
+            }
+            
+            function nextHour(time) {
+                const [hour, period] = time.split(' ');
+                let nextHour = parseInt(hour) + 1;
+                if (nextHour === 12) {
+                    return `12:00 ${period === 'AM' ? 'PM' : 'AM'}`;
+                } else if (nextHour > 12) {
+                    return `${nextHour - 12}:00 ${period}`;
+                } else {
+                    return `${nextHour}:00 ${period}`;
+                }
+            }
+            
+            function confirmBooking(e) {
+                e.preventDefault();
+                
+                if (!document.getElementById('terms').checked) {
+                    alert('Please agree to the Terms & Conditions');
+                    return;
+                }
+                
+                // Generate booking data
+                const bookingId = 'GA' + currentYear + '-' + Math.floor(1000 + Math.random() * 9000);
+                const specialRequests = document.getElementById('special-requests').value;
+                
+                // Update success screen
+                document.getElementById('booking-id').textContent = bookingId;
+                document.getElementById('success-requests').textContent = specialRequests || 'None';
+                
+                // Show success screen
+                contents.forEach(content => content.style.display = 'none');
+                successScreen.style.display = 'block';
+                
+                // Reset form for next booking
+                setTimeout(() => {
+                    resetForm();
+                }, 5000);
+            }
+            
+            function resetForm() {
+                // Reset form fields
+                document.querySelectorAll('.station-card').forEach(card => card.classList.remove('selected'));
+                selectedStation = null;
+                selectedDate = null;
+                selectedTime = null;
+                document.getElementById('special-requests').value = '';
+                document.getElementById('terms').checked = false;
+                
+                // Reset to first step
+                currentStep = 0;
+                showStep(currentStep);
+                successScreen.style.display = 'none';
+            }
+            
+            function toggleMobileMenu() {
+                nav.classList.toggle('active');
+                mobileMenuBtn.querySelector('i').classList.toggle('fa-times');
+                mobileMenuBtn.querySelector('i').classList.toggle('fa-bars');
+            }
+            
+            // Calendar functions
+            function generateCalendar(month, year) {
+                // Clear previous calendar
+                calendarGrid.innerHTML = '';
+                
+                // Set calendar title
+                const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                                   'July', 'August', 'September', 'October', 'November', 'December'];
+                calendarTitle.textContent = `${monthNames[month]} ${year}`;
+                
+                // Get first day of month and total days
+                const firstDay = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                
+                // Get days from previous month
+                const prevMonthDays = new Date(year, month, 0).getDate();
+                
+                // Add day headers
+                const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                dayNames.forEach(day => {
+                    const dayHeader = document.createElement('div');
+                    dayHeader.className = 'calendar-day-header';
+                    dayHeader.textContent = day;
+                    calendarGrid.appendChild(dayHeader);
+                });
+                
+                // Add days from previous month
+                for (let i = firstDay - 1; i >= 0; i--) {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'calendar-day disabled';
+                    dayElement.textContent = prevMonthDays - i;
+                    calendarGrid.appendChild(dayElement);
+                }
+                
+                // Add days of current month
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'calendar-day';
+                    dayElement.textContent = i;
+                    
+                    // Mark today
+                    const today = new Date();
+                    if (i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+                        dayElement.classList.add('selected');
+                        selectedDate = today;
+                    }
+                    
+                    // Add click event
+                    dayElement.addEventListener('click', function() {
+                        if (!this.classList.contains('disabled')) {
+                            document.querySelectorAll('.calendar-day').forEach(day => day.classList.remove('selected'));
+                            this.classList.add('selected');
+                            selectedDate = new Date(year, month, i);
+                            generateTimeSlots();
+                        }
+                    });
+                    
+                    calendarGrid.appendChild(dayElement);
+                }
+                
+                // Add days from next month
+                const totalCells = firstDay + daysInMonth;
+                const remainingCells = totalCells > 35 ? 42 - totalCells : 35 - totalCells;
+                
+                for (let i = 1; i <= remainingCells; i++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'calendar-day disabled';
+                    dayElement.textContent = i;
+                    calendarGrid.appendChild(dayElement);
+                }
+            }
+            
+            function showPrevMonth() {
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                generateCalendar(currentMonth, currentYear);
+            }
+            
+            function showNextMonth() {
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                generateCalendar(currentMonth, currentYear);
+            }
+            
+            function generateTimeSlots() {
+                if (!selectedDate) return;
+                
+                // Clear previous time slots
+                timeSlotsContainer.innerHTML = '';
+                
+                // Generate time slots from 10 AM to 10 PM
+                const startHour = 10;
+                const endHour = 22;
+                
+                // Sample booked times (in a real app, this would come from a database)
+                const sampleBookedTimes = ['2:00 PM', '6:00 PM', '8:00 PM'];
+                
+                for (let hour = startHour; hour < endHour; hour++) {
+                    const timeSlot = document.createElement('div');
+                    const displayHour = hour > 12 ? hour - 12 : hour;
+                    const period = hour >= 12 ? 'PM' : 'AM';
+                    const timeString = `${displayHour}:00 ${period}`;
+                    
+                    timeSlot.className = 'time-slot';
+                    timeSlot.textContent = timeString;
+                    
+                    // Mark as booked if in sample booked times
+                    if (sampleBookedTimes.includes(timeString)) {
+                        timeSlot.classList.add('booked');
+                    }
+                    
+                    // Add click event
+                    timeSlot.addEventListener('click', function() {
+                        if (!this.classList.contains('booked')) {
+                            document.querySelectorAll('.time-slot').forEach(slot => slot.classList.remove('selected'));
+                            this.classList.add('selected');
+                            selectedTime = timeString;
+                        }
+                    });
+                    
+                    timeSlotsContainer.appendChild(timeSlot);
+                }
+            }
+        });
+    </script>
+    <!--<script src="booking.js"></script>-->
+</body>
+</html>

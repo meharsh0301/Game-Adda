@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Log - Game Adda</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!--<link rel="stylesheet" href="activity-log.css">-->
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0f0f1a;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #3aa8d8;
+            transform: translateY(-2px);
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #1a1a2e;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            color: #4cc9f0;
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover, nav a.active {
+            color: #4cc9f0;
+        }
+        
+        nav a i {
+            margin-right: 5px;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Activity Log Styles */
+        .activity-container {
+            max-width: 1000px;
+            margin: 100px auto 50px;
+            background-color: #1a1a2e;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .activity-header h2 {
+            color: #4cc9f0;
+            font-size: 1.8rem;
+        }
+        
+        .activity-filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .activity-filter {
+            background-color: #0f0f1a;
+            border: 1px solid #333;
+            color: #ccc;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .activity-filter:hover {
+            background-color: #25253a;
+        }
+        
+        .activity-filter.active {
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            border-color: #4cc9f0;
+        }
+        
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .activity-item {
+            background-color: #0f0f1a;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.3s;
+        }
+        
+        .activity-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #7209b7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .activity-icon i {
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .activity-details {
+            flex: 1;
+        }
+        
+        .activity-title {
+            color: #4cc9f0;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .activity-meta {
+            display: flex;
+            gap: 15px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        .activity-meta i {
+            margin-right: 5px;
+            color: #4cc9f0;
+        }
+        
+        .activity-points {
+            margin-left: auto;
+            background-color: #f72585;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            min-width: 70px;
+            text-align: center;
+        }
+        
+        .no-activity {
+            text-align: center;
+            padding: 50px;
+            color: #aaa;
+        }
+        
+        .no-activity i {
+            font-size: 3rem;
+            color: #4cc9f0;
+            margin-bottom: 20px;
+        }
+        
+        .load-more {
+            background-color: transparent;
+            color: #4cc9f0;
+            border: 1px solid #4cc9f0;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 20px auto 0;
+            display: block;
+            transition: all 0.3s;
+        }
+        
+        .load-more:hover {
+            background-color: rgba(76, 201, 240, 0.1);
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: #1a1a2e;
+            padding: 50px 0 0;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            color: #4cc9f0;
+        }
+        
+        .footer-section p {
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: #ccc;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: #4cc9f0;
+        }
+        
+        .footer-section.links ul {
+            list-style: none;
+        }
+        
+        .footer-section.links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section.links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section.links a:hover {
+            color: #4cc9f0;
+        }
+        
+        .footer-section.contact p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-section.contact i {
+            color: #4cc9f0;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid #333;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #1a1a2e;
+                flex-direction: column;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            }
+            
+            nav.active {
+                display: flex;
+            }
+            
+            nav a {
+                padding: 10px 20px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 15px;
+                right: 15px;
+            }
+            
+            .activity-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .activity-filters {
+                flex-wrap: wrap;
+            }
+            
+            .activity-meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-gamepad"></i> Game Adda</h1>
+            <nav>
+            
+                <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="activity-log.html" class="active"><i class="fas fa-history"></i> Activity Log</a>
+                <a href="profile.html"><i class="fas fa-user"></i> My Profile</a>
+                <button id="contact-btn" class="btn"><i class="fas fa-envelope"></i> Contact</button>
+            </nav>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="activity-container">
+        <div class="activity-header">
+            <h2><i class="fas fa-history"></i> Activity Log</h2>
+            <button class="btn"><i class="fas fa-download"></i> Export Data</button>
+        </div>
+        
+        <div class="activity-filters">
+            <button class="activity-filter active" data-filter="all">All Activities</button>
+            <button class="activity-filter" data-filter="gaming"><i class="fas fa-gamepad"></i> Gaming</button>
+            <button class="activity-filter" data-filter="tournaments"><i class="fas fa-trophy"></i> Tournaments</button>
+            <button class="activity-filter" data-filter="rewards"><i class="fas fa-gift"></i> Rewards</button>
+            <button class="activity-filter" data-filter="social"><i class="fas fa-users"></i> Social</button>
+        </div>
+        
+        <div class="activity-list" id="activity-list">
+            <!-- Activities will be loaded here -->
+        </div>
+        
+        <button class="load-more" id="load-more">Load More Activities</button>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section about">
+                    <h3><i class="fas fa-gamepad"></i> Game Adda</h3>
+                    <p>Your ultimate destination for competitive gaming and esports events.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="profile.html"><i class="fas fa-user"></i> My Profile</a></li>
+                        <li><a href="activity-log.html"><i class="fas fa-history"></i> Activity Log</a></li>
+                        <li><a href="rewards.html"><i class="fas fa-gift"></i> Rewards</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> info@gameadda.com</p>
+                    <p><i class="fas fa-phone"></i> +91 6200250705</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Gaming Street, Mumbai, India</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Game Adda. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Sample activity data
+        const activities = [
+            {
+                id: 1,
+                type: "gaming",
+                title: "Played Valorant for 2 hours",
+                icon: "gamepad",
+                iconColor: "#4cc9f0",
+                time: "2 hours ago",
+                location: "Station #12",
+                points: 20,
+                team: ""
+            },
+            {
+                id: 2,
+                type: "tournaments",
+                title: "Participated in CS:GO Tournament",
+                icon: "trophy",
+                iconColor: "#f72585",
+                time: "1 day ago",
+                location: "",
+                points: 500,
+                team: "Team: Phoenix"
+            },
+            {
+                id: 3,
+                type: "rewards",
+                title: "Redeemed 1 Hour Free Gaming",
+                icon: "gift",
+                iconColor: "#7209b7",
+                time: "2 days ago",
+                location: "",
+                points: -500,
+                team: ""
+            },
+            {
+                id: 4,
+                type: "gaming",
+                title: "Played Fortnite for 1.5 hours",
+                icon: "gamepad",
+                iconColor: "#4cc9f0",
+                time: "3 days ago",
+                location: "Station #8",
+                points: 15,
+                team: ""
+            },
+            {
+                id: 5,
+                type: "social",
+                title: "Referred a friend",
+                icon: "user-plus",
+                iconColor: "#f72585",
+                time: "1 week ago",
+                location: "",
+                points: 200,
+                team: "Alex Johnson"
+            },
+            {
+                id: 6,
+                type: "gaming",
+                title: "Played Dota 2 for 3 hours",
+                icon: "gamepad",
+                iconColor: "#4cc9f0",
+                time: "1 week ago",
+                location: "Station #5",
+                points: 30,
+                team: ""
+            },
+            {
+                id: 7,
+                type: "tournaments",
+                title: "Won BGMI Weekly Challenge",
+                icon: "trophy",
+                iconColor: "#f72585",
+                time: "2 weeks ago",
+                location: "",
+                points: 1000,
+                team: "Squad: Night Owls"
+            },
+            {
+                id: 8,
+                type: "rewards",
+                title: "Claimed Monthly Bonus",
+                icon: "coins",
+                iconColor: "#7209b7",
+                time: "3 weeks ago",
+                location: "",
+                points: 100,
+                team: ""
+            }
+        ];
+
+        // DOM elements
+        const activityList = document.getElementById('activity-list');
+        const loadMoreBtn = document.getElementById('load-more');
+        const filters = document.querySelectorAll('.activity-filter');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+        const contactBtn = document.getElementById('contact-btn');
+
+        // Current filter and visible activities
+        let currentFilter = 'all';
+        let visibleActivities = 5;
+
+        // Initialize the page
+        function init() {
+            renderActivities();
+            setupEventListeners();
+        }
+
+        // Render activities based on current filter
+        function renderActivities() {
+            activityList.innerHTML = '';
+            
+            const filteredActivities = activities.filter(activity => {
+                return currentFilter === 'all' || activity.type === currentFilter;
+            }).slice(0, visibleActivities);
+            
+            if (filteredActivities.length === 0) {
+                activityList.innerHTML = `
+                    <div class="no-activity">
+                        <i class="fas fa-inbox"></i>
+                        <h3>No activities found</h3>
+                        <p>Try changing your filters or check back later</p>
+                    </div>
+                `;
+                loadMoreBtn.style.display = 'none';
+                return;
+            }
+            
+            filteredActivities.forEach(activity => {
+                const activityItem = document.createElement('div');
+                activityItem.className = 'activity-item';
+                
+                let metaItems = `<span><i class="far fa-clock"></i> ${activity.time}</span>`;
+                
+                if (activity.location) {
+                    metaItems += `<span><i class="fas fa-map-marker-alt"></i> ${activity.location}</span>`;
+                }
+                
+                if (activity.team) {
+                    metaItems += `<span><i class="fas fa-users"></i> ${activity.team}</span>`;
+                }
+                
+                if (activity.points < 0) {
+                    metaItems += `<span><i class="fas fa-coins"></i> ${Math.abs(activity.points)} pts</span>`;
+                }
+                
+                activityItem.innerHTML = `
+                    <div class="activity-icon" style="background-color: ${activity.iconColor}">
+                        <i class="fas fa-${activity.icon}"></i>
+                    </div>
+                    <div class="activity-details">
+                        <h3 class="activity-title">${activity.title}</h3>
+                        <div class="activity-meta">
+                            ${metaItems}
+                        </div>
+                    </div>
+                    ${activity.points > 0 ? `<div class="activity-points">+${activity.points} pts</div>` : ''}
+                `;
+                
+                activityList.appendChild(activityItem);
+            });
+            
+            // Show/hide load more button
+            loadMoreBtn.style.display = visibleActivities >= activities.length ? 'none' : 'block';
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Filter buttons
+            filters.forEach(filter => {
+                filter.addEventListener('click', () => {
+                    filters.forEach(f => f.classList.remove('active'));
+                    filter.classList.add('active');
+                    currentFilter = filter.dataset.filter;
+                    visibleActivities = 5;
+                    renderActivities();
+                });
+            });
+            
+            // Load more button
+            loadMoreBtn.addEventListener('click', () => {
+                visibleActivities += 5;
+                renderActivities();
+                
+                // Scroll to the newly loaded items
+                setTimeout(() => {
+                    const items = document.querySelectorAll('.activity-item');
+                    if (items.length > 5) {
+                        items[items.length - 1].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                }, 100);
+            });
+            
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', () => {
+                nav.classList.toggle('active');
+                mobileMenuBtn.querySelector('i').classList.toggle('fa-times');
+                mobileMenuBtn.querySelector('i').classList.toggle('fa-bars');
+            });
+            
+            // Contact button
+            contactBtn.addEventListener('click', () => {
+                alert('Contact form would open here in a real implementation.');
+            });
+            
+            // Close mobile menu when clicking on a link
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', () => {
+                    nav.classList.remove('active');
+                    mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                    mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                });
+            });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+    <!--<script src="activity-log.js"></script>-->
+</body>
+</html>

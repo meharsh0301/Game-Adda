@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournaments - Game Adda</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!--<link rel="stylesheet" href="tournaments.css">-->
+    <style>
+        /* ====== Base Styles ====== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0f0f1a;
+            color: #fff;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            background-color: #3aa8d8;
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: #4cc9f0;
+            border: 2px solid #4cc9f0;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(76, 201, 240, 0.1);
+        }
+        
+        h1, h2, h3 {
+            color: #4cc9f0;
+        }
+        
+        /* ====== Header Styles ====== */
+        header {
+            background-color: #1a1a2e;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover, nav a.active {
+            color: #4cc9f0;
+        }
+        
+        nav a i {
+            margin-right: 5px;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #fff;
+        }
+        
+        /* ====== Main Content Styles ====== */
+        .main-content {
+            padding-top: 100px;
+            padding-bottom: 50px;
+            flex: 1;
+        }
+        
+        /* ====== Tournaments Section ====== */
+        .tournaments-section {
+            margin-bottom: 50px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: #4cc9f0;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-group {
+            position: relative;
+        }
+        
+        .filter-select {
+            background-color: #1a1a2e;
+            color: #fff;
+            border: 1px solid #333;
+            padding: 10px 15px;
+            padding-right: 35px;
+            border-radius: 5px;
+            cursor: pointer;
+            appearance: none;
+            min-width: 150px;
+        }
+        
+        .filter-select:focus {
+            outline: none;
+            border-color: #4cc9f0;
+        }
+        
+        .filter-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: #4cc9f0;
+        }
+        
+        .tournament-tabs {
+            display: flex;
+            border-bottom: 1px solid #333;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            scrollbar-width: none; /* Firefox */
+        }
+        
+        .tournament-tabs::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+        
+        .tournament-tab {
+            padding: 12px 25px;
+            background: none;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            position: relative;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+        
+        .tournament-tab:hover {
+            color: #4cc9f0;
+        }
+        
+        .tournament-tab.active {
+            color: #4cc9f0;
+        }
+        
+        .tournament-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #4cc9f0;
+        }
+        
+        .tournaments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        
+        .tournament-card {
+            background-color: #1a1a2e;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .tournament-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tournament-banner {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 3px solid #4cc9f0;
+        }
+        
+        .tournament-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .badge-upcoming {
+            background-color: #f72585;
+            color: white;
+        }
+        
+        .badge-live {
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            animation: pulse 2s infinite;
+        }
+        
+        .badge-completed {
+            background-color: #7209b7;
+            color: white;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+        
+        .tournament-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .tournament-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tournament-game {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .tournament-game img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .tournament-game span {
+            font-weight: 500;
+        }
+        
+        .tournament-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        .tournament-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .tournament-meta-item i {
+            color: #4cc9f0;
+        }
+        
+        .tournament-prize {
+            background-color: rgba(114, 9, 183, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            border-left: 3px solid #7209b7;
+        }
+        
+        .prize-amount {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #fff;
+        }
+        
+        .prize-label {
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+        
+        .tournament-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .register-btn {
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            border: none;
+        }
+        
+        .register-btn:hover {
+            background-color: #3aa8d8;
+        }
+        
+        .details-btn {
+            background-color: transparent;
+            color: #4cc9f0;
+            border: 2px solid #4cc9f0;
+        }
+        
+        .details-btn:hover {
+            background-color: rgba(76, 201, 240, 0.1);
+        }
+        
+        .watch-btn {
+            background-color: #f72585;
+            color: white;
+            border: none;
+        }
+        
+        .watch-btn:hover {
+            background-color: #e5177b;
+        }
+        
+        /* ====== Create Tournament Modal ====== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background-color: #1a1a2e;
+            padding: 30px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #ccc;
+            transition: color 0.3s;
+        }
+        
+        .modal-close:hover {
+            color: #f72585;
+        }
+        
+        .modal-title {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4cc9f0;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #0f0f1a;
+            color: #fff;
+            font-size: 1rem;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #4cc9f0;
+            box-shadow: 0 0 0 2px rgba(76, 201, 240, 0.3);
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        /* ====== Loading Animation ====== */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            display: none;
+        }
+        
+        .loader {
+            border: 5px solid #1a1a2e;
+            border-top: 5px solid #4cc9f0;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* ====== No Results State ====== */
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            grid-column: 1 / -1;
+        }
+        
+        .no-results i {
+            font-size: 3rem;
+            color: #4cc9f0;
+            margin-bottom: 20px;
+        }
+        
+        .no-results h3 {
+            margin-bottom: 10px;
+        }
+        
+        .no-results p {
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        
+        /* ====== Footer Styles ====== */
+        footer {
+            background-color: #1a1a2e;
+            padding: 50px 0 0;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-section p {
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: #ccc;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: #4cc9f0;
+        }
+        
+        .footer-section.links ul {
+            list-style: none;
+        }
+        
+        .footer-section.links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section.links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section.links a:hover {
+            color: #4cc9f0;
+        }
+        
+        .footer-section.contact p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-section.contact i {
+            color: #4cc9f0;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid #333;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        
+        /* ====== Responsive Styles ====== */
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #1a1a2e;
+                flex-direction: column;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            }
+            
+            nav.active {
+                display: flex;
+            }
+            
+            nav a {
+                padding: 10px 20px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .tournaments-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .filters {
+                width: 100%;
+            }
+            
+            .filter-select {
+                width: 100%;
+            }
+            
+            .tournament-actions {
+                flex-direction: column;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tournament-tabs {
+                gap: 5px;
+            }
+            
+            .tournament-tab {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div class="loader-container" id="loader">
+        <div class="loader"></div>
+    </div>
+
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-gamepad"></i> Game Adda</h1>
+            <nav>
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="activities.html"><i class="fas fa-running"></i> Activities</a>
+                <a href="events.html"><i class="fas fa-calendar"></i> Events</a>
+                <a href="tournaments.html" class="active"><i class="fas fa-trophy"></i> Tournaments</a>
+                <a href="membership.html"><i class="fas fa-users"></i> Membership</a>
+                <button id="contact-btn" class="btn"><i class="fas fa-envelope"></i> Contact</button>
+            </nav>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <section class="tournaments-section">
+                <div class="section-header">
+                    <h2 class="section-title">Tournaments</h2>
+                    <div class="filters">
+                        <div class="filter-group">
+                            <select class="filter-select" id="game-filter">
+                                <option value="">All Games</option>
+                                <option value="valorant">Valorant</option>
+                                <option value="csgo">CS:GO</option>
+                                <option value="dota2">Dota 2</option>
+                                <option value="lol">League of Legends</option>
+                                <option value="fortnite">Fortnite</option>
+                                <option value="pubg">PUBG</option>
+                            </select>
+                            <i class="fas fa-chevron-down filter-icon"></i>
+                        </div>
+                        <div class="filter-group">
+                            <select class="filter-select" id="region-filter">
+                                <option value="">All Regions</option>
+                                <option value="na">North America</option>
+                                <option value="eu">Europe</option>
+                                <option value="asia">Asia</option>
+                                <option value="india">India</option>
+                            </select>
+                            <i class="fas fa-chevron-down filter-icon"></i>
+                        </div>
+                        <button class="btn" id="create-tournament-btn">
+                            <i class="fas fa-plus"></i> Create Tournament
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="tournament-tabs">
+                    <button class="tournament-tab active" data-tab="all">All Tournaments</button>
+                    <button class="tournament-tab" data-tab="upcoming">Upcoming</button>
+                    <button class="tournament-tab" data-tab="live">Live Now</button>
+                    <button class="tournament-tab" data-tab="past">Past Tournaments</button>
+                    <button class="tournament-tab" data-tab="my">My Tournaments</button>
+                </div>
+                
+                <div class="tournaments-grid" id="tournaments-grid">
+                    <!-- Tournament cards will be dynamically inserted here by JavaScript -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Create Tournament Modal -->
+    <div class="modal" id="create-tournament-modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3 class="modal-title">Create New Tournament</h3>
+            <form id="tournament-form">
+                <div class="form-group">
+                    <label for="tournament-name">Tournament Name</label>
+                    <input type="text" id="tournament-name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tournament-game">Game</label>
+                    <select id="tournament-game" class="form-control" required>
+                        <option value="">Select a game</option>
+                        <option value="valorant">Valorant</option>
+                        <option value="csgo">CS:GO</option>
+                        <option value="dota2">Dota 2</option>
+                        <option value="lol">League of Legends</option>
+                        <option value="fortnite">Fortnite</option>
+                        <option value="pubg">PUBG</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tournament-date">Date & Time</label>
+                    <input type="datetime-local" id="tournament-date" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tournament-region">Region</label>
+                    <select id="tournament-region" class="form-control" required>
+                        <option value="">Select a region</option>
+                        <option value="na">North America</option>
+                        <option value="eu">Europe</option>
+                        <option value="asia">Asia</option>
+                        <option value="india">India</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tournament-prize">Prize Pool (₹)</label>
+                    <input type="number" id="tournament-prize" class="form-control" min="0" step="1000">
+                </div>
+                
+                <div class="form-group">
+                    <label for="tournament-teams">Max Teams</label>
+                    <input type="number" id="tournament-teams" class="form-control" min="2" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tournament-desc">Description</label>
+                    <textarea id="tournament-desc" class="form-control" rows="4" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tournament-banner">Banner Image</label>
+                    <input type="file" id="tournament-banner" class="form-control" accept="image/*">
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" id="cancel-tournament">Cancel</button>
+                    <button type="submit" class="btn">Create Tournament</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section about">
+                    <h3><i class="fas fa-gamepad"></i> Game Adda</h3>
+                    <p>Your ultimate destination for competitive gaming and esports events.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="profile.html">My Profile</a></li>
+                        <li><a href="my-games.html">My Games</a></li>
+                        <li><a href="tournaments.html">Tournaments</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> info@gameadda.com</p>
+                    <p><i class="fas fa-phone"></i> +91 6200250705</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Gaming Street, Mumbai, India</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Game Adda. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // DOM elements
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+        const loader = document.getElementById('loader');
+        const tournamentsGrid = document.getElementById('tournaments-grid');
+        const tournamentTabs = document.querySelectorAll('.tournament-tab');
+        const gameFilter = document.getElementById('game-filter');
+        const regionFilter = document.getElementById('region-filter');
+        const createTournamentBtn = document.getElementById('create-tournament-btn');
+        const createTournamentModal = document.getElementById('create-tournament-modal');
+        const modalCloseBtn = document.querySelector('.modal-close');
+        const cancelTournamentBtn = document.getElementById('cancel-tournament');
+        const tournamentForm = document.getElementById('tournament-form');
+
+        // Sample tournament data
+        const tournaments = [
+            {
+                id: 1,
+                title: "Valorant Weekly Cup",
+                game: "valorant",
+                gameName: "Valorant",
+                date: "2025-06-25T19:00",
+                region: "india",
+                regionName: "India",
+                teams: { registered: 32, max: 64 },
+                prize: 25000,
+                description: "Weekly competitive tournament for Valorant players of all skill levels. Single elimination bracket.",
+                status: "upcoming",
+                banner: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            },
+            {
+                id: 2,
+                title: "CS:GO Championship",
+                game: "csgo",
+                gameName: "CS:GO",
+                date: "2025-06-20T15:00",
+                region: "eu",
+                regionName: "Europe",
+                teams: { registered: 16, max: 16 },
+                prize: 50000,
+                description: "Premier CS:GO tournament with professional teams competing for the championship title.",
+                status: "live",
+                banner: "https://images.unsplash.com/photo-1551103782-9ab6cad0fb88?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            },
+            {
+                id: 3,
+                title: "Dota 2 Summer Showdown",
+                game: "dota2",
+                gameName: "Dota 2",
+                date: "2025-07-10T12:00",
+                region: "asia",
+                regionName: "Asia",
+                teams: { registered: 8, max: 16 },
+                prize: 75000,
+                description: "Seasonal Dota 2 tournament featuring top teams from the region.",
+                status: "upcoming",
+                banner: "https://images.unsplash.com/photo-1598550476439-6847785fcea6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            },
+            {
+                id: 4,
+                title: "League of Legends Clash",
+                game: "lol",
+                gameName: "League of Legends",
+                date: "2025-06-18T18:00",
+                region: "na",
+                regionName: "North America",
+                teams: { registered: 24, max: 32 },
+                prize: 30000,
+                description: "Monthly LoL tournament with team-based competition.",
+                status: "upcoming",
+                banner: "https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
+            },
+            {
+                id: 5,
+                title: "Fortnite Battle Royale",
+                game: "fortnite",
+                gameName: "Fortnite",
+                date: "2025-06-15T14:00",
+                region: "india",
+                regionName: "India",
+                teams: { registered: 48, max: 100 },
+                prize: 100000,
+                description: "Massive Fortnite tournament with solo and duo options available.",
+                status: "completed",
+                banner: "https://images.unsplash.com/photo-1579546929662-711aa81148cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            },
+            {
+                id: 6,
+                title: "PUBG Mobile Championship",
+                game: "pubg",
+                gameName: "PUBG Mobile",
+                date: "2025-06-22T16:00",
+                region: "asia",
+                regionName: "Asia",
+                teams: { registered: 20, max: 25 },
+                prize: 80000,
+                description: "Regional PUBG Mobile championship with qualifying rounds.",
+                status: "live",
+                banner: "https://images.unsplash.com/photo-1587573089734-599851b0c7b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+            }
+        ];
+
+        // Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            mobileMenuBtn.querySelector('i').classList.toggle('fa-times');
+            mobileMenuBtn.querySelector('i').classList.toggle('fa-bars');
+        });
+
+        // Show loading animation
+        function showLoader() {
+            loader.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Hide loading animation
+        function hideLoader() {
+            loader.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Format date to readable string
+        function formatDate(dateString) {
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+
+        // Generate tournament cards
+        function generateTournamentCards(tournamentsToDisplay) {
+            tournamentsGrid.innerHTML = '';
+            
+            if (tournamentsToDisplay.length === 0) {
+                tournamentsGrid.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-trophy"></i>
+                        <h3>No Tournaments Found</h3>
+                        <p>Try adjusting your filters or check back later</p>
+                        <button class="btn" id="reset-filters">Reset Filters</button>
+                    </div>
+                `;
+                
+                document.getElementById('reset-filters').addEventListener('click', resetFilters);
+                return;
+            }
+            
+            tournamentsToDisplay.forEach(tournament => {
+                const tournamentCard = document.createElement('div');
+                tournamentCard.className = 'tournament-card';
+                
+                let badge = '';
+                let actionBtn = '';
+                
+                if (tournament.status === 'upcoming') {
+                    badge = '<span class="tournament-badge badge-upcoming">Upcoming</span>';
+                    actionBtn = '<button class="action-btn register-btn">Register Now</button>';
+                } else if (tournament.status === 'live') {
+                    badge = '<span class="tournament-badge badge-live">Live Now</span>';
+                    actionBtn = '<button class="action-btn watch-btn">Watch Live</button>';
+                } else {
+                    badge = '<span class="tournament-badge badge-completed">Completed</span>';
+                    actionBtn = '<button class="action-btn register-btn" disabled>Completed</button>';
+                }
+                
+                tournamentCard.innerHTML = `
+                    <img src="${tournament.banner}" alt="${tournament.title}" class="tournament-banner">
+                    ${badge}
+                    <div class="tournament-content">
+                        <h3 class="tournament-title">${tournament.title}</h3>
+                        <div class="tournament-game">
+                            <img src="${tournament.banner}" alt="${tournament.gameName}">
+                            <span>${tournament.gameName}</span>
+                        </div>
+                        <div class="tournament-meta">
+                            <div class="tournament-meta-item">
+                                <i class="fas fa-calendar"></i>
+                                <span>${formatDate(tournament.date)}</span>
+                            </div>
+                            <div class="tournament-meta-item">
+                                <i class="fas fa-users"></i>
+                                <span>${tournament.teams.registered}/${tournament.teams.max} teams</span>
+                            </div>
+                            <div class="tournament-meta-item">
+                                <i class="fas fa-globe"></i>
+                                <span>${tournament.regionName}</span>
+                            </div>
+                        </div>
+                        ${tournament.prize ? `
+                        <div class="tournament-prize">
+                            <div class="prize-amount">₹${tournament.prize.toLocaleString()}</div>
+                            <div class="prize-label">Prize Pool</div>
+                        </div>
+                        ` : ''}
+                        <div class="tournament-actions">
+                            ${actionBtn}
+                            <button class="action-btn details-btn">View Details</button>
+                        </div>
+                    </div>
+                `;
+                
+                tournamentsGrid.appendChild(tournamentCard);
+            });
+        }
+
+        // Filter tournaments based on selected filters
+        function filterTournaments() {
+            const selectedTab = document.querySelector('.tournament-tab.active').dataset.tab;
+            const selectedGame = gameFilter.value;
+            const selectedRegion = regionFilter.value;
+            
+            let filteredTournaments = [...tournaments];
+            
+            // Filter by tab
+            if (selectedTab !== 'all') {
+                filteredTournaments = filteredTournaments.filter(t => t.status === selectedTab);
+            }
+            
+            // Filter by game
+            if (selectedGame) {
+                filteredTournaments = filteredTournaments.filter(t => t.game === selectedGame);
+            }
+            
+            // Filter by region
+            if (selectedRegion) {
+                filteredTournaments = filteredTournaments.filter(t => t.region === selectedRegion);
+            }
+            
+            // Filter by "My Tournaments" (simulated)
+            if (selectedTab === 'my') {
+                filteredTournaments = filteredTournaments.filter(t => [1, 3, 5].includes(t.id));
+            }
+            
+            generateTournamentCards(filteredTournaments);
+        }
+
+        // Reset all filters
+        function resetFilters() {
+            gameFilter.value = '';
+            regionFilter.value = '';
+            document.querySelector('.tournament-tab[data-tab="all"]').click();
+            filterTournaments();
+        }
+
+        // Tournament tab functionality
+        tournamentTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                tournamentTabs.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Filter tournaments
+                filterTournaments();
+            });
+        });
+
+        // Filter change handlers
+        gameFilter.addEventListener('change', filterTournaments);
+        regionFilter.addEventListener('change', filterTournaments);
+
+        // Modal functionality
+        createTournamentBtn.addEventListener('click', () => {
+            createTournamentModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+
+        modalCloseBtn.addEventListener('click', () => {
+            createTournamentModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        cancelTournamentBtn.addEventListener('click', () => {
+            createTournamentModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === createTournamentModal) {
+                createTournamentModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Tournament form submission
+        tournamentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            showLoader();
+            
+            // Simulate form processing
+            setTimeout(() => {
+                // Get form values
+                const formData = {
+                    name: document.getElementById('tournament-name').value,
+                    game: document.getElementById('tournament-game').value,
+                    date: document.getElementById('tournament-date').value,
+                    region: document.getElementById('tournament-region').value,
+                    prize: document.getElementById('tournament-prize').value,
+                    teams: document.getElementById('tournament-teams').value,
+                    desc: document.getElementById('tournament-desc').value
+                };
+                
+                // Reset form
+                tournamentForm.reset();
+                
+                // Close modal
+                createTournamentModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                
+                // Show success message
+                alert('Tournament created successfully! It will be reviewed by our team.');
+                
+                hideLoader();
+            }, 1500);
+        });
+
+        // Initialize the page
+        window.addEventListener('DOMContentLoaded', () => {
+            showLoader();
+            
+            // Simulate loading tournaments
+            setTimeout(() => {
+                generateTournamentCards(tournaments);
+                hideLoader();
+            }, 800);
+        });
+    </script>
+    <!--<script src="tournaments.js"></script>-->
+</body>
+</html>

@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Adda - Membership</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!--<link rel="stylesheet" href="membership.css">-->
+    <style>
+        /* Basic reset and styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #0f0f1a;
+    color: #fff;
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Loader styles */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 15, 26, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.loader.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.loader-content {
+    text-align: center;
+}
+
+.loader-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(76, 201, 240, 0.3);
+    border-radius: 50%;
+    border-top-color: #4cc9f0;
+    animation: spin 1s ease-in-out infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loader-text {
+    color: #4cc9f0;
+    font-size: 1.2rem;
+    margin-top: 15px;
+}
+
+/* Header styles */
+header {
+    background-color: #1a1a2e;
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    font-size: 1.8rem;
+    color: #4cc9f0;
+}
+
+h1 i {
+    margin-right: 10px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+nav a:hover, nav a.active {
+    color: #4cc9f0;
+}
+
+nav a i {
+    margin-right: 5px;
+}
+
+.btn {
+    background-color: #4cc9f0;
+    color: #1a1a2e;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn:hover {
+    background-color: #3aa8d8;
+    transform: translateY(-2px);
+}
+
+.outline-btn {
+    background-color: transparent;
+    color: #4cc9f0;
+    border: 1px solid #4cc9f0;
+}
+
+.outline-btn:hover {
+    background-color: rgba(76, 201, 240, 0.1);
+}
+
+.mobile-menu-btn {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Page Hero */
+.page-hero {
+    height: 50vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    margin-top: 60px;
+    position: relative;
+}
+
+.page-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.page-hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+.page-hero h2 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: #4cc9f0;
+}
+
+.page-hero p {
+    font-size: 1.2rem;
+    max-width: 600px;
+}
+
+/* Membership Plans */
+.membership-plans {
+    padding: 80px 0;
+    background-color: #161625;
+}
+
+.plans-content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2.2rem;
+    color: #4cc9f0;
+}
+
+.plans-content h2 i {
+    margin-right: 10px;
+}
+
+.plans-content > p {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+    color: #ccc;
+}
+
+.plans-intro {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    text-align: center;
+    color: #aaa;
+    line-height: 1.7;
+}
+
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.plan-card {
+    background-color: #1a1a2e;
+    border-radius: 10px;
+    padding: 30px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.plan-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.plan-card.basic {
+    border-top: 5px solid #4cc9f0;
+}
+
+.plan-card.premium {
+    border-top: 5px solid #f72585;
+}
+
+.plan-card.elite {
+    border-top: 5px solid #7209b7;
+}
+
+.popular-badge {
+    position: absolute;
+    top: 15px;
+    right: -30px;
+    background-color: #f72585;
+    color: white;
+    padding: 5px 30px;
+    transform: rotate(45deg);
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.plan-header {
+    margin-bottom: 25px;
+    text-align: center;
+    position: relative;
+}
+
+.plan-header h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.basic .plan-header h3 {
+    color: #4cc9f0;
+}
+
+.premium .plan-header h3 {
+    color: #f72585;
+}
+
+.elite .plan-header h3 {
+    color: #7209b7;
+}
+
+.plan-price {
+    font-size: 1.5rem;
+}
+
+.plan-price .amount {
+    font-weight: 700;
+}
+
+.plan-price .duration {
+    font-size: 1rem;
+    color: #aaa;
+}
+
+.plan-features {
+    margin-bottom: 30px;
+}
+
+.plan-features ul {
+    list-style: none;
+}
+
+.plan-features li {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.plan-features i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+.plan-features .fa-check {
+    color: #4cc9f0;
+}
+
+.plan-features .fa-times {
+    color: #f72585;
+}
+
+.plan-btn {
+    display: block;
+    text-align: center;
+    padding: 12px;
+    font-weight: 600;
+}
+
+.basic .plan-btn {
+    background-color: #4cc9f0;
+}
+
+.premium .plan-btn {
+    background-color: #f72585;
+}
+
+.elite .plan-btn {
+    background-color: #7209b7;
+}
+
+/* Membership Benefits */
+.membership-benefits {
+    padding: 80px 0;
+    background-color: #0f0f1a;
+}
+
+.benefits-header h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.2rem;
+    color: #4cc9f0;
+}
+
+.benefits-header h2 i {
+    margin-right: 10px;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.benefit-card {
+    background-color: #1a1a2e;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.benefit-card:hover {
+    transform: translateY(-10px);
+}
+
+.benefit-card i {
+    font-size: 2.5rem;
+    color: #4cc9f0;
+    margin-bottom: 20px;
+}
+
+.benefit-card h3 {
+    margin-bottom: 15px;
+    color: #4cc9f0;
+}
+
+.benefit-card p {
+    color: #ccc;
+}
+
+/* Membership Form */
+.membership-form-section {
+    padding: 80px 0;
+    background-color: #161625;
+}
+
+.form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #1a1a2e;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-header h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #4cc9f0;
+}
+
+.form-header h2 i {
+    margin-right: 10px;
+}
+
+.form-header p {
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+.form-progress {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.form-progress::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #333;
+    z-index: 1;
+}
+
+.progress-step {
+    position: relative;
+    text-align: center;
+    flex: 1;
+    color: #aaa;
+    font-size: 0.9rem;
+    z-index: 2;
+}
+
+.progress-step::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 30px;
+    background-color: #333;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    line-height: 30px;
+    color: white;
+}
+
+.progress-step.active {
+    color: #4cc9f0;
+}
+
+.progress-step.active::before {
+    background-color: #4cc9f0;
+    content: counter(step);
+    counter-increment: step;
+}
+
+.form-step {
+    display: none;
+}
+
+.form-step.active {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #ccc;
+}
+
+.required {
+    color: #f72585;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #0f0f1a;
+    border: 1px solid #333;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #4cc9f0;
+}
+
+.error-message {
+    color: #f72585;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    display: none;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.plan-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.plan-option {
+    background-color: #0f0f1a;
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.plan-option:hover {
+    border-color: #4cc9f0;
+}
+
+.plan-option.selected {
+    border-color: #4cc9f0;
+    background-color: rgba(76, 201, 240, 0.1);
+}
+
+.plan-option h4 {
+    color: #4cc9f0;
+    margin-bottom: 5px;
+}
+
+.plan-option p {
+    color: #aaa;
+    margin-bottom: 10px;
+}
+
+.plan-option ul {
+    list-style: none;
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+.plan-option li {
+    margin-bottom: 5px;
+}
+
+.experience-levels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    background-color: #0f0f1a;
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.radio-option:hover {
+    border-color: #4cc9f0;
+}
+
+.radio-option input {
+    margin-right: 10px;
+}
+
+.payment-methods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    background-color: #0f0f1a;
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.payment-option:hover {
+    border-color: #4cc9f0;
+}
+
+.payment-option input {
+    margin-right: 10px;
+}
+
+.payment-option i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+.payment-details {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #0f0f1a;
+    border-radius: 5px;
+}
+
+.credit-card-details {
+    display: block;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-group input {
+    width: auto;
+    margin-right: 10px;
+}
+
+.checkbox-group label {
+    margin-bottom: 0;
+}
+
+.terms-link {
+    color: #4cc9f0;
+    text-decoration: none;
+}
+
+.terms-link:hover {
+    text-decoration: underline;
+}
+
+.form-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.prev-btn {
+    background-color: #333;
+    color: #fff;
+}
+
+.next-btn, .submit-btn {
+    background-color: #4cc9f0;
+    color: #1a1a2e;
+}
+
+.submit-btn {
+    background-color: #7209b7;
+}
+
+.form-success {
+    text-align: center;
+    padding: 40px 20px;
+    display: none;
+}
+
+.success-icon {
+    font-size: 5rem;
+    color: #4cc9f0;
+    margin-bottom: 20px;
+}
+
+.form-success h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #4cc9f0;
+}
+
+.form-success p {
+    margin-bottom: 10px;
+    color: #ccc;
+}
+
+.success-details {
+    background-color: #0f0f1a;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.success-details p {
+    margin-bottom: 10px;
+}
+
+.dashboard-btn {
+    background-color: #7209b7;
+    padding: 12px 25px;
+}
+
+/* Game selection styles */
+.game-selection-container {
+    position: relative;
+}
+
+.game-selection-input {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #0f0f1a;
+    border: 1px solid #333;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.game-selection-input:focus {
+    outline: none;
+    border-color: #4cc9f0;
+}
+
+.game-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #1a1a2e;
+    border: 1px solid #333;
+    border-radius: 0 0 5px 5px;
+    z-index: 100;
+    display: none;
+}
+
+.game-dropdown.show {
+    display: block;
+}
+
+.game-option {
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.game-option:hover {
+    background-color: #0f0f1a;
+}
+
+.selected-games {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.selected-game {
+    background-color: #4cc9f0;
+    color: #1a1a2e;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+}
+
+.remove-game {
+    margin-left: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #1a1a2e;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #ccc;
+}
+
+.close:hover {
+    color: #fff;
+}
+
+/* Success modal */
+#success-modal .modal-content {
+    text-align: center;
+}
+
+#success-modal .success-icon {
+    font-size: 4rem;
+    color: #4cc9f0;
+    margin-bottom: 20px;
+}
+
+#success-modal h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #4cc9f0;
+}
+
+#success-modal p {
+    margin-bottom: 20px;
+    color: #ccc;
+}
+
+#success-modal .success-details {
+    background-color: #0f0f1a;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+/* Footer styles */
+footer {
+    background-color: #1a1a2e;
+    padding: 50px 0 0;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.footer-section h3 {
+    color: #4cc9f0;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+}
+
+.footer-section p {
+    margin-bottom: 15px;
+    color: #ccc;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-links a {
+    color: #ccc;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+}
+
+.social-links a:hover {
+    color: #4cc9f0;
+}
+
+.footer-section.links ul {
+    list-style: none;
+}
+
+.footer-section.links li {
+    margin-bottom: 10px;
+}
+
+.footer-section.links a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-section.links a:hover {
+    color: #4cc9f0;
+}
+
+.footer-section.contact p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-section.contact i {
+    color: #4cc9f0;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 20px 0;
+    border-top: 1px solid #333;
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #1a1a2e;
+        flex-direction: column;
+        padding: 20px 0;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    nav.active {
+        display: flex;
+    }
+    
+    nav a {
+        padding: 10px 20px;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+    }
+    
+    .page-hero h2 {
+        font-size: 2.2rem;
+    }
+    
+    .page-hero p {
+        font-size: 1rem;
+    }
+    
+    .plans-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .form-container {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-hero h2 {
+        font-size: 1.8rem;
+    }
+    
+    .plan-card {
+        padding: 20px;
+    }
+    
+    .form-progress {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    
+    .form-progress::before {
+        display: none;
+    }
+    
+    .progress-step {
+        text-align: left;
+        display: flex;
+        align-items: center;
+    }
+    
+    .progress-step::before {
+        margin: 0 10px 0 0;
+    }
+}
+    </style>
+    
+</head>
+<body>
+    <!-- Loader element -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <div class="loader-text">Loading...</div>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-gamepad"></i> Game Adda</h1>
+            <nav>
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="activities.html"><i class="fas fa-running"></i> Activities</a>
+                <a href="events.html"><i class="fas fa-calendar"></i> Events</a>
+                <a href="membership.html" class="active"><i class="fas fa-users"></i> Membership</a>
+                <button id="contact-btn" class="btn"><i class="fas fa-envelope"></i> Contact</button>
+            </nav>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-hero" style="background-image: url('https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+        <div class="container">
+            <h2>Join Our Gaming Community</h2>
+            <p>Become a member and unlock exclusive benefits</p>
+        </div>
+    </section>
+
+    <section class="membership-plans">
+        <div class="container">
+            <div class="plans-content">
+                <h2><i class="fas fa-users"></i> Membership Plans</h2>
+                <p>Choose the plan that suits you best and start your gaming journey with us!</p>
+                <div class="plans-intro">
+                    <p>Our membership plans are designed to cater to all types of gamers. Whether you're a casual player or a competitive gamer, we have something for you!</p>
+                    <p>Each plan offers a unique set of benefits, including access to gaming tournaments, exclusive discounts, and premium gaming equipment.</p>
+                </div>
+                <div class="plans-grid">
+                    <div class="plan-card basic">
+                        <div class="plan-header">
+                            <h3>Basic</h3>
+                            <div class="plan-price">
+                                <span class="amount">₹299</span>
+                                <span class="duration">/month</span>
+                            </div>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li><i class="fas fa-check"></i> 10 hours gaming per week</li>
+                                <li><i class="fas fa-check"></i> Access to regular tournaments</li>
+                                <li><i class="fas fa-check"></i> Standard gaming equipment</li>
+                                <li><i class="fas fa-check"></i> Member discounts on food</li>
+                                <li><i class="fas fa-times"></i> Priority tournament registration</li>
+                                <li><i class="fas fa-times"></i> Exclusive member events</li>
+                            </ul>
+                        </div>
+                        <a href="#membership-form" class="btn plan-btn">Get Started</a>
+                    </div>
+
+                    <div class="plan-card premium">
+                        <div class="plan-header">
+                            <div class="popular-badge">Most Popular</div>
+                            <h3>Premium</h3>
+                            <div class="plan-price">
+                                <span class="amount">₹699</span>
+                                <span class="duration">/month</span>
+                            </div>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li><i class="fas fa-check"></i> 25 hours gaming per week</li>
+                                <li><i class="fas fa-check"></i> Access to all tournaments</li>
+                                <li><i class="fas fa-check"></i> Premium gaming equipment</li>
+                                <li><i class="fas fa-check"></i> 15% discount on food</li>
+                                <li><i class="fas fa-check"></i> Priority tournament registration</li>
+                                <li><i class="fas fa-times"></i> Exclusive member events</li>
+                            </ul>
+                        </div>
+                        <a href="#membership-form" class="btn plan-btn">Get Started</a>
+                    </div>
+
+                    <div class="plan-card elite">
+                        <div class="plan-header">
+                            <h3>Elite</h3>
+                            <div class="plan-price">
+                                <span class="amount">₹1299</span>
+                                <span class="duration">/month</span>
+                            </div>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li><i class="fas fa-check"></i> Unlimited gaming access</li>
+                                <li><i class="fas fa-check"></i> VIP tournament entries</li>
+                                <li><i class="fas fa-check"></i> Elite gaming setup</li>
+                                <li><i class="fas fa-check"></i> 25% discount on food</li>
+                                <li><i class="fas fa-check"></i> Priority registration</li>
+                                <li><i class="fas fa-check"></i> Exclusive member events</li>
+                            </ul>
+                        </div>
+                        <a href="#membership-form" class="btn plan-btn">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="membership-benefits">
+        <div class="container">
+            <div class="benefits-header">
+                <h2><i class="fas fa-star"></i> Membership Benefits</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <i class="fas fa-trophy"></i>
+                        <h3>Tournament Access</h3>
+                        <p>Compete in our regular gaming tournaments with cash prizes and rewards.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-percentage"></i>
+                        <h3>Exclusive Discounts</h3>
+                        <p>Enjoy discounts on gaming hours, food, beverages, and merchandise.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-users"></i>
+                        <h3>Community Events</h3>
+                        <p>Participate in member-only meetups, workshops, and gaming nights.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-gamepad"></i>
+                        <h3>Premium Equipment</h3>
+                        <p>Access to high-end gaming PCs, consoles, and peripherals.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-clock"></i>
+                        <h3>Priority Booking</h3>
+                        <p>Reserve gaming stations in advance during peak hours.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-gift"></i>
+                        <h3>Special Rewards</h3>
+                        <p>Earn points for every hour played and redeem them for cool rewards.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="membership-form" class="membership-form-section">
+        <div class="container">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2><i class="fas fa-user-plus"></i> Join Our Gaming Community</h2>
+                    <p>Fill out the form below to become a member and start enjoying exclusive benefits</p>
+                    <div class="form-progress">
+                        <div class="progress-step active" data-step="1">1. Personal Info</div>
+                        <div class="progress-step" data-step="2">2. Gaming Preferences</div>
+                        <div class="progress-step" data-step="3">3. Payment</div>
+                    </div>
+                </div>
+                
+                <form id="membership-form" class="membership-form">
+                    <!-- Step 1: Personal Information -->
+                    <div class="form-step active" data-step="1">
+                        <div class="form-group">
+                            <label for="full-name">Full Name <span class="required">*</span></label>
+                            <input type="text" id="full-name" name="full-name" required placeholder="Enter your full name">
+                            <span class="error-message"></span>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address <span class="required">*</span></label>
+                                <input type="email" id="email" name="email" required placeholder="your@email.com">
+                                <span class="error-message"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number <span class="required">*</span></label>
+                                <input type="tel" id="phone" name="phone" required placeholder="+91 1234567890">
+                                <span class="error-message"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dob">Date of Birth <span class="required">*</span></label>
+                            <input type="date" id="dob" name="dob" required>
+                            <span class="error-message"></span>
+                        </div>
+                        <div class="form-navigation">
+                            <button type="button" class="btn next-btn">Next <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2: Gaming Preferences -->
+                    <div class="form-step" data-step="2">
+                        <div class="form-group">
+                            <label for="plan">Select Membership Plan <span class="required">*</span></label>
+                            <div class="plan-options">
+                                <div class="plan-option" data-value="basic">
+                                    <h4>Basic</h4>
+                                    <p>₹299/month</p>
+                                    <ul>
+                                        <li>10 hours gaming/week</li>
+                                        <li>Standard tournaments</li>
+                                    </ul>
+                                </div>
+                                <div class="plan-option" data-value="premium">
+                                    <h4>Premium</h4>
+                                    <p>₹699/month</p>
+                                    <ul>
+                                        <li>25 hours gaming/week</li>
+                                        <li>All tournaments</li>
+                                    </ul>
+                                </div>
+                                <div class="plan-option" data-value="elite">
+                                    <h4>Elite</h4>
+                                    <p>₹1299/month</p>
+                                    <ul>
+                                        <li>Unlimited gaming</li>
+                                        <li>VIP tournaments</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <input type="hidden" id="plan" name="plan" required>
+                            <span class="error-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="gaming-id">Gaming ID/Username</label>
+                            <input type="text" id="gaming-id" name="gaming-id" placeholder="Your in-game username">
+                        </div>
+                        <div class="form-group game-selection-container">
+                            <label for="fav-games">Favorite Games</label>
+                            <div class="game-selection-wrapper">
+                                <input type="text" id="game-search" class="game-selection-input" placeholder="Search for games...">
+                                <div class="game-dropdown" id="game-dropdown"></div>
+                                <input type="hidden" id="fav-games" name="fav-games">
+                                <div class="selected-games" id="selected-games"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Gaming Experience Level</label>
+                            <div class="experience-levels">
+                                <label class="radio-option">
+                                    <input type="radio" name="experience" value="beginner">
+                                    <span>Beginner</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="experience" value="intermediate">
+                                    <span>Intermediate</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="experience" value="advanced">
+                                    <span>Advanced</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="experience" value="pro">
+                                    <span>Professional</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-navigation">
+                            <button type="button" class="btn prev-btn"><i class="fas fa-arrow-left"></i> Previous</button>
+                            <button type="button" class="btn next-btn">Next <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3: Payment and Finalization -->
+                    <div class="form-step" data-step="3">
+                        <div class="payment-summary">
+                            <h4>Membership Summary</h4>
+                            <div class="summary-details">
+                                <p><strong>Plan:</strong> <span id="summary-plan">Premium</span></p>
+                                <p><strong>Price:</strong> <span id="summary-price">₹699/month</span></p>
+                                <p><strong>Billing Cycle:</strong> Monthly</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="payment-method">Payment Method <span class="required">*</span></label>
+                            <div class="payment-methods">
+                                <label class="payment-option">
+                                    <input type="radio" name="payment-method" value="credit-card" checked>
+                                    <i class="fab fa-cc-visa"></i>
+                                    <i class="fab fa-cc-mastercard"></i>
+                                    <span>Credit/Debit Card</span>
+                                </label>
+                                <label class="payment-option">
+                                    <input type="radio" name="payment-method" value="upi">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <span>UPI</span>
+                                </label>
+                                <label class="payment-option">
+                                    <input type="radio" name="payment-method" value="netbanking">
+                                    <i class="fas fa-university"></i>
+                                    <span>Net Banking</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="payment-details credit-card-details">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="card-number">Card Number <span class="required">*</span></label>
+                                    <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012 3456">
+                                    <span class="error-message"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="card-name">Name on Card <span class="required">*</span></label>
+                                    <input type="text" id="card-name" name="card-name" placeholder="As on card">
+                                    <span class="error-message"></span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="expiry-date">Expiry Date <span class="required">*</span></label>
+                                    <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY">
+                                    <span class="error-message"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cvv">CVV <span class="required">*</span></label>
+                                    <input type="text" id="cvv" name="cvv" placeholder="123">
+                                    <span class="error-message"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <label for="terms">I agree to the <a href="terms.html" class="terms-link">Terms & Conditions</a> and <a href="privacy.html" class="terms-link">Privacy Policy</a> <span class="required">*</span></label>
+                            <span class="error-message"></span>
+                        </div>
+                        
+                        <div class="form-navigation">
+                            <button type="button" class="btn prev-btn"><i class="fas fa-arrow-left"></i> Previous</button>
+                            <button type="submit" class="btn submit-btn">Complete Membership <i class="fas fa-check"></i></button>
+                        </div>
+                    </div>
+                </form>
+                
+                <div class="form-success" style="display: none;">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Welcome to Game Adda!</h3>
+                    <p>Your membership application has been received successfully.</p>
+                    <p>We've sent a confirmation email with your membership details.</p>
+                    <div class="success-details">
+                        <p><strong>Membership ID:</strong> <span id="membership-id">GA2025-XXXX</span></p>
+                        <p><strong>Plan:</strong> <span id="success-plan">Premium</span></p>
+                    </div>
+                    <button class="btn dashboard-btn">Go to Member Dashboard</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="contact-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Contact Us</h2>
+            <form id="contact-form">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea id="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="success-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Membership Application Submitted!</h3>
+            <p>Thank you for joining Game Adda. Your membership details have been sent to your email.</p>
+            <div class="success-details">
+                <p><strong>Membership ID:</strong> <span id="modal-membership-id">GA2025-XXXX</span></p>
+                <p><strong>Plan:</strong> <span id="modal-plan">Premium</span></p>
+            </div>
+            <button class="btn dashboard-btn" onclick="window.location.href='dashboard.html'">Go to Dashboard</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section about">
+                    <h3><i class="fas fa-gamepad"></i> Game Adda</h3>
+                    <p>Your ultimate destination for competitive gaming and esports events.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="activities.html">Activities</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="membership.html">Membership</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> info@gameadda.com</p>
+                    <p><i class="fas fa-phone"></i> +91 6200250705</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Gaming Street, Mumbai, India</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Game Adda. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Loader functionality
+            const loader = document.getElementById('loader');
+            
+            function showLoader(text = 'Loading...') {
+                loader.querySelector('.loader-text').textContent = text;
+                loader.classList.add('active');
+            }
+            
+            function hideLoader() {
+                loader.classList.remove('active');
+            }
+            
+            // Simulate initial page loading
+            showLoader('Loading membership data...');
+            setTimeout(() => {
+                hideLoader();
+            }, 1500);
+
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const nav = document.querySelector('nav');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                nav.classList.toggle('active');
+                mobileMenuBtn.querySelector('i').classList.toggle('fa-times');
+                mobileMenuBtn.querySelector('i').classList.toggle('fa-bars');
+            });
+            
+            // Form navigation
+            const formSteps = document.querySelectorAll('.form-step');
+            const progressSteps = document.querySelectorAll('.progress-step');
+            const nextBtns = document.querySelectorAll('.next-btn');
+            const prevBtns = document.querySelectorAll('.prev-btn');
+            const form = document.getElementById('membership-form');
+            const successScreen = document.querySelector('.form-success');
+            
+            let currentStep = 0;
+            
+            // Initialize first step
+            showStep(currentStep);
+            
+            // Next button click handler
+            nextBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (validateStep(currentStep)) {
+                        showLoader('Processing your information...');
+                        setTimeout(() => {
+                            currentStep++;
+                            showStep(currentStep);
+                            updateProgress();
+                            hideLoader();
+                        }, 800);
+                    }
+                });
+            });
+            
+            // Previous button click handler
+            prevBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    showLoader('Loading previous step...');
+                    setTimeout(() => {
+                        currentStep--;
+                        showStep(currentStep);
+                        updateProgress();
+                        hideLoader();
+                    }, 500);
+                });
+            });
+            
+            // Plan selection
+            const planOptions = document.querySelectorAll('.plan-option');
+            const planInput = document.getElementById('plan');
+            const summaryPlan = document.getElementById('summary-plan');
+            const summaryPrice = document.getElementById('summary-price');
+            const successPlan = document.getElementById('success-plan');
+            
+            planOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    showLoader('Updating plan selection...');
+                    setTimeout(() => {
+                        planOptions.forEach(opt => opt.classList.remove('selected'));
+                        option.classList.add('selected');
+                        planInput.value = option.dataset.value;
+                        
+                        // Update summary
+                        const planName = option.querySelector('h4').textContent;
+                        const planPrice = option.querySelector('p').textContent;
+                        summaryPlan.textContent = planName;
+                        summaryPrice.textContent = planPrice;
+                        successPlan.textContent = planName;
+                        hideLoader();
+                    }, 300);
+                });
+            });
+            
+            // Form submission
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                if (validateStep(currentStep)) {
+                    showLoader('Processing your membership...');
+                    
+                    // Simulate form processing
+                    setTimeout(() => {
+                        // Generate random membership ID
+                        const membershipId = 'GA2025-' + Math.floor(1000 + Math.random() * 9000);
+                        document.getElementById('membership-id').textContent = membershipId;
+                        document.getElementById('modal-membership-id').textContent = membershipId;
+                        
+                        // Get selected plan for modal
+                        const selectedPlan = document.querySelector('.plan-option.selected h4').textContent;
+                        document.getElementById('modal-plan').textContent = selectedPlan;
+                        
+                        // Hide form and show success screen
+                        form.style.display = 'none';
+                        successScreen.style.display = 'block';
+                        
+                        // Show success modal
+                        showSuccessModal();
+                        hideLoader();
+                        
+                        // Reset form after submission
+                        setTimeout(() => {
+                            form.reset();
+                            currentStep = 0;
+                            showStep(currentStep);
+                            updateProgress();
+                            form.style.display = 'block';
+                            successScreen.style.display = 'none';
+                            planOptions.forEach(opt => opt.classList.remove('selected'));
+                            document.getElementById('selected-games').innerHTML = '';
+                            selectedGames = [];
+                        }, 5000);
+                    }, 2000);
+                }
+            });
+            
+            // Show current step
+            function showStep(step) {
+                formSteps.forEach((formStep, index) => {
+                    formStep.classList.toggle('active', index === step);
+                });
+            }
+            
+            // Update progress indicators
+            function updateProgress() {
+                progressSteps.forEach((step, index) => {
+                    if (index < currentStep + 1) {
+                        step.classList.add('active');
+                    } else {
+                        step.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Validate current step
+            function validateStep(step) {
+                let isValid = true;
+                const currentFormStep = formSteps[step];
+                const inputs = currentFormStep.querySelectorAll('input[required], select[required]');
+                
+                inputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        isValid = false;
+                        const errorMsg = input.parentElement.querySelector('.error-message');
+                        errorMsg.textContent = 'This field is required';
+                        errorMsg.style.display = 'block';
+                        input.style.borderColor = '#f72585';
+                    } else {
+                        const errorMsg = input.parentElement.querySelector('.error-message');
+                        errorMsg.style.display = 'none';
+                        input.style.borderColor = '#333';
+                    }
+                });
+                
+                // Additional validation for email
+                const emailInput = currentFormStep.querySelector('input[type="email"]');
+                if (emailInput && !isValidEmail(emailInput.value)) {
+                    isValid = false;
+                    const errorMsg = emailInput.parentElement.querySelector('.error-message');
+                    errorMsg.textContent = 'Please enter a valid email address';
+                    errorMsg.style.display = 'block';
+                    emailInput.style.borderColor = '#f72585';
+                }
+                
+                // Validate terms checkbox
+                if (step === 2) {
+                    const termsCheckbox = currentFormStep.querySelector('input[type="checkbox"]');
+                    if (termsCheckbox && !termsCheckbox.checked) {
+                        isValid = false;
+                        const errorMsg = termsCheckbox.parentElement.querySelector('.error-message');
+                        errorMsg.textContent = 'You must agree to the terms';
+                        errorMsg.style.display = 'block';
+                    }
+                }
+                
+                return isValid;
+            }
+            
+            // Email validation
+            function isValidEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+            
+            // Modal functionality
+            const contactBtn = document.getElementById('contact-btn');
+            const contactModal = document.getElementById('contact-modal');
+            const successModal = document.getElementById('success-modal');
+            const closeBtns = document.querySelectorAll('.close');
+            
+            contactBtn.addEventListener('click', () => {
+                contactModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+            
+            function showSuccessModal() {
+                successModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+            
+            closeBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    contactModal.style.display = 'none';
+                    successModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                });
+            });
+            
+            window.addEventListener('click', (e) => {
+                if (e.target === contactModal || e.target === successModal) {
+                    contactModal.style.display = 'none';
+                    successModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Contact form submission
+            document.getElementById('contact-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                showLoader('Sending your message...');
+                setTimeout(() => {
+                    alert('Thank you for your message! We will get back to you soon.');
+                    e.target.reset();
+                    contactModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    hideLoader();
+                }, 1500);
+            });
+            
+            // Enhanced game selection functionality
+            const games = [
+                "Valorant", "Fortnite", "CS:GO", "Dota 2", "League of Legends",
+                "PUBG", "Call of Duty", "FIFA", "Overwatch", "Apex Legends",
+                "Rainbow Six Siege", "Minecraft", "Rocket League", "Genshin Impact",
+                "World of Warcraft", "Destiny 2", "Hearthstone", "Team Fortress 2",
+                "Counter-Strike 2", "GTA V", "Red Dead Redemption 2", "Cyberpunk 2077",
+                "The Witcher 3", "Elden Ring", "Dark Souls", "Sekiro", "Stardew Valley"
+            ];
+        
+            const gameSearchInput = document.getElementById('game-search');
+            const gameDropdown = document.getElementById('game-dropdown');
+            const favGamesInput = document.getElementById('fav-games');
+            const selectedGamesContainer = document.getElementById('selected-games');
+            let selectedGames = [];
+        
+            // Populate dropdown with game options
+            function populateDropdown(filter = '') {
+                showLoader('Searching games...');
+                setTimeout(() => {
+                    gameDropdown.innerHTML = '';
+                    const filteredGames = games.filter(game => 
+                        game.toLowerCase().includes(filter.toLowerCase())
+                    );
+            
+                    if (filteredGames.length === 0) {
+                        const noResults = document.createElement('div');
+                        noResults.className = 'game-option';
+                        noResults.textContent = 'No games found';
+                        gameDropdown.appendChild(noResults);
+                    } else {
+                        filteredGames.forEach(game => {
+                            // Skip if already selected
+                            if (selectedGames.includes(game)) return;
+                            
+                            const option = document.createElement('div');
+                            option.className = 'game-option';
+                            option.textContent = game;
+                            option.addEventListener('click', () => {
+                                selectGame(game);
+                                gameSearchInput.value = '';
+                                gameDropdown.classList.remove('show');
+                            });
+                            gameDropdown.appendChild(option);
+                        });
+                    }
+                    hideLoader();
+                }, 300);
+            }
+        
+            // Select a game
+            function selectGame(game) {
+                if (!selectedGames.includes(game)) {
+                    selectedGames.push(game);
+                    updateSelectedGames();
+                    updateHiddenInput();
+                }
+            }
+        
+            // Remove a selected game
+            function removeGame(game) {
+                selectedGames = selectedGames.filter(g => g !== game);
+                updateSelectedGames();
+                updateHiddenInput();
+            }
+        
+            // Update the selected games display
+            function updateSelectedGames() {
+                selectedGamesContainer.innerHTML = '';
+                selectedGames.forEach(game => {
+                    const tag = document.createElement('div');
+                    tag.className = 'selected-game';
+                    tag.innerHTML = `
+                        ${game}
+                        <span class="remove-game" data-game="${game}">&times;</span>
+                    `;
+                    selectedGamesContainer.appendChild(tag);
+                });
+        
+                // Add event listeners to remove buttons
+                document.querySelectorAll('.remove-game').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        removeGame(btn.dataset.game);
+                    });
+                });
+            }
+        
+            // Update the hidden input value
+            function updateHiddenInput() {
+                favGamesInput.value = JSON.stringify(selectedGames);
+            }
+        
+            // Event listeners for game selection
+            gameSearchInput.addEventListener('focus', () => {
+                if (games.length > 0) {
+                    populateDropdown();
+                    gameDropdown.classList.add('show');
+                }
+            });
+        
+            gameSearchInput.addEventListener('input', (e) => {
+                populateDropdown(e.target.value);
+                gameDropdown.classList.add('show');
+            });
+        
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.game-selection-wrapper')) {
+                    gameDropdown.classList.remove('show');
+                }
+            });
+        
+            // Initialize with any existing values
+            if (favGamesInput.value) {
+                try {
+                    selectedGames = JSON.parse(favGamesInput.value);
+                    updateSelectedGames();
+                } catch (e) {
+                    console.error('Error parsing favorite games:', e);
+                }
+            }
+        
+            // Initial population
+            populateDropdown();
+        });
+    </script>
+    <!--<script src="membership.js"></script>-->
+</body>
+</html>

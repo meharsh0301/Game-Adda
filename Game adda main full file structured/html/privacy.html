@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Game Adda</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!--<link rel="stylesheet" href="privacy.css">-->
+    <style>
+        /* ====== Base Styles ====== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0f0f1a;
+            color: #fff;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            background-color: #3aa8d8;
+            transform: translateY(-2px);
+        }
+        
+        h1, h2, h3, h4 {
+            color: #4cc9f0;
+        }
+        
+        h1 i, h2 i {
+            margin-right: 10px;
+        }
+        
+        /* ====== Header Styles ====== */
+        header {
+            background-color: #1a1a2e;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover, nav a.active {
+            color: #4cc9f0;
+        }
+        
+        nav a i {
+            margin-right: 5px;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* ====== Main Content ====== */
+        main {
+            flex: 1;
+            padding-top: 80px;
+            padding-bottom: 50px;
+        }
+        
+        /* ====== Privacy Policy Container ====== */
+        .privacy-container {
+            max-width: 1000px;
+            margin: 30px auto 50px;
+            background-color: #1a1a2e;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .privacy-container h1 {
+            color: #4cc9f0;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+        
+        .privacy-container h2 {
+            color: #4cc9f0;
+            margin: 35px 0 20px;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #4cc9f0;
+            padding-bottom: 8px;
+        }
+        
+        .privacy-container h3 {
+            color: #4cc9f0;
+            margin: 25px 0 15px;
+            font-size: 1.4rem;
+        }
+        
+        .privacy-container h4 {
+            color: #4cc9f0;
+            margin: 20px 0 10px;
+            font-size: 1.2rem;
+        }
+        
+        .privacy-container p, .privacy-container li {
+            color: #ccc;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+        
+        .privacy-container ul, .privacy-container ol {
+            padding-left: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .privacy-container li {
+            margin-bottom: 10px;
+        }
+        
+        .privacy-container a {
+            color: #4cc9f0;
+            text-decoration: none;
+        }
+        
+        .privacy-container a:hover {
+            text-decoration: underline;
+        }
+        
+        .highlight-box {
+            background-color: #0f0f1a;
+            border-left: 4px solid #4cc9f0;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .last-updated {
+            text-align: right;
+            font-style: italic;
+            color: #aaa;
+            margin-top: 40px;
+            font-size: 0.95rem;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+        }
+        
+        .back-to-top:hover {
+            background-color: #3aa8d8;
+            transform: translateY(-5px);
+        }
+        
+        /* Loading Animation */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            display: none;
+        }
+
+        .loader {
+            border: 5px solid #1a1a2e;
+            border-top: 5px solid #4cc9f0;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Table Styles */
+        .privacy-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .privacy-table th, .privacy-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+        
+        .privacy-table th {
+            background-color: #0f0f1a;
+            color: #4cc9f0;
+            font-weight: 600;
+        }
+        
+        .privacy-table tr:hover {
+            background-color: #0f0f1a;
+        }
+        
+        /* ====== Footer Styles ====== */
+        footer {
+            background-color: #1a1a2e;
+            padding: 50px 0 0;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-section p {
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: #ccc;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: #4cc9f0;
+        }
+        
+        .footer-section.links ul {
+            list-style: none;
+        }
+        
+        .footer-section.links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section.links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section.links a:hover {
+            color: #4cc9f0;
+        }
+        
+        .footer-section.contact p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-section.contact i {
+            color: #4cc9f0;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid #333;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .privacy-container {
+                margin: 20px auto 30px;
+                padding: 25px;
+            }
+            
+            .privacy-container h1 {
+                font-size: 2rem;
+            }
+            
+            .privacy-container h2 {
+                font-size: 1.6rem;
+            }
+            
+            .privacy-container h3 {
+                font-size: 1.3rem;
+            }
+            
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #1a1a2e;
+                flex-direction: column;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            }
+            
+            nav.active {
+                display: flex;
+            }
+            
+            nav a {
+                padding: 10px 20px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .privacy-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .privacy-container {
+                padding: 20px 15px;
+            }
+            
+            .privacy-container h1 {
+                font-size: 1.8rem;
+            }
+            
+            .privacy-container h2 {
+                font-size: 1.4rem;
+            }
+
+            .footer-section {
+                text-align: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+
+            .footer-section.contact p {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div class="loader-container" id="loader">
+        <div class="loader"></div>
+    </div>
+
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-gamepad"></i> Game Adda</h1>
+            <nav>
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="activities.html"><i class="fas fa-running"></i> Activities</a>
+                <a href="events.html"><i class="fas fa-calendar"></i> Events</a>
+                <a href="membership.html"><i class="fas fa-users"></i> Membership</a>
+                <a href="terms.html"><i class="fas fa-file-contract"></i> Terms</a>
+                <a href="privacy.html" class="active"><i class="fas fa-shield-alt"></i> Privacy</a>
+                <button id="contact-btn" class="btn"><i class="fas fa-envelope"></i> Contact</button>
+            </nav>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="privacy-container">
+            <h1><i class="fas fa-shield-alt"></i> Privacy Policy</h1>
+            
+            <div class="highlight-box">
+                <p><strong>Last Updated:</strong> June 15, 2025</p>
+                <p>This Privacy Policy describes how Game Adda ("we", "us", or "our") collects, uses, discloses, and safeguards your information when you visit our gaming center, use our website (www.gameadda.com), mobile application, or participate in our events and services.</p>
+            </div>
+            
+            <h2>1. Introduction</h2>
+            <p>At Game Adda, we are committed to protecting your privacy and ensuring the security of your personal information. This comprehensive Privacy Policy outlines our practices regarding data collection, processing, and protection in compliance with applicable data protection laws including the General Data Protection Regulation (GDPR) and the California Consumer Privacy Act (CCPA).</p>
+            
+            <p>By accessing or using our services, you agree to the collection and use of information in accordance with this policy. If you do not agree with our policies and practices, please do not use our services.</p>
+            
+            <h2>2. Information We Collect</h2>
+            
+            <h3>2.1 Personal Information</h3>
+            <p>We collect various types of personal information to provide and improve our services to you:</p>
+            <ul>
+                <li><strong>Identification Data:</strong> Full name, date of birth, government-issued ID (for age verification), photograph</li>
+                <li><strong>Contact Information:</strong> Email address, phone number, physical address</li>
+                <li><strong>Financial Information:</strong> Payment card details, billing address, transaction history (processed securely via PCI-compliant processors)</li>
+                <li><strong>Membership Details:</strong> Membership tier, join date, membership number, loyalty points</li>
+                <li><strong>Gaming Profiles:</strong> Usernames, avatars, gaming preferences, skill levels</li>
+                <li><strong>Event Participation:</strong> Tournament history, rankings, team affiliations</li>
+            </ul>
+            
+            <h3>2.2 Usage Data</h3>
+            <p>We automatically collect information about your interactions with our services:</p>
+            <ul>
+                <li><strong>Gaming Activity:</strong> Games played, duration, scores, achievements, in-game purchases</li>
+                <li><strong>Facility Usage:</strong> Equipment used, time spent, preferences, booking history</li>
+                <li><strong>Digital Interactions:</strong> Website visits, app usage, clicks, page views, search queries</li>
+                <li><strong>Social Features:</strong> Friends lists, chat logs (monitored for inappropriate content), team communications</li>
+            </ul>
+            
+            <h3>2.3 Technical Data</h3>
+            <p>For security and analytics purposes, we collect:</p>
+            <ul>
+                <li><strong>Device Information:</strong> IP address, device type, operating system, browser type</li>
+                <li><strong>Network Data:</strong> Connection type, ISP, approximate location (city-level)</li>
+                <li><strong>Performance Metrics:</strong> Load times, error reports, crash analytics</li>
+                <li><strong>Security Data:</strong> Login attempts, suspicious activity logs</li>
+            </ul>
+            
+            <h3>2.4 Special Category Data</h3>
+            <p>In limited circumstances, we may process:</p>
+            <ul>
+                <li>Health information for accessibility accommodations</li>
+                <li>Biometric data for secure facility access (with explicit consent)</li>
+                <li>Age verification data for compliance with gaming regulations</li>
+            </ul>
+            
+            <h2>3. How We Use Your Information</h2>
+            
+            <p>We process your personal data for the following lawful purposes:</p>
+            
+            <h3>3.1 Service Provision</h3>
+            <ul>
+                <li>Create and manage your membership account</li>
+                <li>Process payments and prevent fraudulent transactions</li>
+                <li>Provide access to gaming equipment and facilities</li>
+                <li>Enable participation in tournaments and events</li>
+                <li>Deliver customer support and technical assistance</li>
+            </ul>
+            
+            <h3>3.2 Personalization</h3>
+            <ul>
+                <li>Recommend games based on your preferences</li>
+                <li>Customize your gaming experience and interface</li>
+                <li>Tailor promotions and special offers</li>
+                <li>Create personalized training programs</li>
+            </ul>
+            
+            <h3>3.3 Communication</h3>
+            <ul>
+                <li>Send service-related announcements (membership updates, policy changes)</li>
+                <li>Provide event invitations and tournament details</li>
+                <li>Respond to inquiries and support requests</li>
+                <li>Send marketing communications (with opt-out option)</li>
+            </ul>
+            
+            <h3>3.4 Analytics and Improvement</h3>
+            <ul>
+                <li>Analyze usage patterns to improve our services</li>
+                <li>Develop new features and gaming experiences</li>
+                <li>Conduct market research and player surveys</li>
+                <li>Optimize facility layout and equipment allocation</li>
+            </ul>
+            
+            <h3>3.5 Security and Compliance</h3>
+            <ul>
+                <li>Prevent fraud, cheating, and unauthorized access</li>
+                <li>Enforce our Terms of Service and Community Guidelines</li>
+                <li>Comply with legal obligations and regulatory requirements</li>
+                <li>Protect the rights and safety of our community</li>
+            </ul>
+            
+            <h2>4. Legal Basis for Processing</h2>
+            
+            <p>We process your personal data based on the following legal grounds:</p>
+            
+            <table class="privacy-table">
+                <thead>
+                    <tr>
+                        <th>Processing Purpose</th>
+                        <th>Legal Basis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Contractual Necessity</td>
+                        <td>Processing required to fulfill our membership agreement and provide requested services</td>
+                    </tr>
+                    <tr>
+                        <td>Legitimate Interests</td>
+                        <td>Processing necessary for our business operations, security, and service improvement</td>
+                    </tr>
+                    <tr>
+                        <td>Legal Compliance</td>
+                        <td>Processing required by law (e.g., age verification, tax reporting)</td>
+                    </tr>
+                    <tr>
+                        <td>Consent</td>
+                        <td>Processing based on your explicit permission (e.g., marketing communications)</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h2>5. Data Sharing and Disclosure</h2>
+            
+            <h3>5.1 Service Providers</h3>
+            <p>We engage trusted third parties to assist with operations:</p>
+            <ul>
+                <li><strong>Payment Processors:</strong> Secure transaction handling (Stripe, PayPal)</li>
+                <li><strong>Cloud Services:</strong> Data storage and infrastructure (AWS, Google Cloud)</li>
+                <li><strong>Analytics Providers:</strong> Usage tracking and business intelligence (Google Analytics)</li>
+                <li><strong>Marketing Platforms:</strong> Email delivery and campaign management (Mailchimp)</li>
+                <li><strong>Game Publishers:</strong> Limited data sharing for tournament verification</li>
+            </ul>
+            
+            <h3>5.2 Legal Requirements</h3>
+            <p>We may disclose information when legally required:</p>
+            <ul>
+                <li>In response to subpoenas, court orders, or legal process</li>
+                <li>To establish or exercise our legal rights</li>
+                <li>To defend against legal claims</li>
+                <li>To investigate, prevent, or take action regarding illegal activities</li>
+            </ul>
+            
+            <h3>5.3 Business Transfers</h3>
+            <p>In the event of a merger, acquisition, or asset sale, your information may be transferred as part of the transaction. We will notify you of any such change and outline your choices.</p>
+            
+            <h3>5.4 Community Features</h3>
+            <p>Certain information may be visible to other community members:</p>
+            <ul>
+                <li>Gamer tags and avatars in leaderboards</li>
+                <li>Tournament results and achievements</li>
+                <li>Public forum posts and comments</li>
+            </ul>
+            
+            <h2>6. International Data Transfers</h2>
+            
+            <p>As a global gaming community, your information may be transferred to and processed in countries outside your residence. We implement appropriate safeguards including:</p>
+            <ul>
+                <li>Standard Contractual Clauses approved by the European Commission</li>
+                <li>Privacy Shield certification for US-based providers</li>
+                <li>Data processing agreements with all international vendors</li>
+            </ul>
+            
+            <h2>7. Data Security Measures</h2>
+            
+            <p>We implement robust technical and organizational measures to protect your data:</p>
+            
+            <h3>7.1 Technical Safeguards</h3>
+            <ul>
+                <li>End-to-end encryption for sensitive data transmission</li>
+                <li>Firewalls and intrusion detection systems</li>
+                <li>Regular security audits and penetration testing</li>
+                <li>Multi-factor authentication for administrative access</li>
+            </ul>
+            
+            <h3>7.2 Organizational Measures</h3>
+            <ul>
+                <li>Strict access controls and role-based permissions</li>
+                <li>Comprehensive employee training on data protection</li>
+                <li>Incident response plan and breach notification procedures</li>
+                <li>Regular privacy impact assessments</li>
+            </ul>
+            
+            <p>Despite these measures, no security system is impenetrable. We cannot guarantee absolute security but commit to promptly addressing any vulnerabilities.</p>
+            
+            <h2>8. Data Retention</h2>
+            
+            <p>We retain personal data only as long as necessary for the purposes outlined:</p>
+            
+            <table class="privacy-table">
+                <thead>
+                    <tr>
+                        <th>Data Category</th>
+                        <th>Retention Period</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Account Information</td>
+                        <td>5 years after last activity</td>
+                    </tr>
+                    <tr>
+                        <td>Financial Records</td>
+                        <td>7 years for tax compliance</td>
+                    </tr>
+                    <tr>
+                        <td>Usage Data</td>
+                        <td>3 years from collection</td>
+                    </tr>
+                    <tr>
+                        <td>Marketing Preferences</td>
+                        <td>Until consent withdrawal</td>
+                    </tr>
+                    <tr>
+                        <td>Inactive Accounts</td>
+                        <td>2 years after last login</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p>Data may be retained longer when required by law or for legitimate business needs such as dispute resolution.</p>
+            
+            <h2>9. Your Rights and Choices</h2>
+            
+            <p>Depending on your jurisdiction, you may have the following rights regarding your personal data:</p>
+            
+            <h3>9.1 Access and Portability</h3>
+            <p>Request a copy of your personal data in a structured, commonly used format.</p>
+            
+            <h3>9.2 Correction</h3>
+            <p>Update inaccurate or incomplete personal information.</p>
+            
+            <h3>9.3 Erasure</h3>
+            <p>Request deletion of your personal data under certain circumstances.</p>
+            
+            <h3>9.4 Restriction</h3>
+            <p>Limit processing of your data while we verify accuracy or address objections.</p>
+            
+            <h3>9.5 Objection</h3>
+            <p>Object to processing based on legitimate interests or for direct marketing.</p>
+            
+            <h3>9.6 Consent Withdrawal</h3>
+            <p>Revoke previously given consent at any time.</p>
+            
+            <h3>9.7 Complaint</h3>
+            <p>Lodge a complaint with your local data protection authority.</p>
+            
+            <p>To exercise these rights, please contact us using the information below. We may require identity verification before processing requests.</p>
+            
+            <h2>10. Children's Privacy</h2>
+            
+            <p>Our services are not directed to children under 16 without parental consent:</p>
+            <ul>
+                <li>We implement age verification measures</li>
+                <li>Parental controls are available for minor accounts</li>
+                <li>We comply with the Children's Online Privacy Protection Act (COPPA)</li>
+                <li>Parents may review or delete their child's information</li>
+            </ul>
+            
+            <h2>11. Cookies and Tracking Technologies</h2>
+            
+            <p>We use various technologies to enhance your experience:</p>
+            
+            <h3>11.1 Essential Cookies</h3>
+            <p>Required for core functionality (session management, security)</p>
+            
+            <h3>11.2 Performance Cookies</h3>
+            <p>Collect anonymous usage data to improve our services</p>
+            
+            <h3>11.3 Functional Cookies</h3>
+            <p>Remember preferences and personalize your experience</p>
+            
+            <h3>11.4 Targeting Cookies</h3>
+            <p>Used for advertising and marketing purposes (opt-out available)</p>
+            
+            <p>You can manage cookie preferences through your browser settings or our cookie consent tool.</p>
+            
+            <h2>12. Third-Party Links</h2>
+            
+            <p>Our services may contain links to third-party websites. We are not responsible for their privacy practices and encourage you to review their policies.</p>
+            
+            <h2>13. Changes to This Policy</h2>
+            
+            <p>We may update this policy periodically to reflect:</p>
+            <ul>
+                <li>Changes in our data practices</li>
+                <li>New legal requirements</li>
+                <li>Service enhancements</li>
+            </ul>
+            
+            <p>We will notify you of material changes through email or prominent notices on our website. The "Last Updated" date at the top indicates when revisions were made.</p>
+            
+            <h2>14. Contact Information</h2>
+            
+            <p>For privacy-related inquiries or to exercise your rights:</p>
+            
+            <div class="highlight-box">
+                <p><strong>Data Protection Officer:</strong> Privacy Team</p>
+                <p><strong>Email:</strong> privacy@gameadda.com</p>
+                <p><strong>Phone:</strong> +91 6200250705</p>
+                <p><strong>Address:</strong> Gaming Street, Mumbai, India 400001</p>
+                <p><strong>Response Time:</strong> We aim to respond within 30 days of receipt</p>
+            </div>
+            
+            <div class="last-updated">
+                <p>This Privacy Policy was last updated on June 15, 2025 and is effective immediately.</p>
+            </div>
+        </div>
+
+        <div class="back-to-top" id="backToTop">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section about">
+                    <h3><i class="fas fa-gamepad"></i> Game Adda</h3>
+                    <p>Your ultimate destination for competitive gaming and esports events. Join our community of passionate gamers and experience the thrill of competitive play.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="activities.html"><i class="fas fa-chevron-right"></i> Activities</a></li>
+                        <li><a href="events.html"><i class="fas fa-chevron-right"></i> Events</a></li>
+                        <li><a href="membership.html"><i class="fas fa-chevron-right"></i> Membership</a></li>
+                        <li><a href="terms.html"><i class="fas fa-chevron-right"></i> Terms & Conditions</a></li>
+                        <li><a href="privacy.html"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> info@gameadda.com</p>
+                    <p><i class="fas fa-phone"></i> +91 6200250705</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Gaming Street, Mumbai, India 400001</p>
+                    <p><i class="fas fa-clock"></i> Open Daily: 10:00 AM - 11:00 PM</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Game Adda. All rights reserved. | Designed with <i class="fas fa-heart" style="color: #f038ff;"></i> for gamers</p>
+        </div>
+    </footer>
+
+    <script>
+        // DOM elements
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+        const contactBtn = document.getElementById('contact-btn');
+        const backToTopBtn = document.getElementById('backToTop');
+        const loader = document.getElementById('loader');
+
+        // Show loader when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            showLoader();
+            setTimeout(hideLoader, 1000); // Simulate loading time
+        });
+
+        // Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            mobileMenuBtn.querySelector('i').classList.toggle('fa-times');
+            mobileMenuBtn.querySelector('i').classList.toggle('fa-bars');
+        });
+
+        // Back to top button
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Show/hide loading animation
+        function showLoader() {
+            loader.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideLoader() {
+            loader.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Print button functionality
+        const printPage = () => {
+            window.print();
+        };
+
+        // Add print button dynamically
+        const printBtn = document.createElement('button');
+        printBtn.className = 'btn';
+        printBtn.innerHTML = '<i class="fas fa-print"></i> Print Policy';
+        printBtn.style.margin = '20px auto';
+        printBtn.style.display = 'block';
+        printBtn.addEventListener('click', printPage);
+        document.querySelector('.privacy-container').appendChild(printBtn);
+
+        // Contact form modal functionality
+        contactBtn.addEventListener('click', () => {
+            // In a real implementation, this would open a contact modal
+            alert('Contact form would open here. In a full implementation, this would trigger a modal dialog.');
+        });
+    </script>
+    <!--<script src="privacy.js"></script>-->
+</body>
+</html>

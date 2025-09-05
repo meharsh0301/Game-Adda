@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Games - Game Adda</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!--<link rel="stylesheet" href="my-games.css">-->
+    <style>
+        /* ====== Base Styles ====== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0f0f1a;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        
+        .btn:hover {
+            background-color: #3aa8d8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1, h2, h3 {
+            color: #4cc9f0;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        h1 i, h2 i {
+            margin-right: 10px;
+        }
+        
+        /* ====== Header Styles ====== */
+        header {
+            background-color: #1a1a2e;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+        
+        nav a:hover, nav a.active {
+            color: #4cc9f0;
+        }
+        
+        nav a i {
+            margin-right: 8px;
+            font-size: 1rem;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #fff;
+            background: none;
+            border: none;
+        }
+        
+        /* ====== My Games Section ====== */
+        .my-games {
+            padding: 100px 0 50px;
+            min-height: 100vh;
+        }
+        
+        .games-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .games-search-filter {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .games-search {
+            position: relative;
+            display: flex;
+            min-width: 250px;
+            flex-grow: 1;
+        }
+        
+        .games-search input {
+            padding: 12px 45px 12px 20px;
+            background-color: #1a1a2e;
+            border: 1px solid #333;
+            border-radius: 30px;
+            color: #fff;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .games-search input:focus {
+            outline: none;
+            border-color: #4cc9f0;
+            box-shadow: 0 0 0 2px rgba(76, 201, 240, 0.3);
+        }
+        
+        .games-search button {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+        
+        .games-search button:hover {
+            color: #4cc9f0;
+        }
+        
+        .games-filter {
+            padding: 12px 20px;
+            background-color: #1a1a2e;
+            border: 1px solid #333;
+            border-radius: 30px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 15px;
+            padding-right: 40px;
+        }
+        
+        .games-filter:focus {
+            outline: none;
+            border-color: #4cc9f0;
+            box-shadow: 0 0 0 2px rgba(76, 201, 240, 0.3);
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .game-card {
+            background-color: #1a1a2e;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #25253a;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            border-color: #4cc9f0;
+        }
+        
+        .game-image-container {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .game-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .game-card:hover .game-image {
+            transform: scale(1.05);
+        }
+        
+        .favorite-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #ffd700;
+            font-size: 1.5rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .game-card:hover .favorite-icon {
+            opacity: 1;
+        }
+        
+        .game-card[data-is-favorite="true"] .favorite-icon {
+            opacity: 1;
+        }
+        
+        .game-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .game-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #4cc9f0;
+            font-weight: 600;
+        }
+        
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .game-desc {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 20px;
+            flex-grow: 1;
+            line-height: 1.5;
+        }
+        
+        .game-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .play-btn {
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            flex: 1;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .play-btn:hover {
+            background-color: #3aa8d8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .details-btn {
+            background-color: #7209b7;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            flex: 1;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .details-btn:hover {
+            background-color: #5e07a0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .game-category {
+            display: inline-block;
+            background-color: #14d286;
+            color: #1a1a2e;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Different category colors */
+        .game-category.fps {
+            background-color: #4cc9f0;
+        }
+        
+        .game-category.battle-royale {
+            background-color: #f038ff;
+        }
+        
+        .game-category.moba {
+            background-color: #f0a24c;
+        }
+        
+        .game-category.strategy {
+            background-color: #4cf05e;
+        }
+        
+        .game-category.rpg {
+            background-color: #a54cf0;
+        }
+        
+        .no-games {
+            text-align: center;
+            padding: 50px;
+            grid-column: 1 / -1;
+            background-color: #1a1a2e;
+            border-radius: 10px;
+            border: 1px dashed #333;
+        }
+        
+        .no-games i {
+            font-size: 3rem;
+            color: #4cc9f0;
+            margin-bottom: 20px;
+        }
+        
+        .no-games h3 {
+            margin-bottom: 10px;
+            color: #4cc9f0;
+        }
+        
+        .no-games p {
+            color: #ccc;
+            margin-bottom: 20px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* ====== Loading Animation ====== */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            display: none;
+        }
+        
+        .loader {
+            border: 5px solid #1a1a2e;
+            border-top: 5px solid #4cc9f0;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* ====== Modal Styles ====== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: #1a1a2e;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            border: 1px solid #25253a;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #ccc;
+            transition: color 0.3s ease;
+        }
+        
+        .close:hover {
+            color: #fff;
+        }
+        
+        .modal-game-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .modal-game-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        .modal-game-desc {
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        
+        /* ====== Footer Styles ====== */
+        footer {
+            background-color: #1a1a2e;
+            padding: 50px 0 0;
+            border-top: 1px solid #25253a;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-section p {
+            margin-bottom: 15px;
+            color: #ccc;
+            line-height: 1.6;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: #ccc;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: #4cc9f0;
+        }
+        
+        .footer-section.links ul {
+            list-style: none;
+        }
+        
+        .footer-section.links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section.links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: inline-block;
+            padding: 5px 0;
+        }
+        
+        .footer-section.links a:hover {
+            color: #4cc9f0;
+            transform: translateX(5px);
+        }
+        
+        .footer-section.contact p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .footer-section.contact i {
+            color: #4cc9f0;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid #25253a;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        
+        /* ====== Responsive Styles ====== */
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #1a1a2e;
+                flex-direction: column;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            }
+            
+            nav.active {
+                display: flex;
+            }
+            
+            nav a {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .games-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .games-search-filter {
+                width: 100%;
+            }
+            
+            .games-search {
+                width: 100%;
+            }
+            
+            .games-filter {
+                width: 100%;
+            }
+            
+            .my-games {
+                padding: 90px 0 40px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .game-actions {
+                flex-direction: column;
+            }
+            
+            .play-btn, .details-btn {
+                width: 100%;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+            
+            .modal-game-image {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div class="loader-container" id="loader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Game Details Modal -->
+    <div id="game-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img src="" alt="Game Image" class="modal-game-image" id="modal-game-image">
+            <h2 id="modal-game-title">Game Title</h2>
+            <div class="game-category" id="modal-game-category">Category</div>
+            <div class="modal-game-stats">
+                <span id="modal-game-hours">0 hrs played</span>
+                <span id="modal-game-last-played">Last played: Never</span>
+            </div>
+            <p class="modal-game-desc" id="modal-game-desc">Game description</p>
+            <div class="game-actions">
+                <button class="play-btn" id="modal-play-btn">Play Now</button>
+                <button class="details-btn" id="modal-close-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-gamepad"></i> Game Adda</h1>
+            <nav>
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="activities.html"><i class="fas fa-running"></i> Activities</a>
+                <a href="events.html"><i class="fas fa-calendar"></i> Events</a>
+                <a href="membership.html"><i class="fas fa-users"></i> Membership</a>
+                <a href="my-games.html" class="active"><i class="fas fa-gamepad"></i> My Games</a>
+                <button id="contact-btn" class="btn"><i class="fas fa-envelope"></i> Contact</button>
+            </nav>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <section class="my-games">
+        <div class="container">
+            <div class="games-header">
+                <h2><i class="fas fa-gamepad"></i> My Games</h2>
+                <div class="games-search-filter">
+                    <div class="games-search">
+                        <input type="text" id="game-search" placeholder="Search games...">
+                        <button id="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                    <select class="games-filter" id="game-filter">
+                        <option value="all">All Games</option>
+                        <option value="recent">Recently Played</option>
+                        <option value="favorites">Favorites</option>
+                        <option value="fps">FPS</option>
+                        <option value="battle-royale">Battle Royale</option>
+                        <option value="moba">MOBA</option>
+                        <option value="strategy">Strategy</option>
+                        <option value="rpg">RPG</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="games-grid" id="games-grid">
+                <!-- Game cards will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section about">
+                    <h3><i class="fas fa-gamepad"></i> Game Adda</h3>
+                    <p>Your ultimate destination for competitive gaming and esports events.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="profile.html">My Profile</a></li>
+                        <li><a href="my-games.html">My Games</a></li>
+                        <li><a href="tournaments.html">Tournaments</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> info@gameadda.com</p>
+                    <p><i class="fas fa-phone"></i> +91 6200250705</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Gaming Street, Mumbai, India</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Game Adda. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // DOM elements
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+        const contactBtn = document.getElementById('contact-btn');
+        const gameSearchInput = document.getElementById('game-search');
+        const searchBtn = document.getElementById('search-btn');
+        const gameFilter = document.getElementById('game-filter');
+        const gamesGrid = document.getElementById('games-grid');
+        const loader = document.getElementById('loader');
+        const gameModal = document.getElementById('game-modal');
+        const modalCloseBtn = document.querySelector('.close');
+        const modalCloseBtn2 = document.getElementById('modal-close-btn');
+
+        // Game data with additional details
+        const myGames = [
+            { 
+                id: 1,
+                name: "Valorant", 
+                description: "Tactical shooter game with unique agent abilities and precise gunplay mechanics. Engage in 5v5 matches where teamwork and strategy are key to victory.",
+                image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                hoursPlayed: 15,
+                lastPlayed: "2 days ago",
+                category: "fps",
+                isFavorite: true,
+                lastPlayedDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) // 2 days ago
+            },
+            { 
+                id: 2,
+                name: "Fortnite", 
+                description: "Popular battle royale game with building mechanics and regular content updates. Join 100 players in a fight to be the last one standing.",
+                image: "https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                hoursPlayed: 8,
+                lastPlayed: "1 week ago",
+                category: "battle-royale",
+                isFavorite: false,
+                lastPlayedDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) // 1 week ago
+            },
+            { 
+                id: 3,
+                name: "CS:GO", 
+                description: "Classic tactical first-person shooter with competitive matchmaking and esports scene. Features bomb defusal and hostage rescue game modes.",
+                image: "https://images.unsplash.com/photo-1551103782-9ab6cad0fb88?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                hoursPlayed: 32,
+                lastPlayed: "Yesterday",
+                category: "fps",
+                isFavorite: true,
+                lastPlayedDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000) // 1 day ago
+            },
+            { 
+                id: 4,
+                name: "Dota 2", 
+                description: "Complex MOBA with deep strategy elements and a steep learning curve. Control powerful heroes and destroy the enemy Ancient to win.",
+                image: "https://images.unsplash.com/photo-1598550476439-6847785fcea6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                hoursPlayed: 45,
+                lastPlayed: "3 days ago",
+                category: "moba",
+                isFavorite: false,
+                lastPlayedDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000) // 3 days ago
+            },
+            { 
+                id: 5,
+                name: "League of Legends", 
+                description: "Popular MOBA with diverse champions and regular updates. Work with your team to destroy the enemy Nexus across various maps and modes.",
+                image: "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                hoursPlayed: 28,
+                lastPlayed: "5 days ago",
+                category: "moba",
+                isFavorite: true,
+                lastPlayedDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000) // 5 days ago
+            },
+            { 
+                id: 6,
+                name: "Apex Legends", 
+                description: "Fast-paced battle royale with unique character abilities and team play. Features 60-player matches with innovative ping communication system.",
+                image: "https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
+                hoursPlayed: 12,
+                lastPlayed: "1 day ago",
+                category: "battle-royale",
+                isFavorite: false,
+                lastPlayedDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000) // 1 day ago
+            },
+            { 
+                id: 7,
+                name: "Call of Duty: Warzone", 
+                description: "Free-to-play battle royale set in the Call of Duty universe. Features 150-player matches with loadout customization and buy stations.",
+                image: "https://images.unsplash.com/photo-1579546929662-711aa81148cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                hoursPlayed: 18,
+                lastPlayed: "2 weeks ago",
+                category: "fps",
+                isFavorite: false,
+                lastPlayedDate: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000) // 2 weeks ago
+            },
+            { 
+                id: 8,
+                name: "Overwatch 2", 
+                description: "Team-based hero shooter with diverse characters and abilities. Features 5v5 matches with objective-based game modes and regular updates.",
+                image: "https://images.unsplash.com/photo-1587573089734-599851b0c7b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                hoursPlayed: 22,
+                lastPlayed: "4 days ago",
+                category: "fps",
+                isFavorite: true,
+                lastPlayedDate: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000) // 4 days ago
+            }
+        ];
+
+        // Show/hide loading animation
+        function showLoader() {
+            loader.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideLoader() {
+            loader.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Generate game cards
+        function generateGameCards(games = myGames) {
+            gamesGrid.innerHTML = '';
+            
+            if (games.length === 0) {
+                gamesGrid.innerHTML = `
+                    <div class="no-games">
+                        <i class="fas fa-gamepad"></i>
+                        <h3>No Games Found</h3>
+                        <p>Try different search terms or filters to find your games</p>
+                        <button class="btn" id="reset-filters-btn">Reset Filters</button>
+                    </div>
+                `;
+                
+                document.getElementById('reset-filters-btn').addEventListener('click', () => {
+                    gameSearchInput.value = '';
+                    gameFilter.value = 'all';
+                    generateGameCards(myGames);
+                });
+                return;
+            }
+            
+            games.forEach(game => {
+                const gameCard = document.createElement('div');
+                gameCard.className = 'game-card';
+                gameCard.dataset.id = game.id;
+                gameCard.dataset.category = game.category;
+                gameCard.dataset.lastPlayed = game.lastPlayedDate.getTime();
+                gameCard.dataset.isFavorite = game.isFavorite;
+                
+                gameCard.innerHTML = `
+                    <div class="game-image-container">
+                        <img src="${game.image}" alt="${game.name}" class="game-image">
+                        ${game.isFavorite ? '<i class="fas fa-star favorite-icon"></i>' : '<i class="fas fa-star favorite-icon"></i>'}
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">${game.name}</h3>
+                        <span class="game-category ${game.category}">${getCategoryName(game.category)}</span>
+                        <div class="game-stats">
+                            <span>${game.hoursPlayed} hrs played</span>
+                            <span>Last played: ${game.lastPlayed}</span>
+                        </div>
+                        <p class="game-desc">${game.description}</p>
+                        <div class="game-actions">
+                            <button class="play-btn" data-id="${game.id}">Play Now</button>
+                            <button class="details-btn" data-id="${game.id}">Details</button>
+                        </div>
+                    </div>
+                `;
+                gamesGrid.appendChild(gameCard);
+            });
+            
+            // Add event listeners to all buttons
+            document.querySelectorAll('.play-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const gameId = parseInt(e.target.dataset.id);
+                    playGame(gameId);
+                });
+            });
+            
+            document.querySelectorAll('.details-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const gameId = parseInt(e.target.dataset.id);
+                    showGameDetails(gameId);
+                });
+            });
+        }
+
+        // Get category display name
+        function getCategoryName(category) {
+            const names = {
+                'fps': 'FPS',
+                'battle-royale': 'Battle Royale',
+                'moba': 'MOBA',
+                'strategy': 'Strategy',
+                'rpg': 'RPG'
+            };
+            return names[category] || 'Other';
+        }
+
+        // Play game function
+        function playGame(gameId) {
+            showLoader();
+            const game = myGames.find(g => g.id === gameId);
+            
+            // Simulate game loading
+            setTimeout(() => {
+                hideLoader();
+                alert(`Launching ${game.name}...\n\nThis would normally redirect to the game or launch it.`);
+                // In a real app, this would redirect to the game or launch it
+                
+                // Update last played time
+                game.lastPlayed = "Just now";
+                game.lastPlayedDate = new Date();
+                filterGames();
+            }, 1500);
+        }
+
+        // Show game details modal
+        function showGameDetails(gameId) {
+            const game = myGames.find(g => g.id === gameId);
+            
+            document.getElementById('modal-game-title').textContent = game.name;
+            document.getElementById('modal-game-hours').textContent = `${game.hoursPlayed} hrs played`;
+            document.getElementById('modal-game-last-played').textContent = `Last played: ${game.lastPlayed}`;
+            document.getElementById('modal-game-desc').textContent = game.description;
+            document.getElementById('modal-game-image').src = game.image;
+            document.getElementById('modal-game-image').alt = game.name;
+            
+            const categoryElement = document.getElementById('modal-game-category');
+            categoryElement.textContent = getCategoryName(game.category);
+            categoryElement.className = `game-category ${game.category}`;
+            
+            document.getElementById('modal-play-btn').dataset.id = game.id;
+            
+            gameModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal
+        function closeModal() {
+            gameModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Filter games based on search and filter
+        function filterGames() {
+            const searchTerm = gameSearchInput.value.toLowerCase();
+            const filterValue = gameFilter.value;
+            
+            let filteredGames = myGames.filter(game => 
+                game.name.toLowerCase().includes(searchTerm) || 
+                game.description.toLowerCase().includes(searchTerm)
+            );
+            
+            if (filterValue !== 'all') {
+                if (filterValue === 'recent') {
+                    // Show games played in last 7 days
+                    const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+                    filteredGames = filteredGames.filter(game => 
+                        game.lastPlayedDate > oneWeekAgo
+                    ).sort((a, b) => b.lastPlayedDate - a.lastPlayedDate);
+                } else if (filterValue === 'favorites') {
+                    filteredGames = filteredGames.filter(game => game.isFavorite);
+                } else {
+                    filteredGames = filteredGames.filter(game => game.category === filterValue);
+                }
+            }
+            
+            generateGameCards(filteredGames);
+        }
+
+        // Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+                mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+            });
+        });
+        
+        // Contact button
+        contactBtn.addEventListener('click', () => {
+            alert('Contact form would open here. This could be a modal or redirect to a contact page.');
+        });
+        
+        // Search and filter event listeners
+        gameSearchInput.addEventListener('input', filterGames);
+        gameFilter.addEventListener('change', filterGames);
+        searchBtn.addEventListener('click', filterGames);
+        
+        // Modal event listeners
+        modalCloseBtn.addEventListener('click', closeModal);
+        modalCloseBtn2.addEventListener('click', closeModal);
+        document.getElementById('modal-play-btn').addEventListener('click', (e) => {
+            const gameId = parseInt(e.target.dataset.id);
+            closeModal();
+            playGame(gameId);
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === gameModal) {
+                closeModal();
+            }
+        });
+
+        // Initialize the page
+        window.addEventListener('DOMContentLoaded', () => {
+            showLoader();
+            
+            // Simulate loading games from server
+            setTimeout(() => {
+                generateGameCards();
+                hideLoader();
+            }, 1000);
+        });
+    </script>
+    <!--<script src="my-games.js"></script>-->
+</body>
+</html>

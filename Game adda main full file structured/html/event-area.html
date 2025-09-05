@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - Game Adda</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!--<link rel="stylesheet" href="event-area.css">-->
+    <style>
+        /* ====== Base Styles ====== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0f0f1a;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            background-color: #3aa8d8;
+            transform: translateY(-2px);
+        }
+        
+        h1, h2, h3 {
+            color: #4cc9f0;
+        }
+        
+        h1 i, h2 i {
+            margin-right: 10px;
+        }
+        
+        /* ====== Header Styles ====== */
+        header {
+            background-color: #1a1a2e;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover, nav a.active {
+            color: #4cc9f0;
+        }
+        
+        nav a i {
+            margin-right: 5px;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* ====== Events Section ====== */
+        .events-container {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            background-color: #1a1a2e;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .events-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .events-header h2 {
+            font-size: 2rem;
+        }
+        
+        .filters-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background-color: #0f0f1a;
+            border: 1px solid #333;
+            color: #ccc;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn:hover {
+            border-color: #4cc9f0;
+            color: #fff;
+        }
+        
+        .filter-btn.active {
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            border-color: #4cc9f0;
+        }
+        
+        .search-filter {
+            display: flex;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .search-filter input {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            background-color: #0f0f1a;
+            color: #fff;
+        }
+        
+        .search-filter button {
+            padding: 10px 15px;
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .event-card {
+            background-color: #0f0f1a;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .event-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .event-date {
+            background-color: #7209b7;
+            color: white;
+            padding: 5px 15px;
+            display: inline-block;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .event-info {
+            padding: 20px;
+        }
+        
+        .event-title {
+            font-size: 1.3rem;
+            color: #4cc9f0;
+            margin-bottom: 10px;
+        }
+        
+        .event-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .event-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        .event-meta-item i {
+            color: #4cc9f0;
+        }
+        
+        .event-desc {
+            color: #ccc;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .event-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .event-attendees {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        .attend-btn {
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .attend-btn.attending {
+            background-color: #7209b7;
+            color: #fff;
+        }
+        
+        .featured-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #f72585;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .no-events {
+            text-align: center;
+            padding: 50px;
+            grid-column: 1 / -1;
+        }
+        
+        .no-events i {
+            font-size: 3rem;
+            color: #4cc9f0;
+            margin-bottom: 20px;
+        }
+        
+        .no-events h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .no-events p {
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+        
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            background-color: #0f0f1a;
+            color: #fff;
+            border: 1px solid #333;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .page-btn:hover {
+            border-color: #4cc9f0;
+            color: #4cc9f0;
+        }
+        
+        .page-btn.active {
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            border-color: #4cc9f0;
+        }
+        
+        /* ====== Footer Styles ====== */
+        footer {
+            background-color: #1a1a2e;
+            padding: 50px 0 0;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-section p {
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: #ccc;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: #4cc9f0;
+        }
+        
+        .footer-section.links ul {
+            list-style: none;
+        }
+        
+        .footer-section.links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section.links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section.links a:hover {
+            color: #4cc9f0;
+        }
+        
+        .footer-section.contact p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-section.contact i {
+            color: #4cc9f0;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid #333;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        
+        /* ====== Modal Styles ====== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: #1a1a2e;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #ccc;
+        }
+        
+        .close:hover {
+            color: #fff;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4cc9f0;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #0f0f1a;
+            color: #fff;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        /* ====== Responsive Styles ====== */
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #1a1a2e;
+                flex-direction: column;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            }
+            
+            nav.active {
+                display: flex;
+            }
+            
+            nav a {
+                padding: 10px 20px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .events-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .filters-container {
+                gap: 10px;
+            }
+            
+            .events-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .filter-btn {
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+            
+            .event-card {
+                width: 100%;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-gamepad"></i> Game Adda</h1>
+            <nav>
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="activities.html"><i class="fas fa-running"></i> Activities</a>
+                <a href="events.html" class="active"><i class="fas fa-calendar"></i> Events</a>
+                <a href="membership.html"><i class="fas fa-users"></i> Membership</a>
+                <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
+                <button id="contact-btn" class="btn"><i class="fas fa-envelope"></i> Contact</button>
+            </nav>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Events Content -->
+    <main class="container">
+        <div class="events-container">
+            <div class="events-header">
+                <h2><i class="fas fa-calendar-star"></i> Upcoming Events</h2>
+                <button class="btn" id="create-event-btn"><i class="fas fa-plus"></i> Create Event</button>
+            </div>
+            
+            <!-- Search and Filters -->
+            <div class="search-filter">
+                <input type="text" id="event-search" placeholder="Search events...">
+                <button id="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="filters-container">
+                <button class="filter-btn active" data-filter="all">All Events</button>
+                <button class="filter-btn" data-filter="week">This Week</button>
+                <button class="filter-btn" data-filter="month">This Month</button>
+                <button class="filter-btn" data-filter="online">Online</button>
+                <button class="filter-btn" data-filter="in-person">In-Person</button>
+                <button class="filter-btn" data-filter="featured">Featured</button>
+                <button class="filter-btn" data-filter="free">Free Events</button>
+            </div>
+            
+            <!-- Events Grid -->
+            <div class="events-grid" id="events-grid">
+                <!-- Event cards will be dynamically inserted here by JavaScript -->
+            </div>
+            
+            <!-- No Events Message (hidden by default) -->
+            <div class="no-events" id="no-events" style="display: none;">
+                <i class="fas fa-calendar-times"></i>
+                <h3>No Events Found</h3>
+                <p>Try adjusting your filters or check back later for new events</p>
+                <button class="btn" id="reset-filters-btn">Reset Filters</button>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination" id="pagination">
+                <!-- Pagination buttons will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Create Event Modal -->
+    <div id="create-event-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Create New Event</h2>
+            <form id="event-form">
+                <div class="form-group">
+                    <label for="event-title">Event Title</label>
+                    <input type="text" id="event-title" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="event-description">Description</label>
+                    <textarea id="event-description" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="event-date">Date</label>
+                    <input type="date" id="event-date" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="event-time">Time</label>
+                    <input type="time" id="event-time" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="event-location">Location</label>
+                    <input type="text" id="event-location" placeholder="Physical address or online link" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="event-type">Event Type</label>
+                    <select id="event-type" required>
+                        <option value="">Select type</option>
+                        <option value="tournament">Tournament</option>
+                        <option value="workshop">Workshop</option>
+                        <option value="meetup">Meetup</option>
+                        <option value="lan-party">LAN Party</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="event-image">Image URL</label>
+                    <input type="url" id="event-image" placeholder="https://example.com/image.jpg">
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="featured-event"> Featured Event
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn">Create Event</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section about">
+                    <h3><i class="fas fa-gamepad"></i> Game Adda</h3>
+                    <p>Your ultimate destination for competitive gaming and esports events.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="activities.html">Activities</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="membership.html">Membership</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> info@gameadda.com</p>
+                    <p><i class="fas fa-phone"></i> +91 6200250705</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Gaming Street, Mumbai, India</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Game Adda. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Sample event data
+        const eventsData = [
+            {
+                id: 1,
+                title: "Summer LAN Party",
+                description: "Join us for our biggest LAN party of the summer! Bring your own device or use ours. Tournaments for Valorant, CS:GO, and Dota 2 with cash prizes!",
+                date: "2025-06-25",
+                time: "16:00 - 22:00",
+                location: "Game Adda Arena, Mumbai",
+                type: "lan-party",
+                attendees: 24,
+                image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                featured: true,
+                online: false,
+                price: 500
+            },
+            {
+                id: 2,
+                title: "Game Development Workshop",
+                description: "Learn the basics of game development from industry professionals. This workshop covers Unity basics, game design principles, and publishing your first game.",
+                date: "2025-06-28",
+                time: "18:00 - 20:00",
+                location: "Online (Zoom)",
+                type: "workshop",
+                attendees: 12,
+                image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
+                featured: false,
+                online: true,
+                price: 0
+            },
+            {
+                id: 3,
+                title: "VR Gaming Night",
+                description: "Experience the latest VR games and technology with our premium VR setups. Try out new releases and classics with our high-end VR equipment.",
+                date: "2025-07-02",
+                time: "17:00 - 21:00",
+                location: "Game Adda VR Zone, Mumbai",
+                type: "meetup",
+                attendees: 18,
+                image: "https://images.unsplash.com/photo-1560253023-3ec5d502959f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                featured: false,
+                online: false,
+                price: 300
+            },
+            {
+                id: 4,
+                title: "Valorant Championship",
+                description: "Monthly Valorant tournament with a ₹50,000 prize pool. Teams of 5 compete in this double-elimination bracket tournament.",
+                date: "2025-07-10",
+                time: "12:00 - 20:00",
+                location: "Game Adda Esports Arena",
+                type: "tournament",
+                attendees: 32,
+                image: "https://images.unsplash.com/photo-1633613286848-e6f43bbafb8d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                featured: true,
+                online: false,
+                price: 1000
+            },
+            {
+                id: 5,
+                title: "Indie Game Showcase",
+                description: "Local indie developers showcase their latest games. Play demos, meet the creators, and provide feedback on upcoming titles.",
+                date: "2025-07-15",
+                time: "14:00 - 18:00",
+                location: "Game Adda Lounge",
+                type: "meetup",
+                attendees: 8,
+                image: "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                featured: false,
+                online: false,
+                price: 0
+            },
+            {
+                id: 6,
+                title: "Speedrunning Marathon",
+                description: "Watch top speedrunners attempt world records in classic games. All donations go to charity. Submit your own runs to be featured!",
+                date: "2025-07-20",
+                time: "10:00 - 22:00",
+                location: "Twitch.tv/GameAdda",
+                type: "other",
+                attendees: 45,
+                image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                featured: true,
+                online: true,
+                price: 0
+            }
+        ];
+
+        // DOM elements
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+        const contactBtn = document.getElementById('contact-btn');
+        const modal = document.getElementById('create-event-modal');
+        const closeBtn = document.querySelector('.close');
+        const createEventBtn = document.getElementById('create-event-btn');
+        const eventForm = document.getElementById('event-form');
+        const eventsGrid = document.getElementById('events-grid');
+        const noEventsMsg = document.getElementById('no-events');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const resetFiltersBtn = document.getElementById('reset-filters-btn');
+        const eventSearch = document.getElementById('event-search');
+        const searchBtn = document.getElementById('search-btn');
+        const pagination = document.getElementById('pagination');
+
+        // Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            mobileMenuBtn.querySelector('i').classList.toggle('fa-times');
+            mobileMenuBtn.querySelector('i').classList.toggle('fa-bars');
+        });
+
+        // Modal functionality
+        createEventBtn.addEventListener('click', () => {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Generate event cards
+        function generateEventCards(events) {
+            eventsGrid.innerHTML = '';
+            
+            if (events.length === 0) {
+                noEventsMsg.style.display = 'block';
+                return;
+            }
+            
+            noEventsMsg.style.display = 'none';
+            
+            events.forEach(event => {
+                const eventCard = document.createElement('div');
+                eventCard.className = 'event-card';
+                
+                const eventDate = new Date(event.date);
+                const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+                const formattedDate = `${monthNames[eventDate.getMonth()]} ${eventDate.getDate()}`;
+                
+                eventCard.innerHTML = `
+                    <div style="position: relative;">
+                        <img src="${event.image}" alt="${event.title}" class="event-image">
+                        <span class="event-date">${formattedDate}</span>
+                        ${event.featured ? '<span class="featured-badge">Featured</span>' : ''}
+                    </div>
+                    <div class="event-info">
+                        <h3 class="event-title">${event.title}</h3>
+                        <div class="event-meta">
+                            <div class="event-meta-item">
+                                <i class="fas fa-${event.online ? 'globe' : 'map-marker-alt'}"></i> ${event.location}
+                            </div>
+                            <div class="event-meta-item">
+                                <i class="fas fa-${event.price > 0 ? 'rupee-sign' : 'tag'}"></i> ${event.price > 0 ? `₹${event.price}` : 'Free'}
+                            </div>
+                            <div class="event-meta-item">
+                                <i class="fas fa-users"></i> ${event.type.charAt(0).toUpperCase() + event.type.slice(1)}
+                            </div>
+                        </div>
+                        <p class="event-desc">${event.description}</p>
+                        <div class="event-actions">
+                            <div class="event-attendees">
+                                <i class="fas fa-users"></i> ${event.attendees} attending
+                            </div>
+                            <button class="attend-btn" data-event-id="${event.id}">Attend</button>
+                        </div>
+                    </div>
+                `;
+                eventsGrid.appendChild(eventCard);
+            });
+            
+            // Add event listeners to attend buttons
+            document.querySelectorAll('.attend-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const eventId = parseInt(this.getAttribute('data-event-id'));
+                    const attendeesElement = this.parentElement.querySelector('.event-attendees');
+                    const currentAttendees = parseInt(attendeesElement.textContent.match(/\d+/)[0]);
+                    
+                    if (this.textContent === 'Attend') {
+                        this.textContent = 'Attending';
+                        this.classList.add('attending');
+                        attendeesElement.textContent = attendeesElement.textContent.replace(/\d+/, currentAttendees + 1);
+                        // In a real app, you would send this to your backend
+                        console.log(`User attending event ${eventId}`);
+                    } else {
+                        this.textContent = 'Attend';
+                        this.classList.remove('attending');
+                        attendeesElement.textContent = attendeesElement.textContent.replace(/\d+/, currentAttendees - 1);
+                        // In a real app, you would send this to your backend
+                        console.log(`User no longer attending event ${eventId}`);
+                    }
+                });
+            });
+        }
+
+        // Filter events
+        function filterEvents() {
+            const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+            const searchTerm = eventSearch.value.toLowerCase();
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            let filteredEvents = eventsData.filter(event => {
+                const eventDate = new Date(event.date);
+                const matchesSearch = event.title.toLowerCase().includes(searchTerm) || 
+                                     event.description.toLowerCase().includes(searchTerm) ||
+                                     event.location.toLowerCase().includes(searchTerm);
+                
+                if (!matchesSearch) return false;
+                
+                switch (activeFilter) {
+                    case 'week':
+                        const nextWeek = new Date(today);
+                        nextWeek.setDate(today.getDate() + 7);
+                        return eventDate >= today && eventDate <= nextWeek;
+                    case 'month':
+                        const nextMonth = new Date(today);
+                        nextMonth.setMonth(today.getMonth() + 1);
+                        return eventDate >= today && eventDate <= nextMonth;
+                    case 'online':
+                        return event.online;
+                    case 'in-person':
+                        return !event.online;
+                    case 'featured':
+                        return event.featured;
+                    case 'free':
+                        return event.price === 0;
+                    default:
+                        return true;
+                }
+            });
+            
+            generateEventCards(filteredEvents);
+            generatePagination(filteredEvents.length);
+        }
+
+        // Generate pagination
+        function generatePagination(totalEvents) {
+            pagination.innerHTML = '';
+            const eventsPerPage = 6;
+            const pageCount = Math.ceil(totalEvents / eventsPerPage);
+            
+            if (pageCount <= 1) return;
+            
+            for (let i = 1; i <= pageCount; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = 'page-btn';
+                pageBtn.textContent = i;
+                if (i === 1) pageBtn.classList.add('active');
+                
+                pageBtn.addEventListener('click', function() {
+                    document.querySelectorAll('.page-btn').forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    // In a real app, you would load the appropriate page of events
+                    console.log(`Loading page ${i}`);
+                });
+                
+                pagination.appendChild(pageBtn);
+            }
+        }
+
+        // Form submission
+        eventForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const title = document.getElementById('event-title').value;
+            const description = document.getElementById('event-description').value;
+            const date = document.getElementById('event-date').value;
+            const time = document.getElementById('event-time').value;
+            const location = document.getElementById('event-location').value;
+            const type = document.getElementById('event-type').value;
+            const image = document.getElementById('event-image').value || 'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80';
+            const featured = document.getElementById('featured-event').checked;
+            
+            // Create new event object
+            const newEvent = {
+                id: eventsData.length + 1,
+                title,
+                description,
+                date,
+                time,
+                location,
+                type,
+                attendees: 0,
+                image,
+                featured,
+                online: location.toLowerCase().includes('online') || location.toLowerCase().includes('http'),
+                price: 0 // You could add a price field to the form
+            };
+            
+            // Add to events array (in a real app, you would send to a backend)
+            eventsData.unshift(newEvent);
+            
+            // Reset form and close modal
+            this.reset();
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            
+            // Refresh events display
+            filterEvents();
+            
+            // Show success message
+            alert('Event created successfully!');
+        });
+
+        // Filter button click handler
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                filterEvents();
+            });
+        });
+
+        // Reset filters
+        resetFiltersBtn.addEventListener('click', function() {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+            eventSearch.value = '';
+            filterEvents();
+        });
+
+        // Search functionality
+        searchBtn.addEventListener('click', filterEvents);
+        eventSearch.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') filterEvents();
+        });
+
+        // Initialize the page
+        window.addEventListener('DOMContentLoaded', () => {
+            generateEventCards(eventsData);
+            generatePagination(eventsData.length);
+        });
+    </script>
+    <!--<script src="event-area.js"></script>-->
+</body>
+</html>

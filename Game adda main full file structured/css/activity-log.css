@@ -1,0 +1,360 @@
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #0f0f1a;
+    color: #fff;
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.btn {
+    background-color: #4cc9f0;
+    color: #1a1a2e;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn:hover {
+    background-color: #3aa8d8;
+    transform: translateY(-2px);
+}
+
+/* Header Styles */
+header {
+    background-color: #1a1a2e;
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    font-size: 1.8rem;
+    color: #4cc9f0;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+nav a:hover, nav a.active {
+    color: #4cc9f0;
+}
+
+nav a i {
+    margin-right: 5px;
+}
+
+.mobile-menu-btn {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Activity Log Styles */
+.activity-container {
+    max-width: 1000px;
+    margin: 100px auto 50px;
+    background-color: #1a1a2e;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.activity-header h2 {
+    color: #4cc9f0;
+    font-size: 1.8rem;
+}
+
+.activity-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.activity-filter {
+    background-color: #0f0f1a;
+    border: 1px solid #333;
+    color: #ccc;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.activity-filter:hover {
+    background-color: #25253a;
+}
+
+.activity-filter.active {
+    background-color: #4cc9f0;
+    color: #1a1a2e;
+    border-color: #4cc9f0;
+}
+
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.activity-item {
+    background-color: #0f0f1a;
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: transform 0.3s;
+}
+
+.activity-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #7209b7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.activity-icon i {
+    color: white;
+    font-size: 1rem;
+}
+
+.activity-details {
+    flex: 1;
+}
+
+.activity-title {
+    color: #4cc9f0;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+.activity-meta {
+    display: flex;
+    gap: 15px;
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+.activity-meta i {
+    margin-right: 5px;
+    color: #4cc9f0;
+}
+
+.activity-points {
+    margin-left: auto;
+    background-color: #f72585;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    min-width: 70px;
+    text-align: center;
+}
+
+.no-activity {
+    text-align: center;
+    padding: 50px;
+    color: #aaa;
+}
+
+.no-activity i {
+    font-size: 3rem;
+    color: #4cc9f0;
+    margin-bottom: 20px;
+}
+
+.load-more {
+    background-color: transparent;
+    color: #4cc9f0;
+    border: 1px solid #4cc9f0;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    margin: 20px auto 0;
+    display: block;
+    transition: all 0.3s;
+}
+
+.load-more:hover {
+    background-color: rgba(76, 201, 240, 0.1);
+}
+
+/* Footer Styles */
+footer {
+    background-color: #1a1a2e;
+    padding: 50px 0 0;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.footer-section h3 {
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    color: #4cc9f0;
+}
+
+.footer-section p {
+    margin-bottom: 15px;
+    color: #ccc;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-links a {
+    color: #ccc;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+}
+
+.social-links a:hover {
+    color: #4cc9f0;
+}
+
+.footer-section.links ul {
+    list-style: none;
+}
+
+.footer-section.links li {
+    margin-bottom: 10px;
+}
+
+.footer-section.links a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-section.links a:hover {
+    color: #4cc9f0;
+}
+
+.footer-section.contact p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-section.contact i {
+    color: #4cc9f0;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 20px 0;
+    border-top: 1px solid #333;
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #1a1a2e;
+        flex-direction: column;
+        padding: 20px 0;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    nav.active {
+        display: flex;
+    }
+    
+    nav a {
+        padding: 10px 20px;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
+    
+    .activity-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    
+    .activity-filters {
+        flex-wrap: wrap;
+    }
+    
+    .activity-meta {
+        flex-direction: column;
+        gap: 5px;
+    }
+}

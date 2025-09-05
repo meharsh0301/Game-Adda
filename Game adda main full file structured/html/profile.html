@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Game Adda</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!--<link rel="stylesheet" href="profile.css">-->
+    <style>
+        /* ====== Base Styles ====== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0f0f1a;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            background-color: #3aa8d8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #4cc9f0;
+            color: #4cc9f0;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(76, 201, 240, 0.1);
+        }
+        
+        h1, h2, h3, h4 {
+            color: #4cc9f0;
+        }
+        
+        /* ====== Header Styles ====== */
+        header {
+            background-color: #1a1a2e;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #4cc9f0;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        nav a:hover, nav a.active {
+            color: #4cc9f0;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #fff;
+            background: none;
+            border: none;
+        }
+        
+        /* ====== Profile Container ====== */
+        .profile-container {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            background-color: #1a1a2e;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        /* ====== Profile Header ====== */
+        .profile-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+            padding: 40px;
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .profile-avatar-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            flex-shrink: 0;
+        }
+        
+        .profile-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #4cc9f0;
+            box-shadow: 0 0 20px rgba(76, 201, 240, 0.3);
+        }
+        
+        .avatar-edit {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: #4cc9f0;
+            color: #1a1a2e;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .avatar-edit:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
+        }
+        
+        .profile-info {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .profile-name {
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .profile-badge {
+            font-size: 0.8rem;
+            background: linear-gradient(45deg, #f72585, #7209b7);
+            padding: 5px 12px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .profile-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 15px 0;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        
+        .profile-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .profile-stats {
+            display: flex;
+            gap: 25px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: center;
+            min-width: 80px;
+            position: relative;
+        }
+        
+        .stat-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4cc9f0;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .profile-actions {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+            flex-wrap: wrap;
+        }
+        
+        /* ====== Profile Tabs ====== */
+        .profile-tabs {
+            display: flex;
+            background-color: #0f0f1a;
+            overflow-x: auto;
+            scrollbar-width: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .profile-tabs::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .tab-btn {
+            padding: 15px 25px;
+            background: none;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: all 0.3s;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tab-btn:hover {
+            color: #4cc9f0;
+            background-color: rgba(76, 201, 240, 0.1);
+        }
+        
+        .tab-btn.active {
+            color: #4cc9f0;
+        }
+        
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #4cc9f0;
+        }
+        
+        /* ====== Tab Content ====== */
+        .tab-content {
+            display: none;
+            padding: 30px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .tab-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .tab-title {
+            font-size: 1.5rem;
+            color: #4cc9f0;
+        }
+        
+        .filter-options {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .filter-select {
+            padding: 10px 15px;
+            background-color: #0f0f1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            color: #fff;
+            font-size: 0.9rem;
+            min-width: 180px;
+        }
+        
+        /* ====== Overview Tab ====== */
+        .activity-feed {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .activity-card {
+            background-color: #0f0f1a;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            transition: all 0.3s;
+            border-left: 3px solid #4cc9f0;
+        }
+        
+        .activity-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            background-color: rgba(76, 201, 240, 0.05);
+        }
+        
+        .activity-icon {
+            font-size: 1.5rem;
+            color: #4cc9f0;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+        
+        .activity-content {
+            flex: 1;
+        }
+        
+        .activity-title {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+        
+        .activity-desc {
+            color: #ccc;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .activity-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.8rem;
+            color: #777;
+        }
+        
+        .activity-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* ====== Achievements Tab ====== */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .achievement-card {
+            background-color: #0f0f1a;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .achievement-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-color: rgba(76, 201, 240, 0.3);
+        }
+        
+        .achievement-card.locked {
+            filter: grayscale(80%);
+            opacity: 0.7;
+        }
+        
+        .achievement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            color: #f72585;
+        }
+        
+        .achievement-card.locked .achievement-icon {
+            color: #777;
+        }
+        
+        .achievement-icon .fa-lock {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            font-size: 1rem;
+            color: #f72585;
+            background: #1a1a2e;
+            border-radius: 50%;
+            padding: 5px;
+        }
+        
+        .achievement-title {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #fff;
+        }
+        
+        .achievement-desc {
+            font-size: 0.8rem;
+            color: #aaa;
+            margin-bottom: 10px;
+            min-height: 40px;
+        }
+        
+        .achievement-date {
+            font-size: 0.7rem;
+            color: #777;
+        }
+        
+        .achievement-progress {
+            height: 4px;
+            background: #333;
+            border-radius: 2px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #f72585, #7209b7);
+            width: 0%;
+            transition: width 1s ease;
+        }
+        
+        /* ====== Friends Tab ====== */
+        .friends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .friend-card {
+            background-color: #0f0f1a;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .friend-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-color: rgba(76, 201, 240, 0.3);
+        }
+        
+        .friend-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #4cc9f0;
+        }
+        
+        .friend-info {
+            flex: 1;
+        }
+        
+        .friend-name {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+        
+        .friend-status {
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .status-online {
+            color: #4cf05e;
+        }
+        
+        .status-offline {
+            color: #ccc;
+        }
+        
+        .status-ingame {
+            color: #f0a24c;
+        }
+        
+        .friend-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .friend-btn {
+            background: none;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.3s;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .friend-btn:hover {
+            color: #4cc9f0;
+            background-color: rgba(76, 201, 240, 0.1);
+        }
+        
+        /* ====== Settings Tab ====== */
+        .settings-form {
+            display: grid;
+            gap: 20px;
+            max-width: 600px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4cc9f0;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: #0f0f1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #4cc9f0;
+            box-shadow: 0 0 0 2px rgba(76, 201, 240, 0.2);
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .form-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        /* ====== Avatar Modal ====== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: #1a1a2e;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            padding: 30px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #ccc;
+            background: none;
+            border: none;
+        }
+        
+        .modal-close:hover {
+            color: #fff;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #4cc9f0;
+        }
+        
+        .avatar-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .avatar-option {
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .avatar-option:hover {
+            transform: scale(1.05);
+        }
+        
+        .avatar-option.selected {
+            border-color: #4cc9f0;
+            box-shadow: 0 0 15px rgba(76, 201, 240, 0.3);
+        }
+        
+        .avatar-option img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .upload-option {
+            margin-bottom: 20px;
+        }
+        
+        /* ====== Footer Styles ====== */
+        footer {
+            background-color: #1a1a2e;
+            padding: 50px 0 0;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-section p {
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: #ccc;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: #4cc9f0;
+        }
+        
+        .footer-section.links ul {
+            list-style: none;
+        }
+        
+        .footer-section.links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section.links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section.links a:hover {
+            color: #4cc9f0;
+        }
+        
+        .footer-section.contact p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-section.contact i {
+            color: #4cc9f0;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        
+        /* ====== Responsive Styles ====== */
+        @media (max-width: 992px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 20px;
+            }
+            
+            .profile-avatar-container {
+                margin: 0 auto;
+            }
+            
+            .profile-info {
+                text-align: center;
+            }
+            
+            .profile-stats {
+                justify-content: center;
+            }
+            
+            .profile-actions {
+                margin: 15px auto 0;
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .achievements-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #1a1a2e;
+                flex-direction: column;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+                z-index: 999;
+            }
+            
+            nav.active {
+                display: flex;
+            }
+            
+            nav a {
+                padding: 12px 20px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .profile-container {
+                margin-top: 80px;
+            }
+            
+            .friends-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .avatar-options {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .profile-container {
+                margin-top: 70px;
+                border-radius: 0;
+            }
+            
+            .profile-header {
+                padding: 25px 15px;
+            }
+            
+            .profile-name {
+                font-size: 1.5rem;
+            }
+            
+            .tab-content {
+                padding: 20px 15px;
+            }
+            
+            .tab-btn {
+                padding: 12px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .achievements-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .filter-options {
+                width: 100%;
+            }
+            
+            .filter-select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-gamepad"></i> Game Adda
+            </a>
+            <nav id="main-nav">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="activities.html"><i class="fas fa-running"></i> Activities</a>
+                <a href="events.html"><i class="fas fa-calendar"></i> Events</a>
+                <a href="membership.html"><i class="fas fa-users"></i> Membership</a>
+                <a href="profile.html" class="active"><i class="fas fa-user"></i> Profile</a>
+                <button id="contact-btn" class="btn"><i class="fas fa-envelope"></i> Contact</button>
+            </nav>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Profile Container -->
+    <div class="profile-container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="profile-avatar-container">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile" class="profile-avatar" id="profile-avatar">
+                <button class="avatar-edit" id="avatar-edit-btn">
+                    <i class="fas fa-camera"></i>
+                </button>
+            </div>
+            
+            <div class="profile-info">
+                <h1 class="profile-name" id="profile-name">
+                    John Doe 
+                    <span class="profile-badge">
+                        <i class="fas fa-crown"></i> Premium
+                    </span>
+                </h1>
+                
+                <div class="profile-meta">
+                    <div class="profile-meta-item">
+                        <i class="fas fa-calendar-alt"></i> Joined Jan 2024
+                    </div>
+                    <div class="profile-meta-item">
+                        <i class="fas fa-map-marker-alt"></i> Mumbai, India
+                    </div>
+                    <div class="profile-meta-item">
+                        <i class="fas fa-gamepad"></i> 156 hours played
+                    </div>
+                </div>
+                
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">24</div>
+                        <div class="stat-label">Tournaments</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">8</div>
+                        <div class="stat-label">Wins</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">15</div>
+                        <div class="stat-label">Level</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">87%</div>
+                        <div class="stat-label">Win Rate</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="profile-actions">
+                <button class="btn" id="edit-profile-btn">
+                    <i class="fas fa-edit"></i> Edit Profile
+                </button>
+                <button class="btn btn-outline" id="share-profile-btn">
+                    <i class="fas fa-share-alt"></i> Share
+                </button>
+            </div>
+        </div>
+        
+        <!-- Profile Tabs -->
+        <div class="profile-tabs">
+            <button class="tab-btn active" data-tab="overview">
+                <i class="fas fa-home"></i> Overview
+            </button>
+            <button class="tab-btn" data-tab="achievements">
+                <i class="fas fa-trophy"></i> Achievements
+            </button>
+            <button class="tab-btn" data-tab="games">
+                <i class="fas fa-gamepad"></i> My Games
+            </button>
+            <button class="tab-btn" data-tab="friends">
+                <i class="fas fa-users"></i> Friends
+            </button>
+            <button class="tab-btn" data-tab="settings">
+                <i class="fas fa-cog"></i> Settings
+            </button>
+        </div>
+        
+        <!-- Tab Contents -->
+        <div class="tab-content active" id="overview">
+            <div class="tab-header">
+                <h2 class="tab-title">Recent Activity</h2>
+                <div class="filter-options">
+                    <select class="filter-select" id="activity-filter">
+                        <option value="all">All Activities</option>
+                        <option value="game">Games Played</option>
+                        <option value="achievement">Achievements</option>
+                        <option value="friend">Friend Activity</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="activity-feed" id="activity-feed">
+                <!-- Activity items will be dynamically inserted here -->
+            </div>
+        </div>
+        
+        <div class="tab-content" id="achievements">
+            <div class="tab-header">
+                <h2 class="tab-title">Your Achievements</h2>
+                <div class="filter-options">
+                    <select class="filter-select" id="achievement-filter">
+                        <option value="all">All Achievements</option>
+                        <option value="unlocked">Unlocked</option>
+                        <option value="locked">Locked</option>
+                        <option value="rare">Rare</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="achievements-grid" id="achievements-grid">
+                <!-- Achievement cards will be dynamically inserted here -->
+            </div>
+        </div>
+        
+        <div class="tab-content" id="games">
+            <div class="tab-header">
+                <h2 class="tab-title">My Games</h2>
+                <div class="filter-options">
+                    <select class="filter-select" id="game-filter">
+                        <option value="all">All Games</option>
+                        <option value="recent">Recently Played</option>
+                        <option value="favorites">Favorites</option>
+                        <option value="installed">Installed</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="games-list" id="games-list">
+                <p>Your game collection will appear here.</p>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="friends">
+            <div class="tab-header">
+                <h2 class="tab-title">Friends</h2>
+                <div class="filter-options">
+                    <select class="filter-select" id="friend-filter">
+                        <option value="all">All Friends</option>
+                        <option value="online">Online Now</option>
+                        <option value="ingame">In-Game</option>
+                        <option value="offline">Offline</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="friends-grid" id="friends-grid">
+                <!-- Friend cards will be dynamically inserted here -->
+            </div>
+        </div>
+        
+        <div class="tab-content" id="settings">
+            <div class="tab-header">
+                <h2 class="tab-title">Profile Settings</h2>
+            </div>
+            
+            <form class="settings-form" id="profile-settings-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" class="form-control" value="John" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" class="form-control" value="Doe" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" class="form-control" value="johndoe" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="form-control" value="john.doe@example.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bio">Bio</label>
+                    <textarea id="bio" class="form-control" rows="4" required>Competitive gamer specializing in FPS and Battle Royale games. Always looking for new challenges!</textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" class="form-control" value="Mumbai, India">
+                </div>
+                
+                <div class="form-footer">
+                    <button type="button" class="btn btn-outline" id="cancel-settings-btn">Cancel</button>
+                    <button type="submit" class="btn" id="save-settings-btn">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section about">
+                    <h3><i class="fas fa-gamepad"></i> Game Adda</h3>
+                    <p>Your ultimate destination for competitive gaming and esports events.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="profile.html">My Profile</a></li>
+                        <li><a href="my-games.html">My Games</a></li>
+                        <li><a href="tournaments.html">Tournaments</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> info@gameadda.com</p>
+                    <p><i class="fas fa-phone"></i> +91 6200250705</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Gaming Street, Mumbai, India</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Game Adda. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Avatar Edit Modal -->
+    <div class="modal" id="avatar-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <h2 class="modal-title">Update Profile Picture</h2>
+            <div class="avatar-options">
+                <div class="avatar-option" data-avatar="https://randomuser.me/api/portraits/men/32.jpg">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Avatar 1">
+                </div>
+                <div class="avatar-option" data-avatar="https://randomuser.me/api/portraits/men/44.jpg">
+                    <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Avatar 2">
+                </div>
+                <div class="avatar-option" data-avatar="https://randomuser.me/api/portraits/men/68.jpg">
+                    <img src="https://randomuser.me/api/portraits/men/68.jpg" alt="Avatar 3">
+                </div>
+                <div class="avatar-option" data-avatar="https://randomuser.me/api/portraits/women/65.jpg">
+                    <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Avatar 4">
+                </div>
+            </div>
+            <div class="upload-option">
+                <label for="avatar-upload" class="btn btn-outline">
+                    <i class="fas fa-upload"></i> Upload Custom Avatar
+                </label>
+                <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+            </div>
+            <button class="btn" id="save-avatar-btn">Save Changes</button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // DOM Elements
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mainNav = document.getElementById('main-nav');
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const avatarEditBtn = document.getElementById('avatar-edit-btn');
+        const profileAvatar = document.getElementById('profile-avatar');
+        const avatarModal = document.getElementById('avatar-modal');
+        const modalClose = document.getElementById('modal-close');
+        const avatarOptions = document.querySelectorAll('.avatar-option');
+        const avatarUpload = document.getElementById('avatar-upload');
+        const saveAvatarBtn = document.getElementById('save-avatar-btn');
+        const editProfileBtn = document.getElementById('edit-profile-btn');
+        const shareProfileBtn = document.getElementById('share-profile-btn');
+        const cancelSettingsBtn = document.getElementById('cancel-settings-btn');
+        const saveSettingsBtn = document.getElementById('save-settings-btn');
+        const profileSettingsForm = document.getElementById('profile-settings-form');
+        const activityFilter = document.getElementById('activity-filter');
+        const achievementFilter = document.getElementById('achievement-filter');
+        const gameFilter = document.getElementById('game-filter');
+        const friendFilter = document.getElementById('friend-filter');
+        const activityFeed = document.getElementById('activity-feed');
+        const achievementsGrid = document.getElementById('achievements-grid');
+        const friendsGrid = document.getElementById('friends-grid');
+        const profileName = document.getElementById('profile-name');
+
+        // Sample Data
+        const activities = [
+            {
+                type: 'game',
+                icon: 'fa-gamepad',
+                title: 'Played Valorant',
+                description: 'Completed a competitive match with 25 kills and 5 deaths',
+                time: '2 hours ago',
+                game: 'Valorant'
+            },
+            {
+                type: 'achievement',
+                icon: 'fa-trophy',
+                title: 'Unlocked "First Win"',
+                description: 'Won your first competitive match in BGMI',
+                time: '5 hours ago',
+                game: 'BGMI'
+            },
+            {
+                type: 'friend',
+                icon: 'fa-user-plus',
+                title: 'Added new friend',
+                description: 'You are now friends with JaneSmith',
+                time: '1 day ago'
+            },
+            {
+                type: 'game',
+                icon: 'fa-gamepad',
+                title: 'Played GTA V',
+                description: 'Completed the "Pacific Standard" heist with your crew',
+                time: '2 days ago',
+                game: 'GTA V'
+            },
+            {
+                type: 'achievement',
+                icon: 'fa-medal',
+                title: 'Unlocked "10 Hours Played"',
+                description: 'Played for more than 10 hours in Apex Legends',
+                time: '3 days ago',
+                game: 'Apex Legends'
+            }
+        ];
+
+        const achievements = [
+            {
+                id: 1,
+                title: 'First Win',
+                description: 'Win your first competitive match',
+                icon: 'fa-trophy',
+                date: 'Jan 15, 2024',
+                unlocked: true,
+                rare: false
+            },
+            {
+                id: 2,
+                title: '10 Hours Played',
+                description: 'Play for more than 10 hours',
+                icon: 'fa-medal',
+                date: 'Feb 2, 2024',
+                unlocked: true,
+                rare: false
+            },
+            {
+                id: 3,
+                title: 'Tournament Champion',
+                description: 'Win a tournament with at least 16 participants',
+                icon: 'fa-crown',
+                date: 'Mar 8, 2024',
+                unlocked: true,
+                rare: true
+            },
+            {
+                id: 4,
+                title: 'Perfect Score',
+                description: 'Win a match without dying',
+                icon: 'fa-star',
+                date: 'Apr 12, 2024',
+                unlocked: true,
+                rare: false
+            },
+            {
+                id: 5,
+                title: 'Veteran Player',
+                description: 'Play for more than 100 hours',
+                icon: 'fa-hourglass',
+                date: null,
+                unlocked: false,
+                rare: false,
+                progress: 56
+            },
+            {
+                id: 6,
+                title: 'Friend Collector',
+                description: 'Have at least 20 friends',
+                icon: 'fa-users',
+                date: null,
+                unlocked: false,
+                rare: false,
+                progress: 12
+            },
+            {
+                id: 7,
+                title: 'All-Star',
+                description: 'Win matches in 5 different game categories',
+                icon: 'fa-award',
+                date: null,
+                unlocked: false,
+                rare: true,
+                progress: 3
+            },
+            {
+                id: 8,
+                title: 'Night Owl',
+                description: 'Play between midnight and 5am',
+                icon: 'fa-moon',
+                date: null,
+                unlocked: false,
+                rare: false
+            }
+        ];
+
+        const friends = [
+            {
+                id: 1,
+                name: 'Jane Smith',
+                avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+                status: 'online',
+                game: null
+            },
+            {
+                id: 2,
+                name: 'Mike Johnson',
+                avatar: 'https://randomuser.me/api/portraits/men/22.jpg',
+                status: 'ingame',
+                game: 'Valorant'
+            },
+            {
+                id: 3,
+                name: 'Sarah Williams',
+                avatar: 'https://randomuser.me/api/portraits/women/68.jpg',
+                status: 'online',
+                game: null
+            },
+            {
+                id: 4,
+                name: 'David Brown',
+                avatar: 'https://randomuser.me/api/portraits/men/75.jpg',
+                status: 'offline',
+                game: null
+            },
+            {
+                id: 5,
+                name: 'Emily Davis',
+                avatar: 'https://randomuser.me/api/portraits/women/33.jpg',
+                status: 'ingame',
+                game: 'Apex Legends'
+            },
+            {
+                id: 6,
+                name: 'Robert Wilson',
+                avatar: 'https://randomuser.me/api/portraits/men/55.jpg',
+                status: 'offline',
+                game: null
+            }
+        ];
+
+        // Mobile Menu Toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        // Tab Switching
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                btn.classList.add('active');
+                const tabId = btn.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+                
+                // Load content if needed
+                if (tabId === 'overview') loadActivities();
+                if (tabId === 'achievements') loadAchievements();
+                if (tabId === 'friends') loadFriends();
+            });
+        });
+
+        // Avatar Edit Modal
+        avatarEditBtn.addEventListener('click', () => {
+            avatarModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+
+        modalClose.addEventListener('click', () => {
+            avatarModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === avatarModal) {
+                avatarModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Avatar Selection
+        avatarOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                avatarOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+            });
+        });
+
+        // Avatar Upload
+        avatarUpload.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const newAvatar = event.target.result;
+                    // Update the selected avatar preview
+                    avatarOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Create a new selected avatar (in a real app, you might want to preview it)
+                    profileAvatar.src = newAvatar;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Save Avatar
+        saveAvatarBtn.addEventListener('click', () => {
+            const selectedAvatar = document.querySelector('.avatar-option.selected');
+            if (selectedAvatar) {
+                const newAvatar = selectedAvatar.getAttribute('data-avatar');
+                profileAvatar.src = newAvatar;
+            }
+            avatarModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            
+            // Show success message
+            showToast('Profile picture updated successfully!');
+        });
+
+        // Edit Profile Button
+        editProfileBtn.addEventListener('click', () => {
+            // Switch to settings tab
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            document.querySelector('[data-tab="settings"]').classList.add('active');
+            document.getElementById('settings').classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Share Profile Button
+        shareProfileBtn.addEventListener('click', () => {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Game Adda Profile',
+                    text: 'Check out my Game Adda profile!',
+                    url: window.location.href
+                }).catch(err => {
+                    console.log('Error sharing:', err);
+                });
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                alert('Share this URL: ' + window.location.href);
+            }
+        });
+
+        // Settings Form
+        profileSettingsForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const firstName = document.getElementById('first-name').value;
+            const lastName = document.getElementById('last-name').value;
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const bio = document.getElementById('bio').value;
+            const location = document.getElementById('location').value;
+            
+            // Update profile
+            profileName.innerHTML = `
+                ${firstName} ${lastName}
+                <span class="profile-badge">
+                    <i class="fas fa-crown"></i> Premium
+                </span>
+            `;
+            
+            // Show success message
+            showToast('Profile updated successfully!');
+        });
+
+        cancelSettingsBtn.addEventListener('click', () => {
+            // Reset form to original values
+            document.getElementById('first-name').value = 'John';
+            document.getElementById('last-name').value = 'Doe';
+            document.getElementById('username').value = 'johndoe';
+            document.getElementById('email').value = 'john.doe@example.com';
+            document.getElementById('bio').value = 'Competitive gamer specializing in FPS and Battle Royale games. Always looking for new challenges!';
+            document.getElementById('location').value = 'Mumbai, India';
+        });
+
+        // Filter Functions
+        activityFilter.addEventListener('change', loadActivities);
+        achievementFilter.addEventListener('change', loadAchievements);
+        friendFilter.addEventListener('change', loadFriends);
+
+        function loadActivities() {
+            const filter = activityFilter.value;
+            let filteredActivities = activities;
+            
+            if (filter !== 'all') {
+                filteredActivities = activities.filter(activity => activity.type === filter);
+            }
+            
+            activityFeed.innerHTML = '';
+            
+            if (filteredActivities.length === 0) {
+                activityFeed.innerHTML = '<div class="no-results">No activities found matching your filter.</div>';
+                return;
+            }
+            
+            filteredActivities.forEach(activity => {
+                const activityCard = document.createElement('div');
+                activityCard.className = 'activity-card';
+                
+                let gameInfo = '';
+                if (activity.game) {
+                    gameInfo = `<span class="activity-meta-item"><i class="fas fa-gamepad"></i> ${activity.game}</span>`;
+                }
+                
+                activityCard.innerHTML = `
+                    <div class="activity-icon">
+                        <i class="fas ${activity.icon}"></i>
+                    </div>
+                    <div class="activity-content">
+                        <h3 class="activity-title">${activity.title}</h3>
+                        <p class="activity-desc">${activity.description}</p>
+                        <div class="activity-meta">
+                            <span class="activity-meta-item"><i class="fas fa-clock"></i> ${activity.time}</span>
+                            ${gameInfo}
+                        </div>
+                    </div>
+                `;
+                
+                activityFeed.appendChild(activityCard);
+            });
+        }
+
+        function loadAchievements() {
+            const filter = achievementFilter.value;
+            let filteredAchievements = achievements;
+            
+            if (filter === 'unlocked') {
+                filteredAchievements = achievements.filter(ach => ach.unlocked);
+            } else if (filter === 'locked') {
+                filteredAchievements = achievements.filter(ach => !ach.unlocked);
+            } else if (filter === 'rare') {
+                filteredAchievements = achievements.filter(ach => ach.rare);
+            }
+            
+            achievementsGrid.innerHTML = '';
+            
+            if (filteredAchievements.length === 0) {
+                achievementsGrid.innerHTML = '<div class="no-results">No achievements found matching your filter.</div>';
+                return;
+            }
+            
+            filteredAchievements.forEach(achievement => {
+                const achievementCard = document.createElement('div');
+                achievementCard.className = `achievement-card ${achievement.unlocked ? '' : 'locked'}`;
+                
+                let progressBar = '';
+                if (!achievement.unlocked && achievement.progress) {
+                    progressBar = `
+                        <div class="achievement-progress">
+                            <div class="progress-bar" style="width: ${achievement.progress}%"></div>
+                        </div>
+                    `;
+                }
+                
+                let lockIcon = '';
+                if (!achievement.unlocked) {
+                    lockIcon = '<i class="fas fa-lock"></i>';
+                }
+                
+                achievementCard.innerHTML = `
+                    <div class="achievement-icon">
+                        <i class="fas ${achievement.icon}"></i>
+                        ${lockIcon}
+                    </div>
+                    <h3 class="achievement-title">${achievement.title}</h3>
+                    <p class="achievement-desc">${achievement.description}</p>
+                    ${achievement.date ? `<p class="achievement-date">Unlocked: ${achievement.date}</p>` : ''}
+                    ${progressBar}
+                `;
+                
+                achievementsGrid.appendChild(achievementCard);
+            });
+        }
+
+        function loadFriends() {
+            const filter = friendFilter.value;
+            let filteredFriends = friends;
+            
+            if (filter === 'online') {
+                filteredFriends = friends.filter(friend => friend.status === 'online');
+            } else if (filter === 'ingame') {
+                filteredFriends = friends.filter(friend => friend.status === 'ingame');
+            } else if (filter === 'offline') {
+                filteredFriends = friends.filter(friend => friend.status === 'offline');
+            }
+            
+            friendsGrid.innerHTML = '';
+            
+            if (filteredFriends.length === 0) {
+                friendsGrid.innerHTML = '<div class="no-results">No friends found matching your filter.</div>';
+                return;
+            }
+            
+            filteredFriends.forEach(friend => {
+                const friendCard = document.createElement('div');
+                friendCard.className = 'friend-card';
+                
+                let statusText = '';
+                let statusClass = '';
+                
+                if (friend.status === 'online') {
+                    statusText = 'Online';
+                    statusClass = 'status-online';
+                } else if (friend.status === 'ingame') {
+                    statusText = `In-Game: ${friend.game}`;
+                    statusClass = 'status-ingame';
+                } else {
+                    statusText = 'Offline';
+                    statusClass = 'status-offline';
+                }
+                
+                friendCard.innerHTML = `
+                    <img src="${friend.avatar}" alt="${friend.name}" class="friend-avatar">
+                    <div class="friend-info">
+                        <h3 class="friend-name">${friend.name}</h3>
+                        <p class="friend-status ${statusClass}">
+                            <i class="fas fa-circle"></i> ${statusText}
+                        </p>
+                    </div>
+                    <div class="friend-actions">
+                        <button class="friend-btn" title="Message" data-friend-id="${friend.id}" data-action="message">
+                            <i class="fas fa-comment"></i>
+                        </button>
+                        <button class="friend-btn" title="More options" data-friend-id="${friend.id}" data-action="more">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                    </div>
+                `;
+                
+                friendsGrid.appendChild(friendCard);
+            });
+        }
+
+        // Friend Actions
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('.friend-btn');
+            if (btn) {
+                const friendId = btn.getAttribute('data-friend-id');
+                const action = btn.getAttribute('data-action');
+                const friend = friends.find(f => f.id == friendId);
+                
+                if (action === 'message') {
+                    showToast(`Messaging ${friend.name}`);
+                } else if (action === 'more') {
+                    showToast(`Showing options for ${friend.name}`);
+                }
+            }
+        });
+
+        // Show Toast Notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+
+        // Add toast styles dynamically
+        const toastStyles = document.createElement('style');
+        toastStyles.textContent = `
+            .toast-notification {
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: #4cc9f0;
+                color: #1a1a2e;
+                padding: 12px 24px;
+                border-radius: 5px;
+                font-weight: 500;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                z-index: 3000;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+            
+            .toast-notification.show {
+                opacity: 1;
+            }
+        `;
+        document.head.appendChild(toastStyles);
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load initial content
+            loadActivities();
+        });
+    </script>
+    <!--<script src="profile.js"></script>-->
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Adda - Join the Ultimate Gaming Community</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Loading Animation -->
+    <div class="loader-container" id="loader">
+        <div class="loader"></div>
+    </div>
+
+    <header>
+        <div class="container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-gamepad"></i> Game Adda
+            </a>
+        </div>
+    </header>
+
+    <div class="auth-container">
+        <div class="container">
+            <div class="auth-box" id="auth-box">
+                <div class="auth-header">
+                    <h2 id="auth-title">Welcome Back!</h2>
+                    <p id="auth-subtitle">Login to your account to continue your gaming journey</p>
+                </div>
+                
+                <div class="auth-tabs">
+                    <button class="auth-tab active" id="login-tab">Login</button>
+                    <button class="auth-tab" id="signup-tab">Sign Up</button>
+                </div>
+                
+                <div class="auth-body">
+                    <!-- Login Form -->
+                    <form id="login-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="login-email">Email or Gamer ID</label>
+                            <input type="text" id="login-email" placeholder="Enter your email or gamer ID" required>
+                            <div class="error-message" id="login-email-error"></div>
+                        </div>
+                        
+                        <div class="form-group password-toggle">
+                            <label for="login-password">Password</label>
+                            <div class="input-with-icon">
+                                <input type="password" id="login-password" placeholder="Enter your password" required>
+                                <i class="fas fa-eye toggle-password" id="toggle-login-password"></i>
+                            </div>
+                            <div class="error-message" id="login-password-error"></div>
+                        </div>
+                        
+                        <div class="form-group remember-forgot">
+                            <div class="remember-me">
+                                <input type="checkbox" id="remember-me">
+                                <label for="remember-me">Remember me</label>
+                            </div>
+                            <a href="#" id="forgot-password">Forgot Password?</a>
+                        </div>
+                        
+                        <button type="submit" class="btn" id="login-btn">Login</button>
+                        
+                        <div class="social-login">
+                            <p>Or login with</p>
+                            <div class="social-icons">
+                                <a href="#" class="social-icon google" title="Login with Google">
+                                    <i class="fab fa-google"></i>
+                                </a>
+                                <a href="#" class="social-icon facebook" title="Login with Facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="social-icon discord" title="Login with Discord">
+                                    <i class="fab fa-discord"></i>
+                                </a>
+                                <a href="#" class="social-icon twitter" title="Login with Twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="social-icon twitch" title="Login with Twitch">
+                                    <i class="fab fa-twitch"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    <!-- Signup Form -->
+                    <form id="signup-form" class="auth-form" style="display: none;">
+                        <div class="form-group">
+                            <label for="signup-name">Full Name</label>
+                            <input type="text" id="signup-name" placeholder="Enter your full name" required>
+                            <div class="error-message" id="signup-name-error"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signup-gamerid">Gamer ID</label>
+                            <input type="text" id="signup-gamerid" placeholder="Choose your unique gamer ID" required>
+                            <div class="error-message" id="signup-gamerid-error"></div>
+                            <div class="gamerid-availability" id="gamerid-availability"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="signup-email">Email</label>
+                            <input type="email" id="signup-email" placeholder="Enter your email" required>
+                            <div class="error-message" id="signup-email-error"></div>
+                        </div>
+                        
+                        <div class="form-group password-toggle">
+                            <label for="signup-password">Password</label>
+                            <div class="input-with-icon">
+                                <input type="password" id="signup-password" placeholder="Create a strong password" required>
+                                <i class="fas fa-eye toggle-password" id="toggle-signup-password"></i>
+                            </div>
+                            <div class="strength-meter" id="strength-meter" data-strength="0"></div>
+                            <div class="strength-text" id="strength-text">Password strength: Very Weak</div>
+                            <div class="error-message" id="signup-password-error"></div>
+                            
+                            <ul class="password-requirements" id="password-requirements">
+                                <li data-requirement="length">At least 8 characters</li>
+                                <li data-requirement="uppercase">1 uppercase letter</li>
+                                <li data-requirement="lowercase">1 lowercase letter</li>
+                                <li data-requirement="number">1 number</li>
+                                <li data-requirement="special">1 special character</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="form-group password-toggle">
+                            <label for="signup-confirm-password">Confirm Password</label>
+                            <div class="input-with-icon">
+                                <input type="password" id="signup-confirm-password" placeholder="Confirm your password" required>
+                                <i class="fas fa-eye toggle-password" id="toggle-signup-confirm-password"></i>
+                            </div>
+                            <div class="error-message" id="signup-confirm-password-error"></div>
+                        </div>
+                        
+                        <div class="terms-checkbox">
+                            <input type="checkbox" id="accept-terms" required>
+                            <label for="accept-terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                        </div>
+                        <div class="error-message" id="terms-error"></div>
+                        
+                        <div class="two-factor-auth">
+                            <h4><i class="fas fa-shield-alt"></i> Two-Factor Authentication</h4>
+                            <p>Enable 2FA for extra security on your account (recommended)</p>
+                            <div class="form-group" style="margin: 0;">
+                                <input type="checkbox" id="enable-2fa">
+                                <label for="enable-2fa">Enable Two-Factor Authentication</label>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn" id="signup-btn">Create Account</button>
+                        
+                        <div class="social-login">
+                            <p>Or sign up with</p>
+                            <div class="social-icons">
+                                <a href="#" class="social-icon google" title="Sign up with Google">
+                                    <i class="fab fa-google"></i>
+                                </a>
+                                <a href="#" class="social-icon facebook" title="Sign up with Facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="social-icon discord" title="Sign up with Discord">
+                                    <i class="fab fa-discord"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="auth-footer">
+                    <p id="auth-footer-text">Don't have an account? <a href="#" id="switch-to-signup">Sign up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game character decoration -->
+    <div class="game-character"></div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal" id="forgot-password-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Reset Password</h2>
+            <p>Enter your email to receive a password reset link</p>
+            <form id="forgot-password-form">
+                <div class="form-group">
+                    <label for="reset-email">Email</label>
+                    <input type="email" id="reset-email" placeholder="Your registered email" required>
+                    <div class="error-message" id="reset-email-error"></div>
+                </div>
+                <button type="submit" class="btn">Send Reset Link</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2FA Setup Modal -->
+    <div class="modal" id="two-factor-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Two-Factor Authentication</h2>
+            <p>Scan the QR code with your authenticator app</p>
+            <div class="qrcode-container">
+                <div id="qrcode"></div>
+            </div>
+            <div class="form-group">
+                <label for="2fa-code">Verification Code</label>
+                <input type="text" id="2fa-code" placeholder="Enter 6-digit code" maxlength="6">
+                <div class="error-message" id="2fa-error"></div>
+            </div>
+            <button type="button" class="btn" id="verify-2fa-btn">Verify & Complete Setup</button>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="success-modal">
+        <div class="modal-content">
+            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+            <h2 id="success-title">Success!</h2>
+            <p id="success-message">Your account has been created successfully.</p>
+            <button type="button" class="btn" id="success-btn">Continue to Dashboard</button>
+        </div>
+    </div>
+
+    <!-- Dark mode toggle -->
+    <div class="dark-mode-toggle" id="dark-mode-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>

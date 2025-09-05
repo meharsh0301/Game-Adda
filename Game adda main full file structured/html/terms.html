@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions - Game Adda</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!--<link rel="stylesheet" href="terms.css">-->
+    <style>
+        /* ====== Base Styles ====== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0f0f1a;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            background-color: #3aa8d8;
+            transform: translateY(-2px);
+        }
+        
+        h1, h2, h3, h4 {
+            color: #4cc9f0;
+        }
+        
+        h1 i, h2 i, h3 i {
+            margin-right: 10px;
+        }
+        
+        a {
+            color: #4cc9f0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: #3aa8d8;
+            text-decoration: underline;
+        }
+        
+        /* ====== Header Styles ====== */
+        header {
+            background-color: #1a1a2e;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        h1.logo {
+            font-size: 1.8rem;
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover, nav a.active {
+            color: #4cc9f0;
+        }
+        
+        nav a i {
+            margin-right: 5px;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #fff;
+        }
+        
+        /* ====== Terms Container ====== */
+        .terms-container {
+            max-width: 1000px;
+            margin: 100px auto 50px;
+            background-color: #1a1a2e;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .terms-container h1 {
+            color: #4cc9f0;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2.5rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .terms-container h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(90deg, #4cc9f0, #3a0ca3);
+        }
+        
+        .terms-container h2 {
+            color: #4cc9f0;
+            margin: 35px 0 20px;
+            font-size: 1.8rem;
+            border-left: 4px solid #4cc9f0;
+            padding-left: 15px;
+        }
+        
+        .terms-container h3 {
+            color: #4cc9f0;
+            margin: 25px 0 15px;
+            font-size: 1.4rem;
+        }
+        
+        .terms-container h4 {
+            color: #4cc9f0;
+            margin: 20px 0 10px;
+            font-size: 1.2rem;
+        }
+        
+        .terms-container p, .terms-container li {
+            color: #ccc;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+        
+        .terms-container ul, .terms-container ol {
+            padding-left: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .terms-container li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .terms-container li::before {
+            content: '•';
+            color: #4cc9f0;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        
+        .terms-container ol {
+            counter-reset: item;
+        }
+        
+        .terms-container ol li {
+            counter-increment: item;
+        }
+        
+        .terms-container ol li::before {
+            content: counter(item) ".";
+            color: #4cc9f0;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        
+        .highlight-box {
+            background-color: rgba(76, 201, 240, 0.1);
+            border-left: 4px solid #4cc9f0;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .note {
+            background-color: rgba(255, 215, 0, 0.1);
+            border-left: 4px solid #ffd700;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .warning {
+            background-color: rgba(255, 69, 0, 0.1);
+            border-left: 4px solid #ff4500;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .last-updated {
+            text-align: right;
+            font-style: italic;
+            color: #aaa;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #4cc9f0;
+            color: #1a1a2e;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background-color: #3aa8d8;
+            transform: translateY(-3px);
+        }
+        
+        /* ====== Footer Styles ====== */
+        footer {
+            background-color: #1a1a2e;
+            padding: 50px 0 0;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-section p {
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: #ccc;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: #4cc9f0;
+        }
+        
+        .footer-section.links ul {
+            list-style: none;
+        }
+        
+        .footer-section.links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section.links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section.links a:hover {
+            color: #4cc9f0;
+        }
+        
+        .footer-section.contact p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-section.contact i {
+            color: #4cc9f0;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid #333;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        
+        /* ====== Loading Animation ====== */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            display: none;
+        }
+        
+        .loader {
+            border: 5px solid #1a1a2e;
+            border-top: 5px solid #4cc9f0;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* ====== Responsive Styles ====== */
+        @media (max-width: 992px) {
+            .terms-container {
+                padding: 30px;
+            }
+            
+            .terms-container h1 {
+                font-size: 2.2rem;
+            }
+            
+            .terms-container h2 {
+                font-size: 1.6rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #1a1a2e;
+                flex-direction: column;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            }
+            
+            nav.active {
+                display: flex;
+            }
+            
+            nav a {
+                padding: 10px 20px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .terms-container {
+                margin: 80px auto 30px;
+                padding: 20px;
+            }
+            
+            .terms-container h1 {
+                font-size: 1.8rem;
+                padding-bottom: 10px;
+            }
+            
+            .terms-container h1::after {
+                width: 100px;
+            }
+            
+            .terms-container h2 {
+                font-size: 1.4rem;
+            }
+            
+            .terms-container h3 {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .terms-container {
+                padding: 15px;
+            }
+            
+            .terms-container h1 {
+                font-size: 1.6rem;
+            }
+            
+            .terms-container h2 {
+                font-size: 1.3rem;
+            }
+            
+            .back-to-top {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #fff;
+                color: #000;
+            }
+            
+            .terms-container {
+                background-color: #fff;
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .terms-container h1, 
+            .terms-container h2, 
+            .terms-container h3, 
+            .terms-container h4 {
+                color: #000;
+            }
+            
+            .terms-container p, 
+            .terms-container li {
+                color: #333;
+            }
+            
+            header, footer, .back-to-top {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div class="loader-container" id="loader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <header>
+        <div class="container">
+            <h1 class="logo"><i class="fas fa-gamepad"></i> Game Adda</h1>
+            <nav id="mainNav">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="activities.html"><i class="fas fa-running"></i> Activities</a>
+                <a href="events.html"><i class="fas fa-calendar"></i> Events</a>
+                <a href="membership.html"><i class="fas fa-users"></i> Membership</a>
+                <button id="contact-btn" class="btn"><i class="fas fa-envelope"></i> Contact</button>
+            </nav>
+            <div class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="terms-container">
+        <h1><i class="fas fa-file-contract"></i> Terms & Conditions</h1>
+        
+        <div class="highlight-box">
+            <p><strong>Last Updated:</strong> June 15, 2025</p>
+            <p>By accessing or using Game Adda's services, facilities, or website, you agree to be bound by these Terms and Conditions. Please read them carefully before using our services.</p>
+        </div>
+        
+        <h2>1. Membership Agreement</h2>
+        
+        <h3>1.1 Membership Eligibility and Requirements</h3>
+        <p>To become a member of Game Adda, you must meet the following criteria:</p>
+        <ul>
+            <li><strong>Age Requirement:</strong> You must be at least 16 years of age. Members between 16-18 years old must provide written parental consent and have a parent or legal guardian co-sign the membership agreement.</li>
+            <li><strong>Valid Identification:</strong> All members must provide valid government-issued photo identification for verification purposes.</li>
+            <li><strong>Behavior Standards:</strong> Prospective members must agree to abide by all facility rules and demonstrate appropriate behavior during the application process.</li>
+        </ul>
+        
+        <h3>1.2 Membership Types and Benefits</h3>
+        <p>Game Adda offers several membership tiers, each with distinct benefits and privileges:</p>
+        <ol>
+            <li><strong>Basic Membership:</strong> Includes 10 hours of gaming per month, access to standard gaming equipment, and participation in member-only events.</li>
+            <li><strong>Premium Membership:</strong> Provides unlimited gaming hours, priority access to high-end equipment, 15% discount on food and beverages, and early registration for tournaments.</li>
+            <li><strong>VIP Membership:</strong> Offers all Premium benefits plus exclusive access to VIP lounges, personal locker, monthly game credits, and invitation-only events.</li>
+            <li><strong>Corporate Membership:</strong> Designed for businesses, includes team-building events, bulk discounts, and customized gaming packages.</li>
+        </ol>
+        
+        <div class="note">
+            <p><i class="fas fa-info-circle"></i> <strong>Note:</strong> Membership benefits are subject to change. Current members will be notified 30 days in advance of any changes to their membership benefits.</p>
+        </div>
+        
+        <h3>1.3 Membership Fees and Payment Terms</h3>
+        <p>Membership at Game Adda requires payment of recurring fees according to the following terms:</p>
+        <ul>
+            <li><strong>Payment Schedule:</strong> Membership fees are charged monthly on the anniversary date of membership activation.</li>
+            <li><strong>Payment Methods:</strong> We accept all major credit cards, debit cards, bank transfers, and digital payment methods. Cash payments are only accepted in-person at our facility.</li>
+            <li><strong>Late Payments:</strong> Accounts with payments more than 7 days overdue will be suspended until payment is received. A late fee of 5% of the monthly membership cost will be applied after 15 days.</li>
+            <li><strong>Non-Refundable:</strong> Membership fees are non-refundable except as required by law. No refunds will be given for partial months of service.</li>
+        </ul>
+        
+        <h3>1.4 Membership Cancellation and Termination</h3>
+        <p>Members may cancel their membership under the following conditions:</p>
+        <ul>
+            <li><strong>Voluntary Cancellation:</strong> Members may cancel by providing written notice at least 30 days before the next billing cycle. No refunds will be issued for the current billing period.</li>
+            <li><strong>Termination by Game Adda:</strong> We reserve the right to terminate any membership for violations of these Terms without refund. Serious violations may result in permanent banning from all Game Adda facilities.</li>
+            <li><strong>Freeze Policy:</strong> Members may freeze their membership for up to 3 months per calendar year for medical or military reasons with proper documentation.</li>
+        </ul>
+        
+        <div class="warning">
+            <p><i class="fas fa-exclamation-triangle"></i> <strong>Warning:</strong> Attempting to circumvent membership restrictions or share membership benefits with non-members will result in immediate termination of membership without refund.</p>
+        </div>
+        
+        <h2>2. Facility Usage and Rules</h2>
+        
+        <h3>2.1 General Facility Rules</h3>
+        <p>All members and guests must adhere to the following facility rules:</p>
+        <ul>
+            <li><strong>Respectful Conduct:</strong> Harassment, bullying, or discrimination of any kind will not be tolerated. This includes but is not limited to behavior based on race, gender, sexual orientation, religion, or disability.</li>
+            <li><strong>Equipment Care:</strong> Members are responsible for proper use of all equipment. Rough handling or misuse that results in damage will incur repair or replacement fees.</li>
+            <li><strong>Personal Belongings:</strong> Game Adda is not responsible for lost, stolen, or damaged personal items. Lockers are available for rent to secure valuables.</li>
+            <li><strong>Food and Beverages:</strong> Only food and beverages purchased from Game Adda may be consumed on premises. Outside food is only permitted with prior approval for medical reasons.</li>
+            <li><strong>Smoking/Vaping:</strong> Absolutely no smoking, vaping, or tobacco use is permitted anywhere within the facility.</li>
+        </ul>
+        
+        <h3>2.2 Equipment Usage Policies</h3>
+        <p>Specific rules govern the use of gaming equipment:</p>
+        <ol>
+            <li><strong>Time Limits:</strong> Equipment use is limited based on membership tier and current facility occupancy. Time limits may be extended when the facility is not at capacity.</li>
+            <li><strong>Reservations:</strong> Premium and VIP members may reserve specific equipment in advance. Reservations are forfeited if the member is more than 15 minutes late.</li>
+            <li><strong>Personal Devices:</strong> Members may connect personal controllers or peripherals after inspection and approval by staff. Game Adda is not responsible for any damage to personal devices.</li>
+            <li><strong>Software Installation:</strong> No unauthorized software may be installed on Game Adda equipment. Custom configurations must be approved by technical staff.</li>
+        </ol>
+        
+        <h3>2.3 Health and Safety Regulations</h3>
+        <p>To ensure a safe environment for all:</p>
+        <ul>
+            <li><strong>Emergency Procedures:</strong> All members must follow staff instructions during emergencies. Familiarize yourself with emergency exits and procedures.</li>
+            <li><strong>Health Concerns:</strong> Members with contagious illnesses should refrain from visiting the facility. Staff may request members displaying symptoms to leave for public health reasons.</li>
+            <li><strong>Physical Safety:</strong> No running, roughhousing, or dangerous behavior is permitted. Keep walkways clear of bags and personal items.</li>
+            <li><strong>Equipment Sanitation:</strong> Members must use provided sanitizing wipes to clean equipment before and after use, especially controllers and headsets.</li>
+        </ul>
+        
+        <h2>3. Tournament and Event Policies</h2>
+        
+        <h3>3.1 Tournament Participation</h3>
+        <p>Game Adda hosts regular gaming tournaments with the following participation rules:</p>
+        <ul>
+            <li><strong>Eligibility:</strong> Some tournaments are restricted by skill level, age, or membership tier. Members must verify eligibility before registering.</li>
+            <li><strong>Registration:</strong> Tournament registration typically opens 2 weeks before the event date. VIP members receive 48-hour early registration privileges.</li>
+            <li><strong>Entry Fees:</strong> Tournament fees vary by event and are non-refundable unless the tournament is canceled by Game Adda.</li>
+            <li><strong>Check-In:</strong> Participants must check in at least 30 minutes before tournament start time. Late arrivals may be disqualified.</li>
+        </ul>
+        
+        <h3>3.2 Tournament Conduct and Rules</h3>
+        <p>All participants must adhere to strict conduct standards:</p>
+        <ol>
+            <li><strong>Sportsmanship:</strong> Good sportsmanship is required at all times. Taunting, trash talking, or unsportsmanlike behavior may result in disqualification.</li>
+            <li><strong>Cheating:</strong> Any form of cheating, including but not limited to hacking, exploiting glitches, or collusion, will result in immediate disqualification and possible membership termination.</li>
+            <li><strong>Equipment Rules:</strong> Tournament-specific rules regarding equipment, controllers, and settings will be provided before each event.</li>
+            <li><strong>Disputes:</strong> All disputes must be brought to tournament officials immediately. Decisions by tournament officials are final.</li>
+        </ol>
+        
+        <h3>3.3 Prizes and Awards</h3>
+        <p>Tournament prizes are governed by these policies:</p>
+        <ul>
+            <li><strong>Prize Distribution:</strong> Prizes are awarded immediately following tournament conclusion unless otherwise specified. Winners must provide valid identification to claim prizes.</li>
+            <li><strong>Tax Responsibility:</strong> Winners are solely responsible for any taxes associated with prizes. Game Adda will provide necessary tax documentation for prizes valued over ₹10,000.</li>
+            <li><strong>Prize Substitution:</strong> Prizes cannot be substituted for cash or other items except at Game Adda's sole discretion.</li>
+            <li><strong>Forfeiture:</strong> Prizes not claimed within 30 days will be forfeited.</li>
+        </ul>
+        
+        <h2>4. Code of Conduct and Behavior Standards</h2>
+        
+        <h3>4.1 General Behavior Expectations</h3>
+        <p>Game Adda maintains a family-friendly environment with these behavior standards:</p>
+        <ul>
+            <li><strong>Language:</strong> Offensive language, including profanity, slurs, and hate speech, is strictly prohibited.</li>
+            <li><strong>Content:</strong> Viewing or sharing inappropriate content (pornographic, violent, or otherwise offensive material) is grounds for immediate expulsion.</li>
+            <li><strong>Harassment:</strong> Any form of harassment, including sexual harassment, will not be tolerated. Report any incidents immediately to staff.</li>
+            <li><strong>Discrimination:</strong> Discrimination based on race, gender, religion, sexual orientation, or any other protected characteristic is strictly prohibited.</li>
+        </ul>
+        
+        <h3>4.2 Online Conduct</h3>
+        <p>When using Game Adda's online services or playing online games at our facility:</p>
+        <ol>
+            <li><strong>Account Security:</strong> Members are responsible for securing their personal gaming accounts. Game Adda is not responsible for hacked or compromised accounts.</li>
+            <li><strong>Cheating/Banning:</strong> If a member is banned from any online service while using Game Adda facilities, they may also face restrictions at Game Adda.</li>
+            <li><strong>Streaming:</strong> Members who stream content from our facility must clearly identify that they are at Game Adda and adhere to all streaming platform rules.</li>
+            <li><strong>Bandwidth Usage:</strong> Excessive bandwidth usage that impacts other members may result in network restrictions.</li>
+        </ol>
+        
+        <h3>4.3 Dress Code</h3>
+        <p>To maintain a comfortable environment for all:</p>
+        <ul>
+            <li><strong>Appropriate Attire:</strong> Clothing must be free of offensive images or language. Staff reserves the right to determine what is appropriate.</li>
+            <li><strong>Footwear:</strong> Shoes must be worn at all times for health and safety reasons.</li>
+            <li><strong>Hygiene:</strong> Members must maintain reasonable personal hygiene. Staff may address hygiene issues that affect others.</li>
+        </ul>
+        
+        <h2>5. Privacy and Data Protection</h2>
+        
+        <h3>5.1 Information Collection</h3>
+        <p>Game Adda collects various types of information:</p>
+        <ul>
+            <li><strong>Personal Information:</strong> Includes name, contact details, age verification, and payment information necessary for membership.</li>
+            <li><strong>Usage Data:</strong> We collect data on facility usage, game preferences, and equipment usage to improve services.</li>
+            <li><strong>Security Footage:</strong> The facility is monitored by security cameras for safety and security purposes.</li>
+        </ul>
+        
+        <h3>5.2 Data Usage and Protection</h3>
+        <p>How we use and protect your information:</p>
+        <ol>
+            <li><strong>Service Provision:</strong> Your information is used to provide and improve our services, process payments, and communicate with you.</li>
+            <li><strong>Security Measures:</strong> We implement industry-standard security measures to protect your data, including encryption and secure servers.</li>
+            <li><strong>Third-Party Sharing:</strong> We do not sell your personal information. Limited data may be shared with tournament organizers or game publishers when necessary for event participation.</li>
+            <li><strong>Data Retention:</strong> Membership data is retained for 3 years after account closure for legal and accounting purposes.</li>
+        </ol>
+        
+        <h3>5.3 Member Rights</h3>
+        <p>Members have certain rights regarding their data:</p>
+        <ul>
+            <li><strong>Access:</strong> Members may request a copy of their personal data held by Game Adda.</li>
+            <li><strong>Correction:</strong> Members may request correction of inaccurate personal information.</li>
+            <li><strong>Deletion:</strong> Members may request deletion of personal data, subject to legal retention requirements.</li>
+            <li><strong>Opt-Out:</strong> Members may opt out of marketing communications while retaining important service notifications.</li>
+        </ul>
+        
+        <h2>6. Liability and Disclaimers</h2>
+        
+        <h3>6.1 Limitation of Liability</h3>
+        <p>Game Adda's liability is limited as follows:</p>
+        <ul>
+            <li><strong>Equipment Failure:</strong> We are not liable for interruptions in service due to equipment failure, though we will make reasonable efforts to restore service.</li>
+            <li><strong>Personal Injury:</strong> Members use facilities at their own risk. Game Adda is not liable for injuries sustained during normal facility use.</li>
+            <li><strong>Game Content:</strong> We are not responsible for content in third-party games, including potentially offensive material.</li>
+            <li><strong>Financial Loss:</strong> We are not liable for any financial losses related to account bans, game performance, or tournament outcomes.</li>
+        </ul>
+        
+        <h3>6.2 Service Guarantees</h3>
+        <p>Game Adda provides these service assurances:</p>
+        <ol>
+            <li><strong>Uptime:</strong> We strive for 99% facility uptime, excluding scheduled maintenance periods.</li>
+            <li><strong>Equipment Quality:</strong> All equipment is maintained to industry standards and replaced as needed.</li>
+            <li><strong>Fair Play:</strong> We implement measures to ensure fair competition in all tournaments and events.</li>
+            <li><strong>Customer Service:</strong> Staff are available during all operating hours to address member concerns.</li>
+        </ol>
+        
+        <h2>7. Intellectual Property</h2>
+        
+        <h3>7.1 Game Adda's Intellectual Property</h3>
+        <p>All Game Adda branding, logos, and original content are protected:</p>
+        <ul>
+            <li><strong>Trademarks:</strong> The Game Adda name and logo are registered trademarks and may not be used without permission.</li>
+            <li><strong>Content:</strong> Original content created by Game Adda, including event formats and promotional materials, is protected by copyright.</li>
+            <li><strong>Photography:</strong> Game Adda reserves the right to use photographs and videos taken at our facilities for promotional purposes.</li>
+        </ul>
+        
+        <h3>7.2 Third-Party Intellectual Property</h3>
+        <p>Respect for game publishers' rights:</p>
+        <ol>
+            <li><strong>Game Licenses:</strong> All games available at Game Adda are properly licensed for commercial use.</li>
+            <li><strong>Streaming Rights:</strong> Members must respect game publishers' streaming and content creation policies.</li>
+            <li><strong>Modifications:</strong> No unauthorized modifications to game software are permitted on Game Adda equipment.</li>
+        </ol>
+        
+        <h2>8. Dispute Resolution</h2>
+        
+        <h3>8.1 Member Complaints</h3>
+        <p>Complaint resolution process:</p>
+        <ul>
+            <li><strong>Initial Resolution:</strong> Members should first attempt to resolve issues with on-duty staff.</li>
+            <li><strong>Formal Complaint:</strong> Unresolved issues may be submitted in writing to management within 14 days of the incident.</li>
+            <li><strong>Response Time:</strong> Game Adda will respond to formal complaints within 10 business days.</li>
+        </ul>
+        
+        <h3>8.2 Legal Jurisdiction</h3>
+        <p>Legal matters are governed by:</p>
+        <ul>
+            <li><strong>Governing Law:</strong> These Terms are governed by the laws of India.</li>
+            <li><strong>Jurisdiction:</strong> Any legal disputes shall be resolved in the courts of Mumbai.</li>
+            <li><strong>Arbitration:</strong> Before pursuing legal action, parties agree to attempt mediation through a mutually agreed arbitrator.</li>
+        </ul>
+        
+        <h2>9. Amendments to Terms</h2>
+        
+        <h3>9.1 Notification of Changes</h3>
+        <p>Game Adda may update these Terms:</p>
+        <ul>
+            <li><strong>Notice Period:</strong> Members will be notified of significant changes at least 30 days in advance.</li>
+            <li><strong>Continued Use:</strong> Continued use of Game Adda services after changes constitutes acceptance of the new Terms.</li>
+            <li><strong>Archives:</strong> Previous versions of the Terms are available upon request.</li>
+        </ul>
+        
+        <div class="last-updated">
+            <p><strong>Last Updated:</strong> June 15, 2025</p>
+            <p><strong>Effective Date:</strong> June 15, 2025</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section about">
+                    <h3><i class="fas fa-gamepad"></i> Game Adda</h3>
+                    <p>Your ultimate destination for competitive gaming and esports events.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="activities.html">Activities</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="membership.html">Membership</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> info@gameadda.com</p>
+                    <p><i class="fas fa-phone"></i> +91 6200250705</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Gaming Street, Mumbai, India</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Game Adda. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // DOM elements
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        const backToTopBtn = document.getElementById('backToTop');
+        const loader = document.getElementById('loader');
+        const contactBtn = document.getElementById('contact-btn');
+        
+        // Show loader when page is loading
+        function showLoader() {
+            loader.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function hideLoader() {
+            loader.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+        
+        // Back to top button
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (mainNav.classList.contains('active')) {
+                        mainNav.classList.remove('active');
+                        mobileMenuBtn.querySelector('i').classList.toggle('fa-bars');
+                        mobileMenuBtn.querySelector('i').classList.toggle('fa-times');
+                    }
+                }
+            });
+        });
+        
+        // Contact button functionality
+        contactBtn.addEventListener('click', () => {
+            // In a complete implementation, this would open a contact modal
+            alert('Contact form would open here. This is a demonstration.');
+        });
+        
+        // Simulate loading content
+        window.addEventListener('DOMContentLoaded', () => {
+            showLoader();
+            
+            // Simulate content loading
+            setTimeout(() => {
+                hideLoader();
+                
+                // Add animation to terms sections when they come into view
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = 1;
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                document.querySelectorAll('.terms-container h2, .terms-container h3').forEach(section => {
+                    section.style.opacity = 0;
+                    section.style.transform = 'translateY(20px)';
+                    section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    observer.observe(section);
+                });
+            }, 1500);
+        });
+    </script>
+    <!--<script src="terms.js"></script>-->
+</body>
+</html>
